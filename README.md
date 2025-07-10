@@ -2,12 +2,12 @@
 *Georgia Institute of Technology – Fridays 2 pm ET*
 
 **Designers:** Andrew Rosemberg & Michael Klamkin  
-**Instructor of Record:** Prof. Pascal Van Hentenryck
+**Instructor:** Prof. Pascal Van Hentenryck
 
 ---
 
 ## Overview
-This student-led course explores modern techniques for controlling — and learning to control — dynamical systems. Topics range from classical optimal control and numerical optimization to reinforcement learning, PDE-constrained optimization (finite-element methods, Neural DiffEq, PINNs, neural operators) and GPU-accelerated workflows.
+This student-led course explores modern techniques for controlling — and learning to control — dynamical systems. Topics range from classical optimal control and numerical optimization to reinforcement learning, PDE-constrained optimization (finite-element methods, Neural DiffEq, PINNs, neural operators), and GPU-accelerated workflows.
 
 ## Prerequisites
 * Solid linear-algebra background  
@@ -34,8 +34,8 @@ This student-led course explores modern techniques for controlling — and learn
 | 5  | 09/19/2025   | Lecture | **Nonlinear** trajectory **optimization**; collocation; implicit integration | |
 | 6  | 09/26/2025   | **External seminar 1** TBD (speaker to be confirmed) | Trajectory **optimization** on robots in Julia Robotics | |
 | 7  | 10/03/2025   | Lecture | Essentials of PDEs for control engineers; weak forms; FEM/FDM review | |
-| 8  | 10/10/2025   | **External seminar 2** TBD (speaker to be confirmed) | |
-| 9  | 10/17/2025   | **External seminar 3 — François Pacaud** | GPU acceleration of solvers; automatic differentiation on GPUs | |
+| 8  | 10/10/2025   | **External seminar 2** TBD (speaker to be confirmed) | Topology **optimization** | |
+| 9  | 10/17/2025   | **External seminar 3 — François Pacaud** | GPU-accelerated optimal control | |
 |10  | 10/24/2025   | Lecture | Physics-Informed Neural Networks (PINNs): formulation & pitfalls | |
 |11  | 10/31/2025   | **External seminar 4** TBD (speaker to be confirmed) | Neural Differential Equations: PINNs + classical solvers | |
 |12  | 11/07/2025   | Lecture | Neural operators (FNO, Galerkin Transformer); large-scale surrogates | |
