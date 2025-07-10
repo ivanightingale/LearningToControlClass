@@ -21,8 +21,6 @@ This student-led course explores modern techniques for controlling — and learn
 | In-class presentations | **50 %** |
 | Projects | **25 %** |
 
-## Weekly Schedule
-
 ## Weekly Schedule (Fall 2025 – Fridays 2 p.m. ET)
 
 | #  | Date (MM/DD) | Format / Presenter | Topic & Learning Goals | Prep / Key Resources |
@@ -41,6 +39,14 @@ This student-led course explores modern techniques for controlling — and learn
 |12  | 11/07/2025   | Lecture | Neural operators (FNO, Galerkin Transformer); large-scale surrogates | |
 |13  | 11/14/2025   | **External seminar 5** TBD (speaker to be confirmed) | Scalable PINNs / neural operators; CFD & weather applications | |
 |14  | 11/21/2025   | Lecture | Robust control & min-max DDP (incl. PDE cases); chance constraints; Data-driven control & RL-in-the-loop | |
+
+## Reference Material
+
+- https://optimalcontrol.ri.cmu.edu/
+- https://underactuated.mit.edu/
+- https://www.math.lmu.de/~philip/publications/lectureNotes/philipPeter_OptimalControlOfPDE.pdf
+- https://castle.princeton.edu/sda/
+- https://www.mit.edu/~dimitrib/dpbook.html
 
 ---
 
