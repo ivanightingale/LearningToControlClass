@@ -2,7 +2,7 @@
 
 **Presenter:** François Pacaud
 
-**Topic:** GPU acceleration of PDE solvers; automatic differentiation on GPUs
+**Topic:** GPU-accelerated optimal control.
 
 ---
 
