@@ -1,4 +1,10 @@
-# Class 5
+# Class 5 — 09/19/2025
 
-Add notes, links, and resources here.
+**Presenter:** TBD
+
+**Topic:** Nonlinear trajectory optimization; collocation; implicit integration
+
+---
+
+Add notes, links, and resources below.
 

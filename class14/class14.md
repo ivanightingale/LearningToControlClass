@@ -1,4 +1,10 @@
-# Class 14
+# Class 14 — 11/21/2025
 
-Add notes, links, and resources here.
+**Presenter:** TBD
+
+**Topic:** Robust control & min-max DDP (incl. PDE cases); chance constraints
+
+---
+
+Add notes, links, and resources below.
 

@@ -1,4 +1,10 @@
-# Class 7
+# Class 7 — 10/03/2025
 
-Add notes, links, and resources here.
+**Presenter:** TBD
+
+**Topic:** Essentials of PDEs for control engineers; weak forms; FEM/FDM review
+
+---
+
+Add notes, links, and resources below.
 

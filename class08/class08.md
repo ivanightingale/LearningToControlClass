@@ -1,4 +1,10 @@
-# Class 8
+# Class 8 — 10/10/2025
 
-Add notes, links, and resources here.
+**Presenter:** TBD
+
+**Topic:** Topic TBD
+
+---
+
+Add notes, links, and resources below.
 

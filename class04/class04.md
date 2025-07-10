@@ -1,4 +1,10 @@
-# Class 4
+# Class 4 — 09/12/2025
 
-Add notes, links, and resources here.
+**Presenter:** TBD
+
+**Topic:** Dynamic Programming & Model-Predictive Control
+
+---
+
+Add notes, links, and resources below.
 

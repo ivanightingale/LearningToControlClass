@@ -1,4 +1,10 @@
-# Class 13
+# Class 13 — 11/14/2025
 
-Add notes, links, and resources here.
+**Presenter:** TBD
+
+**Topic:** Scalable PINNs / neural operators; CFD & weather applications
+
+---
+
+Add notes, links, and resources below.
 

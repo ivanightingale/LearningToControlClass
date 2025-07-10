@@ -1,4 +1,10 @@
-# Class 11
+# Class 11 — 10/31/2025
 
-Add notes, links, and resources here.
+**Presenter:** TBD
+
+**Topic:** SciML & Neural Differential Equations: PINNs + classical solvers
+
+---
+
+Add notes, links, and resources below.
 

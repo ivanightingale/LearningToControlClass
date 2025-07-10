@@ -1,4 +1,10 @@
-# Class 10
+# Class 10 — 10/24/2025
 
-Add notes, links, and resources here.
+**Presenter:** TBD
+
+**Topic:** Physics-Informed Neural Networks (PINNs): formulation & pitfalls
+
+---
+
+Add notes, links, and resources below.
 

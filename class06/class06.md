@@ -1,4 +1,10 @@
-# Class 6
+# Class 6 — 09/26/2025
 
-Add notes, links, and resources here.
+**Presenter:** TBD
+
+**Topic:** Trajectory optimization on robots in Julia Robotics
+
+---
+
+Add notes, links, and resources below.
 
