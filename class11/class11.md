@@ -2,8 +2,7 @@
 
 **Presenter:** TBD
 
-**Topic:** SciML & Neural Differential Equations: PINNs + classical solvers
-
+**Topic:** Neural Differential Equations: PINNs + classical solvers.
 ---
 
 Add notes, links, and resources below.
