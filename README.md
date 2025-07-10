@@ -32,14 +32,14 @@ This student-led course explores modern techniques for controlling — and learn
 | 3  | 09/05/2025   | Lecture | Pontryagin’s Maximum Principle; shooting & multiple shooting; LQR, Riccati, QP viewpoint (finite / infinite horizon) | |
 | 4  | 09/12/2025   | Lecture | Dynamic Programming & Model-Predictive Control | |
 | 5  | 09/19/2025   | Lecture | **Nonlinear** trajectory **optimization**; collocation; implicit integration | |
-| 6  | 09/26/2025   | **External seminar 1** | TBD (speaker to be confirmed) | Trajectory **optimization** on robots in Julia Robotics | |
+| 6  | 09/26/2025   | **External seminar 1** TBD (speaker to be confirmed) | Trajectory **optimization** on robots in Julia Robotics | |
 | 7  | 10/03/2025   | Lecture | Essentials of PDEs for control engineers; weak forms; FEM/FDM review | |
-| 8  | 10/10/2025   | **External seminar 2** | TBD (speaker to be confirmed) | |
+| 8  | 10/10/2025   | **External seminar 2** TBD (speaker to be confirmed) | |
 | 9  | 10/17/2025   | **External seminar 3 — François Pacaud** | GPU acceleration of solvers; automatic differentiation on GPUs | |
 |10  | 10/24/2025   | Lecture | Physics-Informed Neural Networks (PINNs): formulation & pitfalls | |
-|11  | 10/31/2025   | **External seminar 4** | TBD (speaker to be confirmed) | Neural Differential Equations: PINNs + classical solvers | |
+|11  | 10/31/2025   | **External seminar 4** TBD (speaker to be confirmed) | Neural Differential Equations: PINNs + classical solvers | |
 |12  | 11/07/2025   | Lecture | Neural operators (FNO, Galerkin Transformer); large-scale surrogates | |
-|13  | 11/14/2025   | **External seminar 5** | TBD (speaker to be confirmed) | Scalable PINNs / neural operators; CFD & weather applications | |
+|13  | 11/14/2025   | **External seminar 5** TBD (speaker to be confirmed) | Scalable PINNs / neural operators; CFD & weather applications | |
 |14  | 11/21/2025   | Lecture | Robust control & min-max DDP (incl. PDE cases); chance constraints; Data-driven control & RL-in-the-loop | |
 
 ---
