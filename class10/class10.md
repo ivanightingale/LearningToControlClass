@@ -1,6 +1,6 @@
 # Class 10 — 10/24/2025
 
-**Presenter:** TBD
+**Presenter:** Michael Klamkin
 
 **Topic:** Physics-Informed Neural Networks (PINNs): formulation & pitfalls
 
