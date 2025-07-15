@@ -1,6 +1,7 @@
 # Class 11 — 10/31/2025
 
-**Presenter:** TBD
+**Presenter:** Chris Rackauckas
+**Liason:** Michael Klamkin
 
 **Topic:** Neural Differential Equations: PINNs + classical solvers.
 ---
