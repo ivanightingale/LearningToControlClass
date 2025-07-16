@@ -1,6 +1,7 @@
 # Class 13 — 11/14/2025
 
-**Presenter:** TBD
+**Presenter:** Charlelie Laurent
+**Liason:** Pedro Paulo Santos
 
 **Topic:** Scalable PINNs / neural operators; CFD & weather applications
 
