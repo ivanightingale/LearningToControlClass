@@ -34,7 +34,7 @@ This student-led course explores modern techniques for controlling — and learn
 | 7  | 10/03/2025   | Lecture | Essentials of PDEs for control engineers; weak forms; FEM/FDM review | |
 | 8  | 10/10/2025   | **External seminar 2** TBD (speaker to be confirmed) | Topology **optimization** | |
 | 9  | 10/17/2025   | **External seminar 3 — François Pacaud** | GPU-accelerated optimal control | |
-|10  | 10/24/2025   | Lecture | Physics-Informed Neural Networks (PINNs): formulation & pitfalls | |
+|10  | 10/24/2025   | Lecture - Michael Klamkin | Physics-Informed Neural Networks (PINNs): formulation & pitfalls | |
 |11  | 10/31/2025   | **External seminar 4** - Chris Rackauckas | Neural Differential Equations: PINNs + classical solvers | |
 |12  | 11/07/2025   | Lecture | Neural operators (FNO, Galerkin Transformer); large-scale surrogates | |
 |13  | 11/14/2025   | **External seminar 5** - Charlelie Laurent | Scalable PINNs / neural operators; CFD & weather applications | |
