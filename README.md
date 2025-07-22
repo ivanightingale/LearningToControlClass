@@ -43,6 +43,7 @@ This student-led course explores modern techniques for controlling — and learn
 ## Reference Material
 
 - https://optimalcontrol.ri.cmu.edu/
+- https://github.com/SciML/SciMLBook
 - https://underactuated.mit.edu/
 - https://www.math.lmu.de/~philip/publications/lectureNotes/philipPeter_OptimalControlOfPDE.pdf
 - https://castle.princeton.edu/sda/
