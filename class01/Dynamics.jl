@@ -32,6 +32,9 @@ end
 # ╔═╡ b6ba1231-2942-4f06-8252-22f02553bb57
 using CairoMakie
 
+# ╔═╡ ec473e69-d5ec-4d6a-b868-b89dadb85705
+ChooseDisplayMode()
+
 # ╔═╡ 52005382-177b-4a11-a914-49a5ffc412a3
 md"# 101 (Continuous-Time) Dynamics
 #### A Crash Course
@@ -397,6 +400,81 @@ md"""
 When will the system stay "near" an equilibrium point under pertubations?
 """
 
+# ╔═╡ 0e29ab58-e56c-4f54-aa2a-3152034ddc0c
+md"### 1--D System"
+
+# ╔═╡ d0d251ec-4ea9-417a-90c2-3f19f4b75aa8
+md"""
+ Outer points: $(@bind var1 CheckBox()) | Inner: $(@bind var2 CheckBox())
+"""
+
+# ╔═╡ 4f69216c-fc31-45d5-9699-c774f9f77a24
+begin
+	import Plots: plot, hline!, vline!, plot!
+	f(x) = x^3 - 3*x
+	plt = plot(range(-2.2,2.2, 1000),f, label="ẋ = x³ - 3*x", xlabel="x",
+			   ylabel="ẋ")
+	hline!(plt, [0], label="", color=:black, style=:dash)
+	vline!(plt, [0], label="", color=:black, style=:dash)
+	if var2
+		plot!(plt, [0.5,0.1], [0.2, 0.2],arrow=true,color=:green,linewidth=2,label="")
+		plot!(plt, [-0.5,-0.1], [0.2, 0.2],arrow=true,color=:green,linewidth=2,label="")
+	end
+	if var1
+		plot!(plt, [1.9,2.4], [0.2, 0.2],arrow=true,color=:red,linewidth=2,label="")
+		plot!(plt, [1.6,1.1], [0.2, 0.2],arrow=true,color=:red,linewidth=2,label="")
+		plot!(plt, [-1.9,-2.4], [0.2, 0.2],arrow=true,color=:red,linewidth=2,label="")
+		plot!(plt, [-1.6,-1.1], [0.2, 0.2],arrow=true,color=:red,linewidth=2,label="")
+	end
+	plt
+end
+
+# ╔═╡ f659d05c-e345-46c8-9c7b-c1adf95c9023
+Foldable(md"Can we say anything about the slope of $\dot{x}$?", md"""
+
+```math
+\begin{cases}
+\frac{\partial f}{\partial x} < 0 & \text{Stable} \\
+\frac{\partial f}{\partial x} > 0 & \text{Unstable} 
+\end{cases}
+```
+
+""")
+
+# ╔═╡ 7dc0c8c9-ba46-43ab-a7e3-c2e160be141c
+md"### Basin of Attraction
+
+> The set of all points in the phase space that are attracted to a specific equilibrium point (or attractor). "
+
+# ╔═╡ 25bfc51e-11cf-48f6-9b92-9ac682db05a8
+Foldable(md"What is the $\textit{Basin of Attraction}$ of $(0,0)$ ?", md"""
+
+The space between the unstable equilibrium points:
+		 
+```math
+\{ x | - \sqrt{3} < x < \sqrt{3} \}
+```
+
+""")
+
+# ╔═╡ 876bdea3-9a0e-4e40-9ae4-ef77b08c2428
+Foldable(md"What if the slope was 0?", md"""
+
+
+		 TODO: Lyapunov stability
+```math
+
+```
+
+""")
+
+# ╔═╡ 161a2a6e-567f-4994-8d77-9a0f0962cdd9
+md"""
+As we increase the dimensions, it gets increasingly more complicated to reason about how a system will evolve!
+
+> For continuous, autonomous dynamical systems, the Poincaré–Bendixson theorem states that chaos cannot occur in phase spaces of dimension less than 3.
+"""
+
 # ╔═╡ 97994ed8-5606-46ef-bd30-c5343c1d99cf
 begin
 	MarkdownLiteral.@markdown(
@@ -410,6 +488,7 @@ end
 
 # ╔═╡ Cell order:
 # ╟─13b12c00-6d6e-11f0-3780-a16e73360478
+# ╟─ec473e69-d5ec-4d6a-b868-b89dadb85705
 # ╟─52005382-177b-4a11-a914-49a5ffc412a3
 # ╟─2be161cd-2d4c-4778-adca-d45f8ab05f98
 # ╟─b452ee52-ee33-44ad-a980-6a6e90954ee1
@@ -435,4 +514,12 @@ end
 # ╟─17939d59-1ba1-483c-864c-fed049b54151
 # ╟─aa63e35d-13dd-4910-b2fd-be017cda4b55
 # ╟─b180beb7-9606-4332-8e94-cd4546b4bc59
+# ╟─0e29ab58-e56c-4f54-aa2a-3152034ddc0c
+# ╟─d0d251ec-4ea9-417a-90c2-3f19f4b75aa8
+# ╟─4f69216c-fc31-45d5-9699-c774f9f77a24
+# ╟─f659d05c-e345-46c8-9c7b-c1adf95c9023
+# ╟─7dc0c8c9-ba46-43ab-a7e3-c2e160be141c
+# ╟─25bfc51e-11cf-48f6-9b92-9ac682db05a8
+# ╠═876bdea3-9a0e-4e40-9ae4-ef77b08c2428
+# ╟─161a2a6e-567f-4994-8d77-9a0f0962cdd9
 # ╟─97994ed8-5606-46ef-bd30-c5343c1d99cf
