@@ -34,7 +34,7 @@ md"
 
 | | | |
 |-----------:|:--|:------------------|
-|  Professor   | : | Rosemberg, Andrew |
+|  Lecturer   | : | Rosemberg, Andrew |
 
 # Background Math (_Welcome to Pluto!_)
 
