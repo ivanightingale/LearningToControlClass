@@ -24,7 +24,7 @@ makedocs(
     ),
     pages  = [
         "Home"   => "index.md",
-        "Class 1" => "class01.md",
+        "Class 1" => "class01/class01.md",
     ],
 )
 
