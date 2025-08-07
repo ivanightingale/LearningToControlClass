@@ -20,6 +20,7 @@ end
 begin
 	import Pkg
 	Pkg.activate(".")
+	Pkg.instantiate()
 	# Pkg.status()
 	using PlutoUI
 	using Random
@@ -38,11 +39,89 @@ using ForwardDiff
 # ╔═╡ ec473e69-d5ec-4d6a-b868-b89dadb85705
 ChooseDisplayMode()
 
-# ╔═╡ 52005382-177b-4a11-a914-49a5ffc412a3
-md"# 101 (Continuous-Time) Dynamics
-#### A Crash Course
+# ╔═╡ 1f774f46-d57d-4668-8204-dc83d50d8c94
+md"# Intro - Optimal Control and Learning
 
-General form for a smooth system:
+In this course, we are interested in problems with the following structure:
+
+```math
+\begin{equation}
+\!\!\!\!\!\!\!\!\min_{\substack{(\mathbf y_1,\mathbf x_1)\\\mathrm{s.t.}}}
+\!\underset{%
+   \phantom{\substack{(\mathbf y_1,\mathbf x_1)\\\mathrm{s.t.}}}%
+   \!\!\!\!\!\!\!\!\!\!(\mathbf y_1,\mathbf x_1)\in\mathcal X_1(\mathbf x_0)%
+}{%
+   \!\!\!\!f(\mathbf x_1,\mathbf y_1)%
+}
++\mathbb{E}_1\Bigl[
+   \quad \cdots
+  
+  \;+\;\mathbb{E}_t\Bigl[
+    \min_{\substack{(\mathbf y_t,\mathbf x_t)\\\mathrm{s.t.}}}
+    \!\underset{%
+       \phantom{\substack{(\mathbf y_t,\mathbf x_t)\\\mathrm{s.t.}}}%
+       \!\!\!\!(\mathbf y_t,\mathbf x_t)\in\mathcal X_t(\mathbf x_{t-1},w_t)%
+    }{%
+       \!\!\!\!\!\!\!\!\!\!f(\mathbf x_t,\mathbf y_t)%
+    }
+    +\mathbb{E}_{t+1}[\cdots]
+\Bigr].
+\end{equation}
+```
+which minimizes a first stage cost function $f(\mathbf{x}_1,
+\mathbf{y}_1)$ and the expected value of future costs over possible
+values of the exogenous stochastic variable $\{w_{t}\}_{t=2}^{T} \in
+\Omega$. 
+
+Here, $\mathbf{x}_0$ is the initial system state and the
+control decisions $\mathbf{y}_t$ are obtained at every period $t$
+under a feasible region defined by the incoming state
+$\mathbf{x}_{t-1}$ and the realized uncertainty $w_t$. $\mathbf{E}_t$ represents the expected value over future uncertainties $\{w_{\tau}\}_{\tau=t}^{T}$. This
+optimization program assumes that the system is entirely defined by
+the incoming state, a common modeling choice in many frameworks (e.g.,
+MDPs). This is without loss of generality,
+since any information can be appended in the state. The system
+constraints can be generally posed as:
+
+```math
+\begin{align}
+    &\mathcal{X}_t(\mathbf{x}_{t-1}, w_t)= 
+    \begin{cases}
+        \mathcal{T}(\mathbf{x}_{t-1}, w_t, \mathbf{y}_t) = \mathbf{x}_t \\
+        h(\mathbf{x}_t, \mathbf{y}_t) \geq 0 
+    \end{cases}
+\end{align}
+```
+"
+
+# ╔═╡ a0f71960-c97c-40d1-8f78-4b1860d2e0a2
+md"""
+where the outgoing state of the system $\mathbf{x}_t$ is a
+transformation based on the incoming state, the realized uncertainty,
+and the control variables. $h(\mathbf{x}_t, \mathbf{y}_t) \geq 0$
+captures the state constraints. Markov Decision Process (MDPs) refer
+to $\mathcal{T}$ as the "transition kernel" of the system. State and
+control variables are restricted further by additional constraints
+captured by $h(\mathbf{x}_t, \mathbf{y}_t) \geq 0$.  We
+consider policies that map the past information into decisions. In
+period $t$, an optimal policy is given by the solution of the dynamic
+equations:
+
+```math
+\begin{align}
+    V_{t}(\mathbf{x}_{t-1}, w_t) = &\min_{\mathbf{x}_t, \mathbf{y}_t} \quad  \! \! f(\mathbf{x}_t, \mathbf{y}_t) + \mathbf{E}[V_{t+1}(\mathbf{x}_t, w_{t+1})]    \\
+    &   \text{ s.t. } \quad\mathbf{x}_t  = \mathcal{T}(\mathbf{x}_{t-1}, w_t, \mathbf{y}_t) \nonumber         \\
+    &  \quad \quad \quad \! \! h(\mathbf{x}_t, \mathbf{y}_t)  \geq 0. \nonumber             
+\end{align}
+```
+"""
+
+# ╔═╡ 52005382-177b-4a11-a914-49a5ffc412a3
+section_outline(md"A Crash Course:",md" (Continuous-Time) Dynamics
+")
+
+# ╔═╡ 8ea866a6-de0f-4812-8f59-2aebec709243
+md"General form for a smooth system:
 
 ```math
 \dot{x} = f(x,u) \quad \text{First-Order Ordinary Differential Equation (ODE)}
@@ -56,7 +135,6 @@ u \in \mathbb{R}^{m} & \text{Control} \\
 \dot{x} \in \mathbb{R}^{n} & \text{Time derivative of } x \\
 \end{cases}
 ```
-
 "
 
 # ╔═╡ 2be161cd-2d4c-4778-adca-d45f8ab05f98
@@ -951,7 +1029,10 @@ end
 # ╔═╡ Cell order:
 # ╟─13b12c00-6d6e-11f0-3780-a16e73360478
 # ╟─ec473e69-d5ec-4d6a-b868-b89dadb85705
+# ╟─1f774f46-d57d-4668-8204-dc83d50d8c94
+# ╟─a0f71960-c97c-40d1-8f78-4b1860d2e0a2
 # ╟─52005382-177b-4a11-a914-49a5ffc412a3
+# ╟─8ea866a6-de0f-4812-8f59-2aebec709243
 # ╟─2be161cd-2d4c-4778-adca-d45f8ab05f98
 # ╟─b452ee52-ee33-44ad-a980-6a6e90954ee1
 # ╟─9f62fae9-283c-44c3-8d69-29bfa90faf29

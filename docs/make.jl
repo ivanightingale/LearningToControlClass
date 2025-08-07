@@ -7,7 +7,10 @@ repo_dir = dirname(@__DIR__)
 build_dir = joinpath(repo_dir, "docs", "build")
 
 plutos = [
-    joinpath(repo_dir, "class01", "background_materials", "basics_math.jl"),
+    joinpath(repo_dir, "class01", "background_materials", "math_basics.jl"),
+    joinpath(repo_dir, "class01", "background_materials", "optimization_basics.jl"),
+    joinpath(repo_dir, "class01", "background_materials", "optimization_motivation.jl"),
+    joinpath(repo_dir, "class01", "class01_intro.jl"),
 ]
 
 if !isdir(build_dir)
@@ -30,7 +33,9 @@ makedocs(
     ),
     pages  = [
         "Home"   => "index.md",
-        "Class 1" => ["class01/class01.md"],
+        "Class 1" => ["class01/class01.md",
+            "class01/background_materials/git_adventure_guide.md",
+        ],
     ],
 )
 

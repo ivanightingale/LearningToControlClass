@@ -64,12 +64,19 @@ julia> Pluto.run()
 
 #### Step 5: Opening an existing notebook file
 
-To run a local notebook file that you have not opened before, then you need to enter its full path (e.g. `path/to/basics_math.jl`) into the blue box in the main menu.
+To run a local notebook file that you have not opened before, then you need to enter its full path (e.g. `path/to/math_basics.jl`) into the blue box in the main menu.
 
 ### **Linear Algebra**: 
-We have prepared a basic (Pluto) [Linear Algebra Primer](https://learningtooptimize.github.io/LearningToControlClass/dev/class01/background_materials/basics_math.html) to help you brush up on essential concepts. This primer covers key topics such as matrix operations, eigenvalues, and eigenvectors besides other fundamental calculus concepts. It is recommended to review this primer before the first class.
+We have prepared a basic (Pluto) [Linear Algebra Primer](https://learningtooptimize.github.io/LearningToControlClass/dev/class01/background_materials/math_basics.html) to help you brush up on essential concepts. This primer covers key topics such as matrix operations, eigenvalues, and eigenvectors besides other fundamental calculus concepts. It is recommended to review this primer before the first class.
 
 ### **Optimization**:
 We will use JuMP for some optimization tasks. If you are new to JuMP, please review the [JuMP Tutorial](https://jump.dev/JuMP.jl/stable/tutorials/getting_started/getting_started_with_JuMP/) to familiarize yourself with its syntax and capabilities.
 
-Test your knowledge with this (Pluto) [Modeling Exercise](https://learningtooptimize.github.io/LearningToControlClass/dev/class01/background_materials/optimization_homework.html).
+Test your knowledge with this (Pluto) [Modeling Exercise](https://learningtooptimize.github.io/LearningToControlClass/dev/class01/background_materials/optimization_basics.html).
+
+*Final 🧠*: The (Pluto) [Motivational Exercise](https://learningtooptimize.github.io/LearningToControlClass/dev/class01/background_materials/optimization_motivation.html) will test what you have learned and motivate what we will research in the course.
+
+## In-Class Material
+
+Besides the administrative topics, we will cover the structure of the problem we are trying to solve and start with the basics of how to model it.
+The main (Pluto) [Class 01 Notebook](https://learningtooptimize.github.io/LearningToControlClass/dev/class01/class01_intro.html) contains the in-class material.

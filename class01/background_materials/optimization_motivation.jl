@@ -7,7 +7,7 @@ using InteractiveUtils
 # ╔═╡ f0c826c7-b2e3-4dbf-b29d-37623aa4d7c6
 begin
 	import Pkg
-	Pkg.activate(".")
+	Pkg.activate("..")
 	Pkg.status()
 end
 
@@ -110,8 +110,8 @@ begin
 	for (ri,y) in enumerate(h_cs), (ci,x) in enumerate(v_cs)
 		global vid
 	    # skip the outer frame
-		if !(ri == n_rows -5 && ci == 4)
-		    if ri <= 27 || ri >= n_rows - 3 || ci <= 6 || ci >= n_cols - 3
+		if !(ri == n_rows -5 && ci ==3)
+		    if ri <= 25 || ri >= n_rows - 4 || ci <= 8 || ci >= n_cols - 2
 		        continue                       
 		    end
 		end
@@ -129,7 +129,12 @@ begin
 	end
 	@info "Vertices = $(nv(g))  |  Edges = $(ne(g))"
 
-	add_edge!(g, 211, 212)
+	# add entrance
+	add_edge!(g, 173, 174)
+
+	# TODO: Automate ensure connectivity
+	add_edge!(g, 104, 83)
+	add_edge!(g, 104, 105)
 
 	overlay_img = overlay(img, h_cs, v_cs, verts) 
 end
@@ -167,7 +172,7 @@ begin
 	
 	    sort(sel)
 	end
-	function overlay_items(img_rgb, hcs, vcs, verts, list, start_node=211, end_node=102; dot_half = 3, fade::Float64   = 0.40, gradc=false
+	function overlay_items(img_rgb, hcs, vcs, verts, list, start_node=173, end_node=46; dot_half = 3, fade::Float64   = 0.40, gradc=false
 	)
 	    grey = RGB.(Gray.(img_rgb))
 	    ol   = map(c -> RGB((1 - fade) * c.r + fade,
@@ -253,7 +258,7 @@ Date: 28 of July, 2025
 # ╔═╡ 01c44cc2-68d5-11f0-2860-05c9ffbde13a
 md"# Decisions Decisions: A Path to optimality
 
-Once upon a time, a boy named **Pedro Paulo** 🤵 loved **Costco** supermarket 🛒. However, everytime there, he spendt more time ⏱️ and money 💸 than needed.
+Once upon a time, a boy named **Pedro Paulo** 🤵 loved shopping at his local supermarket 🛒. However, everytime there, he spendt more time ⏱️ and money 💸 than needed.
 
 Let's help Pedro out!
 "
@@ -261,7 +266,7 @@ Let's help Pedro out!
 # ╔═╡ 8d0fe751-aeb1-4ad1-a076-4c7bcd863a55
 md"## Problem Setting
 
-After some investigation, we got a hold of a real Costco layout! 🎉🎉 🗺️ 🎉🎉
+After some investigation, we got a hold of the market layout! 🎉🎉 🗺️ 🎉🎉
 "
 
 # ╔═╡ 9eb11624-17db-438e-86e4-77b313da268b
@@ -360,7 +365,7 @@ begin
 end
 
 # ╔═╡ 8705f186-8af4-4f6b-bb53-c3fa46d0b8ba
-function greedy_tour(list, dist; start_node=211, end_node=102)
+function greedy_tour(list, dist; start_node=173, end_node=46)
     tour = [start_node]
     remaining = Set([list[1:end]; end_node])
     while !isempty(remaining)
@@ -430,7 +435,7 @@ question_box(md"### How to model it as an integer programing problem?")
 
 # ╔═╡ acb9d0fd-c024-44b7-b549-78875068050f
 begin
-	nverts=length(verts); nitems=length(plist);start_node=211;end_node=102;
+	nverts=length(verts); nitems=length(plist);start_node=173;end_node=46;
 	md"""
 	#### What we have: 
 	
@@ -476,41 +481,16 @@ begin
 	#  BASIC SETS
 	_V     = vertices(g)
 	_A     = [(u,v) for e in edges(g) for (u,v) in ((src(e),dst(e)), (dst(e),src(e)))]
-	_s, _e = 211, 102 						 # start, end
+	_s, _e = 173, 46 						 # start, end
 	_items = setdiff(Set(plist), [_s,_e])
 	K      = length(_items) + 1              # units of flow we must deliver
 
 	# MODEL
 	model = Model(HiGHS.Optimizer)
 	
-	@variable(model, x[_A], Bin)
-	@variable(model, 0 ≤ f[_A] ≤ K)
-	
-	out(v)  = sum(x[(v,w)]   for w in _V if (v,w) in _A)
-	inn(v)  = sum(x[(u,v)]   for u in _V if (u,v) in _A)
-	fout(v) = sum(f[(v,w)]   for w in _V if (v,w) in _A)
-	finn(v) = sum(f[(u,v)]   for u in _V if (u,v) in _A)
-	
-	## degree / balance
-	@constraint(model,  out(_s) - inn(_s) == 1)        # Costco Entrance
-	@constraint(model,  inn(_e) - out(_e) == 1)        # Payment Exit
-	@constraint(model, [i in _items],  inn(i) ≥ 1)     # Pick up items
-	@constraint(model, [i in _items],  out(i) ≥ 1)
-	@constraint(model, [v in setdiff(_V, [_s,_e])], inn(v) == out(v))
-	
-	## multi-unit single-commodity flow
-	@constraint(model, [a in _A], f[a] ≤ K * x[a])     # deactivate on unused arcs
-	
-	@constraint(model, fout(_s) - finn(_s) ==  K)      # source injects K units
-	@constraint(model, finn(_e) - fout(_e) ==  1)      # _e ‘consumes’ one unit
-	@constraint(model, [i in _items],  finn(i) - fout(i) == 1)   # each item consumes 1
-	@constraint(model, [v in setdiff(_V, [_s,_e] ∪ _items)],
-	                      fout(v) == finn(v))          # pure transshipment elsewhere
-	
-	## objective
-	@objective(model, Min, sum(D[u,v] * x[(u,v)] for (u,v) in _A))
-	
-	optimize!(model)
+	# Write your Model Here
+
+	itinerary_answer = missing # replace missing with the optimal itinerary
 end
 
 # ╔═╡ 8e507678-5d40-4a44-9aac-5701cc27f8ad
@@ -534,6 +514,22 @@ A[i,j] =
 	 
 ")
 
+# ╔═╡ f5faca5f-abc3-49f1-add5-385de0ddb5b7
+begin
+	if ismissing(itinerary_answer)
+		still_missing()
+	else
+		length_walk = itinerary_distance(itinerary_answer, D)
+		if length_walk <= 312 && itinerary_answer[1] == _s && itinerary_answer[end] == _e
+			correct(md" $(round(length_walk)) meters. You have found the optimal path!")
+		elseif length_walk <= total_length && itinerary_answer[1] == _s && itinerary_answer[end] == _e
+			almost(md" $(round(length_walk)) meters. Nice you have beaten the greedy algorithm! But there is still room for improvement.")
+		else
+			keep_working(md" $(round(length_walk)) meters. You should at least beat the greedy algorithm. I thrust in you!")
+		end
+	end
+end
+
 # ╔═╡ f7dc2333-d85f-44d7-bd5e-2f497a23f32b
 function euler!(adj, start)
 	st=[start]; path=Int[]
@@ -548,45 +544,12 @@ function euler!(adj, start)
 	reverse(path)                             # ends at _e by construction
 end
 
-# ╔═╡ 7db1a83c-0100-4b6b-a97b-a7d59520dc22
-begin
-	adj = Dict{Int,Vector{Int}}()
-	for (u,v) in _A
-	    if value(x[(u,v)]) > 0.5
-	        push!(get!(adj,u,Int[]), v)
-	    end
-	end
-	itinerary_answer = euler!(deepcopy(adj), _s)
-	@assert itinerary_answer[1] == _s && itinerary_answer[end] == _e
-	itinerary_answer
-end
-
-# ╔═╡ 1c527fc1-f4fd-4a59-8f0b-63413b1bea56
-# itinerary_answer = missing # replace with your answer
-
-# ╔═╡ f5faca5f-abc3-49f1-add5-385de0ddb5b7
-begin
-	if ismissing(itinerary_answer)
-		still_missing()
-	else
-		length_walk = itinerary_distance(itinerary_answer, D)
-		if length_walk <= 312
-			correct(md" $(round(length_walk)) meters. You have found the optimal path!")
-		elseif length_walk <= total_length
-			almost(md" $(round(length_walk)) meters. Nice you have beaten the greedy algorithm! But there is still room for improvement.")
-		else
-			keep_working(md" $(round(length_walk)) meters. You should at least beat the greedy algorithm. I thrust in you!")
-		end
-	end
-end
-
 # ╔═╡ 5de8429f-349d-4441-90b4-6f7caaf6b5e4
 if !ismissing(itinerary_answer)
 	overlay_items(img,  h_cs, v_cs, verts, full_itinerary; gradc=true)
-end
-
-# ╔═╡ e7cc612d-fc6a-4976-89b2-821064dc612c
-still_missing()
+else
+	still_missing()
+end	
 
 # ╔═╡ e04cfe19-5827-4bf2-8183-a13bad579497
 md"## Now Let's get a bit crazy!
@@ -620,19 +583,7 @@ begin
 end
 
 # ╔═╡ 6ab03a08-6cda-4f35-bd80-e0ace02b86b5
-Foldable(md"#### Can we know the position of Pedro and his cart at any given moment?", md"""
-
-```math
-x[t+1] = x[t] + \dot{x}[t] * \Delta_t
-```
-```math
-\dot{x}[t] = \dot{x}[t-1] + \ddot{x}
-```
-
-""")
-
-# ╔═╡ e4baeff0-f380-4269-9818-9fc43c1f802d
-
+question_box(md"#### Can we know the position of Pedro and his cart at any given moment?")
 
 # ╔═╡ f31d8852-ca07-46c9-bbea-5dd8f476c25c
 	md"## References"
@@ -650,9 +601,6 @@ begin
 """
 )
 end
-
-# ╔═╡ 2e57bcd7-af6a-4813-8a2a-f7a71752a2de
-
 
 # ╔═╡ Cell order:
 # ╟─f0c826c7-b2e3-4dbf-b29d-37623aa4d7c6
@@ -684,20 +632,15 @@ end
 # ╟─083ddea0-f1db-46ef-b82c-5e10499bfb9d
 # ╠═7c889414-b9c4-477d-8e57-79ee1518dc8c
 # ╟─8e507678-5d40-4a44-9aac-5701cc27f8ad
-# ╠═f7dc2333-d85f-44d7-bd5e-2f497a23f32b
-# ╠═7db1a83c-0100-4b6b-a97b-a7d59520dc22
-# ╠═1c527fc1-f4fd-4a59-8f0b-63413b1bea56
 # ╟─f5faca5f-abc3-49f1-add5-385de0ddb5b7
+# ╟─f7dc2333-d85f-44d7-bd5e-2f497a23f32b
 # ╟─5de8429f-349d-4441-90b4-6f7caaf6b5e4
-# ╠═e7cc612d-fc6a-4976-89b2-821064dc612c
 # ╟─e04cfe19-5827-4bf2-8183-a13bad579497
 # ╟─263969f2-5e0f-4d7b-9b42-eb033861e4e9
 # ╟─bf94beb1-f5c9-45b0-a864-94f773a3c198
 # ╟─85f6ac91-bcc7-44de-948c-5a631a82c846
 # ╠═bcaf8412-964e-4d79-8db8-d69754fe4b83
 # ╠═c0cdf191-5350-4738-882f-8ded20168dbb
-# ╠═6ab03a08-6cda-4f35-bd80-e0ace02b86b5
-# ╠═e4baeff0-f380-4269-9818-9fc43c1f802d
+# ╟─6ab03a08-6cda-4f35-bd80-e0ace02b86b5
 # ╟─f31d8852-ca07-46c9-bbea-5dd8f476c25c
 # ╟─178c6168-b515-4220-b37f-2c31b34e045c
-# ╠═2e57bcd7-af6a-4813-8a2a-f7a71752a2de
