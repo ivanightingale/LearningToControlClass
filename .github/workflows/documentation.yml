@@ -20,7 +20,7 @@ jobs:
           version: '1'
       - uses: julia-actions/cache@v2
       - name: Install dependencies
-        run: julia --project=docs/ -e 'using Pkg; Pkg.develop(PackageSpec(path=pwd())); Pkg.instantiate()'
+        run: julia --project=docs/ -e 'using Pkg; Pkg.develop(PackageSpec(path=joinpath(pwd(),"docs"))); Pkg.instantiate()'
       - name: Setup symlink
         run: ln -s ../../class01/class01.md class01.md
         working-directory: docs/src
