@@ -7,6 +7,7 @@ using InteractiveUtils
 # ╔═╡ 9fffca86-aec9-4c26-bced-3edaa1af9a22
 begin
 using Pkg; Pkg.activate("..")
+Pkg.instantiate()
 end
 
 # ╔═╡ 00cc1e5e-f10e-4559-b9d9-8aba44eb493e
