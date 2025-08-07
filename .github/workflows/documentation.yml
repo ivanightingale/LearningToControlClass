@@ -21,9 +21,9 @@ jobs:
       - uses: julia-actions/cache@v2
       - name: Install dependencies
         run: julia --project=docs/ -e 'using Pkg; Pkg.instantiate()'
-      - name: Setup symlink
-        run: ln -s ../../class01/class01.md class01.md
-        working-directory: docs/src
+      # - name: Setup symlink
+      #   run: ln -s ../../class01/class01.md class01.md
+      #   working-directory: docs/src
       - name: Build and deploy
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
