@@ -1,3 +1,5 @@
+[![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://LearningToOptimize.github.io/LearningToControlClass.jl/dev/)
+
 # Special Topics on Optimal Control and Learning — Fall 2025 (ISYE 8803 VAN)
 *Georgia Institute of Technology – Fridays 2 pm ET*
 
