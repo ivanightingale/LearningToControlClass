@@ -10,6 +10,12 @@ plutos = [
     joinpath(repo_dir, "class01", "background_materials", "basics_math.jl"),
 ]
 
+if !isdir(build_dir)
+    symlink(joinpath(repo_dir, "class01"),
+        joinpath(repo_dir, "docs", "src", "class01")
+    )
+end
+
 makedocs(
     sitename = "LearningToControlClass",
     format = Documenter.HTML(;
@@ -24,9 +30,11 @@ makedocs(
     ),
     pages  = [
         "Home"   => "index.md",
-        "Class 1" => "class01.md",
+        "Class 1" => ["class01/class01.md"],
     ],
 )
+
+rm(joinpath(repo_dir, "docs", "src", "class01"), force=true)
 
 s = Pluto.ServerSession();
 for pluto in plutos
