@@ -2,7 +2,7 @@
 
 **Presenter:** Andrew Rosemberg
 
-**Topic:** Course map; why PDE-constrained optimization; tooling overview; stability & state-space dynamics; Lyapunov; discretization issues
+**Topic:** Course map; why PDE-constrained optimization; tooling overview; stability & state-space dynamics; Lyapunov; discretization issues.
 
 ---
 
