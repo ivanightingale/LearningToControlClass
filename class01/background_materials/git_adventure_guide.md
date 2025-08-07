@@ -92,10 +92,11 @@ git config --global user.email "you@example.com"
 ## 🪄 Everyday Workflow
 0. **Initialize a new repository**  
 If you’re starting a new project, create a new Git repository:
-   ```bash
-   git init my-awesome-project
-   cd my-awesome-project
-   ```
+
+```bash
+git init my-awesome-project
+cd my-awesome-project
+```
 
 > 🧩 *Puzzle*: What happens if you run `git init` in a directory that already has a `.git` folder?
 
@@ -105,25 +106,28 @@ If you’re starting a new project, create a new Git repository:
 You can create a repository directly on GitHub or any other Git hosting service, which will give you a URL to clone it.
 
 Once you have a remote repository, you can clone it to your local machine:
-   ```bash
-   git clone <url>
-   ```
+
+```bash
+git clone <url>
+```
 This process will also save the remote repository URL to a variable called `origin`, which is the default name for the remote repository. A repository remote is a version of your repository that is hosted on the internet or another network, allowing you to collaborate with others.
 
 > 🧩 *Puzzle*: Can you have multiple remote copies' URLs stored in your local git configuration?
 
 > 🏗️ *Quest Preparation*: Create a repository on Github. Then, since we started our repository locally, add the URL manually: 
-   ```bash
-   git remote add origin <url>
-   ```
+
+```bash
+git remote add origin <url>
+```
 
 2. **Hack away**  
 Changes can be bundled or committed separately. Staging is the process of preparing files for a commit. 
 You can stage specific files or all changes:
-   ```bash
-   git add <files>      # stage
-   git commit -m "feat: add lunar lasers"  # snapshot
-   ```
+
+```bash
+git add <files>      # stage
+git commit -m "feat: add lunar lasers"  # snapshot
+```
 
 Commits (versions) will store your changes with a message describing what you did.
 
@@ -134,9 +138,9 @@ Commits (versions) will store your changes with a message describing what you di
 3. **Push** your masterpiece to the remote repository:
 In order to collaborate with others, you need to push your changes to the remote repository:
 
-   ```bash
-   git push origin main
-   ```
+```bash
+git push origin main
+```
 
 > 🌟 *Pro‑tip*: Use `git add -p` to stage hunks interactively like a choose‑your‑own‑adventure book.
 
@@ -189,17 +193,19 @@ git commit -m "fix: resolve cosmic cheese conflict"
 
 2. **Clone** your fork.
 In order to work on your forked repository, you need to clone it to your local machine:
-   ```bash
-   git clone <url-of-your-fork>
-   cd <your-fork-directory>
-   ```
+
+```bash
+git clone <url-of-your-fork>
+cd <your-fork-directory>
+```
 3. **Sync** with upstream.  
 If the original repository has new changes, you can keep your fork up to date by syncing it with the upstream repository:
-   ```bash
-   git remote add upstream <url-of-original>
-   git fetch upstream
-   git rebase upstream/main
-   ```  
+
+```bash
+git remote add upstream <url-of-original>
+git fetch upstream
+git rebase upstream/main
+```  
 However, this is much easier on the GitHub website.  
    - Go to your forked repository on GitHub and sync it with the original repository by clicking the "Sync fork" button.
 
@@ -231,28 +237,32 @@ Git is a powerful tool, but sometimes you make mistakes. Here are some common sc
 
 ## 🛠️ Advanced Magic
 - **Stash spells**  
-  ```bash
-  git stash push -m "WIP dragon taming"
-  git stash list
-  git stash pop
-  ```
+
+```bash
+git stash push -m "WIP dragon taming"
+git stash list
+git stash pop
+```
 
 - **Bisect detective**  
-  ```bash
-  git bisect start
-  git bisect bad          # current commit is broken
-  git bisect good v2.0.0  # last known good tag
-  ```
+
+```bash
+git bisect start
+git bisect bad          # current commit is broken
+git bisect good v2.0.0  # last known good tag
+```
   Git walks the commit tree to find the culprit!
 
 - **Cherry‑pick delicacy**  
-  ```bash
-  git cherry-pick <hash>
-  ```
+
+```bash
+git cherry-pick <hash>
+```
 
 ---
 
 ## 🧾 Cheat Sheet
+
 ```bash
 # add everything
 git add -A
