@@ -10,7 +10,9 @@ plutos = [
     joinpath(repo_dir, "class01", "background_materials", "basics_math.jl"),
 ]
 
-@assert isfile(repo_dir, "docs", "src", "class01.md") "Expected docs/class01.md to exist."
+symlink(joinpath(repo_dir, "class01", "class01.md"),
+    joinpath(repo_dir, "docs", "src", "class01.md")
+) 
 
 makedocs(
     sitename = "LearningToControlClass",
