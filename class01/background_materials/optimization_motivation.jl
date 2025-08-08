@@ -251,9 +251,10 @@ using Unitful
 
 # ╔═╡ 533cbe59-a206-418e-a397-b21c68e314da
 md"
-Author: Andrew Rosemberg
-
-Date: 28 of July, 2025
+| | | |
+|-----------:|:--|:------------------|
+|  Lecturer   | : | Rosemberg, Andrew |
+|  Date   | : | 28 of July, 2025 |
 "
 
 # ╔═╡ 01c44cc2-68d5-11f0-2860-05c9ffbde13a
