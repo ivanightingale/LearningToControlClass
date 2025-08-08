@@ -34,6 +34,12 @@ end
 
 # ╔═╡ 0df8b65a-0527-4545-bf11-00e9912bced0
 md"""
+
+| | | |
+|-----------:|:--|:------------------|
+|  Lecturer   | : | Rosemberg, Andrew |
+|  Date   | : | 28 of July, 2025 |
+
 # Background – Modeling Optimization Problems in JuMP 🏗️
 
 This short Pluto notebook walks you through three small optimisation models of increasing
