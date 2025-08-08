@@ -30,16 +30,16 @@ This student-led course explores modern techniques for controlling — and learn
 | 1  | 08/22/2025   | Lecture — Andrew Rosemberg | Course map; why PDE-constrained **optimization**; tooling overview; stability & state-space dynamics; Lyapunov; discretization issues | |
 | 2  | 08/29/2025   | Lecture | Numerical **optimization** for control (grad/SQP/QP); ALM vs. interior-point vs. penalty methods | |
 | 3  | 09/05/2025   | Lecture | Pontryagin’s Maximum Principle; shooting & multiple shooting; LQR, Riccati, QP viewpoint (finite / infinite horizon) | |
-| 4  | 09/12/2025   | Lecture | Dynamic Programming & Model-Predictive Control | |
+| 4  | 09/12/2025   | **External seminar 1** - Joaquim Dias Garcia| Dynamic Programming & Model-Predictive Control | |
 | 5  | 09/19/2025   | Lecture - Guancheng "Ivan" Qiu | **Nonlinear** trajectory **optimization**; collocation; implicit integration | |
-| 6  | 09/26/2025   | **External seminar 1** - Henrique Ferrolho | Trajectory **optimization** on robots in Julia Robotics | |
+| 6  | 09/26/2025   | **External seminar 2** - Henrique Ferrolho | Trajectory **optimization** on robots in Julia Robotics | |
 | 7  | 10/03/2025   | Lecture | Essentials of PDEs for control engineers; weak forms; FEM/FDM review | |
-| 8  | 10/10/2025   | **External seminar 2** TBD (speaker to be confirmed) | Topology **optimization** | |
-| 9  | 10/17/2025   | **External seminar 3 — François Pacaud** | GPU-accelerated optimal control | |
+| 8  | 10/10/2025   | **External seminar 3** TBD (speaker to be confirmed) | Topology **optimization** | |
+| 9  | 10/17/2025   | **External seminar 4** — François Pacaud | GPU-accelerated optimal control | |
 |10  | 10/24/2025   | Lecture - Michael Klamkin | Physics-Informed Neural Networks (PINNs): formulation & pitfalls | |
-|11  | 10/31/2025   | **External seminar 4** - Chris Rackauckas | Neural Differential Equations: PINNs + classical solvers | |
+|11  | 10/31/2025   | **External seminar 5** - Chris Rackauckas | Neural Differential Equations: PINNs + classical solvers | |
 |12  | 11/07/2025   | Lecture - Pedro Paulo | Neural operators (FNO, Galerkin Transformer); large-scale surrogates | |
-|13  | 11/14/2025   | **External seminar 5** - Charlelie Laurent | Scalable PINNs / neural operators; CFD & weather applications | |
+|13  | 11/14/2025   | **External seminar 6** - Charlelie Laurent | Scalable PINNs / neural operators; CFD & weather applications | |
 |14  | 11/21/2025   | Lecture | Robust control & min-max DDP (incl. PDE cases); chance constraints; Data-driven control & RL-in-the-loop | |
 
 ## Reference Material

@@ -37,6 +37,7 @@ md"
 | | | |
 |-----------:|:--|:------------------|
 |  Lecturer   | : | Rosemberg, Andrew |
+|  Date   | : | 28 of July, 2025 |
 
 # Background Math (_Welcome to Pluto!_)
 

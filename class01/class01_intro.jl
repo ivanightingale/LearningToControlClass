@@ -18,6 +18,7 @@ end
 
 # ╔═╡ 13b12c00-6d6e-11f0-3780-a16e73360478
 begin
+	class_dir = @__DIR__
 	import Pkg
 	Pkg.activate(".")
 	Pkg.instantiate()
@@ -28,6 +29,7 @@ begin
 	using HypertextLiteral
 	using PlutoTeachingTools
 	using ShortCodes, MarkdownLiteral
+	import Images: load
 end
 
 # ╔═╡ b6ba1231-2942-4f06-8252-22f02553bb57
@@ -39,6 +41,14 @@ using ForwardDiff
 # ╔═╡ ec473e69-d5ec-4d6a-b868-b89dadb85705
 ChooseDisplayMode()
 
+# ╔═╡ 8d7a34ef-5a2d-41a8-ac55-39ab00d7e432
+md"
+| | | |
+|-----------:|:--|:------------------|
+|  Lecturer   | : | Rosemberg, Andrew |
+|  Date   | : | 28 of July, 2025 |
+"
+
 # ╔═╡ 1f774f46-d57d-4668-8204-dc83d50d8c94
 md"# Intro - Optimal Control and Learning
 
@@ -46,35 +56,35 @@ In this course, we are interested in problems with the following structure:
 
 ```math
 \begin{equation}
-\!\!\!\!\!\!\!\!\min_{\substack{(\mathbf y_1,\mathbf x_1)\\\mathrm{s.t.}}}
+\!\!\!\!\!\!\!\!\min_{\substack{(\mathbf u_1,\mathbf x_1)\\\mathrm{s.t.}}}
 \!\underset{%
-   \phantom{\substack{(\mathbf y_1,\mathbf x_1)\\\mathrm{s.t.}}}%
-   \!\!\!\!\!\!\!\!\!\!(\mathbf y_1,\mathbf x_1)\in\mathcal X_1(\mathbf x_0)%
+   \phantom{\substack{(\mathbf u_1,\mathbf x_1)\\\mathrm{s.t.}}}%
+   \!\!\!\!\!\!\!\!\!\!(\mathbf u_1,\mathbf x_1)\in\mathcal X_1(\mathbf x_0)%
 }{%
-   \!\!\!\!f(\mathbf x_1,\mathbf y_1)%
+   \!\!\!\!c(\mathbf x_1,\mathbf y_1)%
 }
 +\mathbb{E}_1\Bigl[
    \quad \cdots
   
   \;+\;\mathbb{E}_t\Bigl[
-    \min_{\substack{(\mathbf y_t,\mathbf x_t)\\\mathrm{s.t.}}}
+    \min_{\substack{(\mathbf u_t,\mathbf x_t)\\\mathrm{s.t.}}}
     \!\underset{%
-       \phantom{\substack{(\mathbf y_t,\mathbf x_t)\\\mathrm{s.t.}}}%
-       \!\!\!\!(\mathbf y_t,\mathbf x_t)\in\mathcal X_t(\mathbf x_{t-1},w_t)%
+       \phantom{\substack{(\mathbf u_t,\mathbf x_t)\\\mathrm{s.t.}}}%
+       \!\!\!\!(\mathbf u_t,\mathbf x_t)\in\mathcal X_t(\mathbf x_{t-1},w_t)%
     }{%
-       \!\!\!\!\!\!\!\!\!\!f(\mathbf x_t,\mathbf y_t)%
+       \!\!\!\!\!\!\!\!\!\!c(\mathbf x_t,\mathbf u_t)%
     }
     +\mathbb{E}_{t+1}[\cdots]
 \Bigr].
 \end{equation}
 ```
-which minimizes a first stage cost function $f(\mathbf{x}_1,
-\mathbf{y}_1)$ and the expected value of future costs over possible
+which minimizes a first stage cost function $c(\mathbf{x}_1,
+\mathbf{u}_1)$ and the expected value of future costs over possible
 values of the exogenous stochastic variable $\{w_{t}\}_{t=2}^{T} \in
 \Omega$. 
 
 Here, $\mathbf{x}_0$ is the initial system state and the
-control decisions $\mathbf{y}_t$ are obtained at every period $t$
+control decisions $\mathbf{u}_t$ are obtained at every period $t$
 under a feasible region defined by the incoming state
 $\mathbf{x}_{t-1}$ and the realized uncertainty $w_t$. $\mathbf{E}_t$ represents the expected value over future uncertainties $\{w_{\tau}\}_{\tau=t}^{T}$. This
 optimization program assumes that the system is entirely defined by
@@ -87,7 +97,7 @@ constraints can be generally posed as:
 \begin{align}
     &\mathcal{X}_t(\mathbf{x}_{t-1}, w_t)= 
     \begin{cases}
-        \mathcal{T}(\mathbf{x}_{t-1}, w_t, \mathbf{y}_t) = \mathbf{x}_t \\
+        f(\mathbf{x}_{t-1}, w_t, \mathbf{u}_t) = \mathbf{x}_t \\
         h(\mathbf{x}_t, \mathbf{y}_t) \geq 0 
     \end{cases}
 \end{align}
@@ -98,23 +108,115 @@ constraints can be generally posed as:
 md"""
 where the outgoing state of the system $\mathbf{x}_t$ is a
 transformation based on the incoming state, the realized uncertainty,
-and the control variables. $h(\mathbf{x}_t, \mathbf{y}_t) \geq 0$
-captures the state constraints. Markov Decision Process (MDPs) refer
-to $\mathcal{T}$ as the "transition kernel" of the system. State and
+and the control variables. In the Markov Decision Process (MDP) framework, we refer to $f$ as the "transition kernel" of the system. State and
 control variables are restricted further by additional constraints
 captured by $h(\mathbf{x}_t, \mathbf{y}_t) \geq 0$.  We
-consider policies that map the past information into decisions. In
+consider policies that map the past information into decisions: $\pi_t : (\mathbf{x}_{t-1}, w_t) \rightarrow \mathbf{x}_t$. In
 period $t$, an optimal policy is given by the solution of the dynamic
 equations:
 
 ```math
 \begin{align}
-    V_{t}(\mathbf{x}_{t-1}, w_t) = &\min_{\mathbf{x}_t, \mathbf{y}_t} \quad  \! \! f(\mathbf{x}_t, \mathbf{y}_t) + \mathbf{E}[V_{t+1}(\mathbf{x}_t, w_{t+1})]    \\
-    &   \text{ s.t. } \quad\mathbf{x}_t  = \mathcal{T}(\mathbf{x}_{t-1}, w_t, \mathbf{y}_t) \nonumber         \\
-    &  \quad \quad \quad \! \! h(\mathbf{x}_t, \mathbf{y}_t)  \geq 0. \nonumber             
+    V_{t}(\mathbf{x}_{t-1}, w_t) = &\min_{\mathbf{x}_t, \mathbf{u}_t} \quad  \! \! c(\mathbf{x}_t, \mathbf{u}_t) + \mathbf{E}_{t+1}[V_{t+1}(\mathbf{x}_t, w_{t+1})]    \\
+    &   \text{ s.t. } \quad\mathbf{x}_t  = f(\mathbf{x}_{t-1}, w_t, \mathbf{u}_t) \nonumber         \\
+    &  \quad \quad \quad \! \! h(\mathbf{x}_t, \mathbf{u}_t)  \geq 0. \nonumber             
 \end{align}
 ```
+```math
+\implies \pi_t^{*}(\mathbf{x}_{t-1}, w_t) \in \{\mathbf{x}_t \;|\; \exists u_t \;:\; c(\mathbf{x}_t, \mathbf{u}_t) + \mathbf{E}_{t+1}[V_{t+1}(\mathbf{x}_t, w_{t+1})] = V_{t}(\mathbf{x}_{t-1}, w_t) \}
+```
+
 """
+
+# ╔═╡ 1d7092cd-0044-4d38-962a-ce3214c48c24
+md"""
+Function $V_{t}(\mathbf{x}_{t-1}, w_t)$ is refered to as the value function. To find the optimal policy for the $1^{\text{st}}$ stage, we need to find the optimal policy for the entire horizon $\{t=2,\cdots,T\}$ or at least estimate the "optimal" value function.
+"""
+
+# ╔═╡ 60ba261a-f2eb-4b45-ad6d-b6042926ccab
+load(joinpath(class_dir, "indecision_tree.png"))
+
+# ╔═╡ 15709f7b-943e-4190-8f40-0cfdb8772183
+md"""
+Notice that the number of "nodes" to be evaluated (either decisions or their cost) grows exponetially with the number of stages. This the the *Curse of dimensionality*
+in stochastic programming.
+
+"""
+
+# ╔═╡ 5d7a4408-21ff-41ec-b004-4b0a9f04bb4f
+question_box(md"Can you name a few ways to try and/or solve this problem?")
+
+# ╔═╡ c08f511e-b91d-4d17-a286-96469c31568a
+md"## Example: Robotic Arm Manipulation"
+
+# ╔═╡ b3129bcb-c24a-4faa-a5cf-f69ce518ea87
+load(joinpath(class_dir, "nlp_robot_arm.png"))
+
+# ╔═╡ c1f43c8d-0616-4572-bb48-dbb71e40adda
+md"""
+The tip of the second link is computed using the direct geometric model:
+
+```math
+p(\theta_{1},\theta_{2}) \;=\;
+\begin{cases}
+x = L_{1}\,\sin\theta_{1} \;+\; L_{2}\,\sin\!\bigl(\theta_{1}+\theta_{2}\bigr),\\[6pt]
+y = L_{1}\,\cos\theta_{1} \;+\; L_{2}\,\cos\!\bigl(\theta_{1}+\theta_{2}\bigr).
+\end{cases}
+\tag{1}
+```
+"""
+
+# ╔═╡ 57d896ca-221a-4cfc-b37a-be9898fac923
+begin
+md"""
+**State**  
+```math
+  \mathbf{x}_t=\begin{bmatrix}\theta_{1,t}&\theta_{2,t}&\dot\theta_{1,t}&\dot\theta_{2,t}\end{bmatrix}^{\!\top}
+```
+
+**Control**  
+```math
+  \mathbf{u}_t=\boldsymbol\tau_t=\begin{bmatrix}\tau_{1,t}&\tau_{2,t}\end{bmatrix}^{\!\top}
+```
+
+**Dynamics** (Euler sample time Δt)  
+```math
+  \mathbf{x}_{t+1}=f_d(\mathbf{x}_t,\mathbf{u}_t)
+  \;\;\equiv\;
+  \begin{bmatrix}
+  \boldsymbol\theta_t+\Delta t\,\dot{\boldsymbol\theta}_t\\[2pt]
+  \dot{\boldsymbol\theta}_t+\Delta t\,\mathcal{M}^{-1}(\boldsymbol\theta_t)(B(\boldsymbol\theta_t)\boldsymbol\tau_t + F(w_t) - C(\boldsymbol\theta_t,\boldsymbol{\dot\theta})\bigr)
+  \end{bmatrix}
+```
+
+**Stage cost** 
+
+```math
+c(\mathbf{x}_t,\mathbf{u}_t)=
+\underbrace{\|p(\boldsymbol\theta_t)-p_{\text{target}}\|_2^{2}}_{\text{tracking}}
++\;\lambda_\tau\|\boldsymbol\tau_t\|_2^{2}\;,
+\qquad \lambda_\tau>0 .
+```
+
+Terminal cost  
+$V_T(\mathbf{x}_T)=\|p(\boldsymbol\theta_T)-p_{\text{target}}\|_2^{2}$.
+
+**Constraints**
+
+```math
+h(\mathbf{x}_t,\mathbf{u}_t)\ge 0\;:\;
+\begin{cases}
+\theta_{\min}\le\boldsymbol\theta_t\le\theta_{\max} &\text{(joint limits)}\\
+|\dot{\boldsymbol\theta}_t|\le\dot\theta_{\max} &\text{(velocity limits)}\\
+|\boldsymbol\tau_t|\le\tau_{\max} &\text{(actuator limits)}
+\end{cases}
+```
+
+"""
+end
+
+# ╔═╡ e2d3d160-d3b6-41f2-a8bc-2878ba71e78c
+
 
 # ╔═╡ 52005382-177b-4a11-a914-49a5ffc412a3
 section_outline(md"A Crash Course:",md" (Continuous-Time) Dynamics
@@ -361,15 +463,40 @@ Foldable(md"All mechanical systems can be written this way. Why?", md"""
 
 Manipulator Dynamics Equations are a way of rewriting the Euler--Lagrange equations.
 
-> In the calculus of variations and classical mechanics, the Euler–Lagrange equations are a system of second-order ordinary differential equations whose solutions are stationary points of the given action functional. The equations were discovered in the 1750s by Swiss mathematician Leonhard Euler and Italian mathematician Joseph-Louis Lagrange.
+#### 🚀 Detour: The Principle of Least Action 🚀
 
+In the calculus of variations and classical mechanics, the Euler–Lagrange equations are a system of second-order ordinary differential equations whose solutions are stationary points of the given action functional. 
+
+> The equations were discovered in the 1750s by Swiss mathematician Leonhard Euler and Italian mathematician Joseph-Louis Lagrange.
+
+In classical mechanics:
+		 
 ```math
 L = \underbrace{\frac{1}{2} v^{\top}M(q)v}_{\text{Kinematic Energy}} - \underbrace{U(q)}_{\text{Potential Energy}}
 ```
 
-What can you say about $M(q)$? When do we have a problem inverting it?
+A curve ($q^\star(t)$) is physically realised iff it is a stationary
+point of ($\mathcal{S}$) :
+
+```math
+\delta\mathcal{S}=0
+\;\;\Longrightarrow\;\;
+\frac{d}{dt}\!\bigl(\tfrac{\partial L}{\partial\dot q}\bigr)
+- \frac{\partial L}{\partial q}=0
+\quad\Longrightarrow\quad
+M(q)\,\ddot q + C(q,\dot q)\,\dot q + \nabla U(q)=0 .
+```
 
 """)
+
+# ╔═╡ f3d155c6-5384-481a-8373-582e753ea8d6
+question_box(md"What can you say about $M(q)$? When do we have a problem inverting it?")
+
+# ╔═╡ b9aeab8a-f8ea-4310-8568-5d6bda0bb4d3
+question_box(md"Can you derive the stationary condition?")
+
+# ╔═╡ e1dc6ecf-4e62-415a-a620-0731953c5ab4
+
 
 # ╔═╡ 5f35a169-887f-477f-b010-167627f7ce4c
 md"## Linear Systems
@@ -1029,8 +1156,18 @@ end
 # ╔═╡ Cell order:
 # ╟─13b12c00-6d6e-11f0-3780-a16e73360478
 # ╟─ec473e69-d5ec-4d6a-b868-b89dadb85705
+# ╟─8d7a34ef-5a2d-41a8-ac55-39ab00d7e432
 # ╟─1f774f46-d57d-4668-8204-dc83d50d8c94
 # ╟─a0f71960-c97c-40d1-8f78-4b1860d2e0a2
+# ╟─1d7092cd-0044-4d38-962a-ce3214c48c24
+# ╟─60ba261a-f2eb-4b45-ad6d-b6042926ccab
+# ╟─15709f7b-943e-4190-8f40-0cfdb8772183
+# ╟─5d7a4408-21ff-41ec-b004-4b0a9f04bb4f
+# ╟─c08f511e-b91d-4d17-a286-96469c31568a
+# ╟─b3129bcb-c24a-4faa-a5cf-f69ce518ea87
+# ╟─c1f43c8d-0616-4572-bb48-dbb71e40adda
+# ╟─57d896ca-221a-4cfc-b37a-be9898fac923
+# ╠═e2d3d160-d3b6-41f2-a8bc-2878ba71e78c
 # ╟─52005382-177b-4a11-a914-49a5ffc412a3
 # ╟─8ea866a6-de0f-4812-8f59-2aebec709243
 # ╟─2be161cd-2d4c-4778-adca-d45f8ab05f98
@@ -1048,6 +1185,9 @@ end
 # ╟─f10927fe-d392-4374-bad1-ab5ac85b8116
 # ╟─b8b206ef-cdc5-4cc9-9b55-70d711ba2a9e
 # ╟─a09de9e4-7ecc-4d23-9135-384077f0c03f
+# ╟─f3d155c6-5384-481a-8373-582e753ea8d6
+# ╟─b9aeab8a-f8ea-4310-8568-5d6bda0bb4d3
+# ╠═e1dc6ecf-4e62-415a-a620-0731953c5ab4
 # ╟─5f35a169-887f-477f-b010-167627f7ce4c
 # ╟─e860d92b-cc8f-479b-a0fc-e5f7a11ae1fd
 # ╟─bb4bfa72-bf69-41f5-b017-7cbf31653bae
