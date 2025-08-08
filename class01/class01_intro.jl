@@ -463,15 +463,40 @@ Foldable(md"All mechanical systems can be written this way. Why?", md"""
 
 Manipulator Dynamics Equations are a way of rewriting the Euler--Lagrange equations.
 
-> In the calculus of variations and classical mechanics, the Euler–Lagrange equations are a system of second-order ordinary differential equations whose solutions are stationary points of the given action functional. The equations were discovered in the 1750s by Swiss mathematician Leonhard Euler and Italian mathematician Joseph-Louis Lagrange.
+#### 🚀 Detour: The Principle of Least Action 🚀
 
+In the calculus of variations and classical mechanics, the Euler–Lagrange equations are a system of second-order ordinary differential equations whose solutions are stationary points of the given action functional. 
+
+> The equations were discovered in the 1750s by Swiss mathematician Leonhard Euler and Italian mathematician Joseph-Louis Lagrange.
+
+In classical mechanics:
+		 
 ```math
 L = \underbrace{\frac{1}{2} v^{\top}M(q)v}_{\text{Kinematic Energy}} - \underbrace{U(q)}_{\text{Potential Energy}}
 ```
 
-What can you say about $M(q)$? When do we have a problem inverting it?
+A curve ($q^\star(t)$) is physically realised iff it is a stationary
+point of ($\mathcal{S}$) :
+
+```math
+\delta\mathcal{S}=0
+\;\;\Longrightarrow\;\;
+\frac{d}{dt}\!\bigl(\tfrac{\partial L}{\partial\dot q}\bigr)
+- \frac{\partial L}{\partial q}=0
+\quad\Longrightarrow\quad
+M(q)\,\ddot q + C(q,\dot q)\,\dot q + \nabla U(q)=0 .
+```
 
 """)
+
+# ╔═╡ f3d155c6-5384-481a-8373-582e753ea8d6
+question_box(md"What can you say about $M(q)$? When do we have a problem inverting it?")
+
+# ╔═╡ b9aeab8a-f8ea-4310-8568-5d6bda0bb4d3
+question_box(md"Can you derive the stationary condition?")
+
+# ╔═╡ e1dc6ecf-4e62-415a-a620-0731953c5ab4
+
 
 # ╔═╡ 5f35a169-887f-477f-b010-167627f7ce4c
 md"## Linear Systems
@@ -1160,6 +1185,9 @@ end
 # ╟─f10927fe-d392-4374-bad1-ab5ac85b8116
 # ╟─b8b206ef-cdc5-4cc9-9b55-70d711ba2a9e
 # ╟─a09de9e4-7ecc-4d23-9135-384077f0c03f
+# ╟─f3d155c6-5384-481a-8373-582e753ea8d6
+# ╟─b9aeab8a-f8ea-4310-8568-5d6bda0bb4d3
+# ╠═e1dc6ecf-4e62-415a-a620-0731953c5ab4
 # ╟─5f35a169-887f-477f-b010-167627f7ce4c
 # ╟─e860d92b-cc8f-479b-a0fc-e5f7a11ae1fd
 # ╟─bb4bfa72-bf69-41f5-b017-7cbf31653bae
