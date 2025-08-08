@@ -31,7 +31,7 @@ This student-led course explores modern techniques for controlling — and learn
 | 2  | 08/29/2025   | Lecture | Numerical **optimization** for control (grad/SQP/QP); ALM vs. interior-point vs. penalty methods | |
 | 3  | 09/05/2025   | Lecture | Pontryagin’s Maximum Principle; shooting & multiple shooting; LQR, Riccati, QP viewpoint (finite / infinite horizon) | |
 | 4  | 09/12/2025   | Lecture | Dynamic Programming & Model-Predictive Control | |
-| 5  | 09/19/2025   | Lecture | **Nonlinear** trajectory **optimization**; collocation; implicit integration | |
+| 5  | 09/19/2025   | Lecture - Guancheng "Ivan" Qiu | **Nonlinear** trajectory **optimization**; collocation; implicit integration | |
 | 6  | 09/26/2025   | **External seminar 1** - Henrique Ferrolho | Trajectory **optimization** on robots in Julia Robotics | |
 | 7  | 10/03/2025   | Lecture | Essentials of PDEs for control engineers; weak forms; FEM/FDM review | |
 | 8  | 10/10/2025   | **External seminar 2** TBD (speaker to be confirmed) | Topology **optimization** | |
