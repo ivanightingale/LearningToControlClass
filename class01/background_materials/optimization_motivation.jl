@@ -6,6 +6,7 @@ using InteractiveUtils
 
 # ╔═╡ f0c826c7-b2e3-4dbf-b29d-37623aa4d7c6
 begin
+	class_dir = dirname(@__DIR__)
 	import Pkg
 	Pkg.activate("..")
 	Pkg.status()
@@ -77,7 +78,7 @@ begin
 	    return uniq
 	end
 	
-	img  = load("layout.png")
+	img  = load(joinpath(class_dir, "layout.png"))
 	gimg = Float64.(gray.(Gray.(img)))
 	
 	_edges = detect_edges(
