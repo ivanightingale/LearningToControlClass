@@ -57,13 +57,13 @@ begin
 	MarkdownLiteral.@markdown(
 """
 
-[^cmu]: Zachary Manchester et al. Optimal Control and Reinforcement Learning at Carnegie Mellon University - [CMU 16-745]("https://optimalcontrol.ri.cmu.edu/")
+[^cmu]: Zachary Manchester et al. [Optimal Control and Reinforcement Learning at Carnegie Mellon University - CMU 16-745](https://optimalcontrol.ri.cmu.edu/)
 
-[^OptProx]: Van Hentenryck, P., 2024. Fusing Artificial Intelligence and Optimization with Trustworthy Optimization Proxies. Collections, 57(02).
+[^OptProx]: Van Hentenryck, P., 2024. [Fusing Artificial Intelligence and Optimization with Trustworthy Optimization Proxies](https://www.siam.org/publications/siam-news/articles/fusing-artificial-intelligence-and-optimization-with-trustworthy-optimization-proxies/). Collections, 57(02).
 		
-[^ArmManip]: Guechi, E.H., Bouzoualegh, S., Zennir, Y. and Blažič, S., 2018. MPC control and LQ optimal control of a two-link robot arm: A comparative study. Machines, 6(3), p.37.
+[^ArmManip]: Guechi, E.H., Bouzoualegh, S., Zennir, Y. and Blažič, S., 2018. [MPC control and LQ optimal control of a two-link robot arm: A comparative study](https://www.mdpi.com/2075-1702/6/3/37). Machines, 6(3), p.37.
 
-[^ZachMIT]: Zachary Manchester talk at MIT - [MIT Robotics - Zac Manchester - Composable Optimization for Robotic Motion Planning and Control]("https://www.youtube.com/watch?v=eSleutHuc0w&ab_channel=MITRobotics").
+[^ZachMIT]: Zachary Manchester talk at MIT - [MIT Robotics - Zac Manchester - Composable Optimization for Robotic Motion Planning and Control](https://www.youtube.com/watch?v=eSleutHuc0w&ab_channel=MITRobotics).
 		
 """
 )
