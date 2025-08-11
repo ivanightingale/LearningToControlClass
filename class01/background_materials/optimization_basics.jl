@@ -100,6 +100,162 @@ md"Tests will automatically fetch the optimal values from your solved model."
 # ╔═╡ 248b398a-0cf5-4c2b-8752-7b9cc4e765d6
 question_box(md"Did we get partial products?")
 
+# ╔═╡ 245eb671-84e1-447b-8045-e9eb04966d80
+md"""
+### 1.2 Other Modeling Tricks
+#### Epigraph reformulation for absolute-value expressions  
+A convex **epigraph** turns a non-linear term into a linear one by treating it
+as the upper envelope of an auxiliary variable.
+
+*Goal:* model $u \;\ge\; |x|$ (or set $u=|x|$ in an objective).
+
+**Epigraph form**
+
+```math
+\begin{aligned}
+u &\ge \phantom{-}x,\\[-2pt]
+u &\ge         -x.
+\end{aligned}
+```
+
+* Both constraints are linear, so $u$ is the **least upper bound** on $|x|$.
+* If the objective minimises $u$ (or if $u$ appears on the left-hand side of
+  other $\le$ constraints) the optimum forces $u=|x|$ automatically.
+* No binaries are required – this is purely continuous and exploits the convex
+  shape of $|x|$.
+
+---
+
+"""
+
+# ╔═╡ 6a823649-04fa-4322-a028-2fb29dffb08b
+md"""
+**Example** – Weighted-Median Warehouse Location on a Highway
+
+A logistics company must decide where to build a single cross-dock hub along a straight 50-km stretch of highway.  
+Eight supermarkets lie on the same axis at known kilometre posts $d_i$ and generate a daily demand (truck-loads) $w_i$.
+
+| Supermarket $i$            | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |
+|------------------------------|---|---|---|---|---|---|---|---|
+| Location $d_i\,[\text{km}]$| 3 | 8 | 15 | 20 | 25 | 29 | 35 | 40 |
+| Daily demand $w_i$         | 2 | 1 | 3  | 4  | 2  | 3  | 5  | 1  |
+
+Let $x \in [0,50]$ be the kilometre post chosen for the hub.  
+Travel occurs on the highway, so distance is **one-dimensional**.  
+Devise an optimization problem that minimizes the work done by the truck (distance times weight).
+
+"""
+
+# ╔═╡ c369ab46-b416-4c12-83fe-65040a0c47c8
+begin
+# === Your LP model goes below ===
+# Replace the contents of this cell with your own model.
+model_lp2 = Model(HiGHS.Optimizer)
+
+# Required variable names (used for testing)
+@variable(model_lp2, x_d)
+
+# --- YOUR CODE HERE ---
+
+# optimize!(model_lp2) # uncomment to optimize
+
+# Let's look at our model
+println(model_lp2)
+end
+
+# ╔═╡ b13f9775-68c2-4646-9b67-c69ee23a4ea0
+md"""
+#### Cutting-plane (outer-approximation) method for nonlinear functions  
+When a constraint contains a smooth convex function $g(x)\le 0$, one can
+iteratively approximate it by linear cuts that **support** the graph of $g$.
+
+**Idea**
+
+1. **Relax** the nonlinear constraint and solve the LP/MILP master problem.
+2. **Check** the candidate solution $\bar x$:
+   * If $g(\bar x)\le0$ it is feasible (and the current best).
+   * Otherwise, generate a tangent plane that cuts off $\bar x$ but remains
+     valid for all feasible points (by convexity).
+
+   The gradient $\nabla g(\bar x)$ gives the supporting hyperplane
+
+```math
+     g(\bar x) + \nabla g(\bar x)^{\!\top}(x-\bar x)\;\le\;0 .
+```
+
+3. **Add** this cut to the master problem and repeat.
+
+Because each cut is a *global* under-estimator of $g$, the feasible region is
+shrunk safely from the outside—hence *outer approximation*.  For a convex NLP
+the procedure converges finitely to the exact optimum; for non-convex problems
+it provides a lower bound similar to branch-and-cut.
+
+*Common uses*
+
+* **Piecewise-linearisation** of $\sqrt{\cdot},\;\log(\cdot),\;\exp(\cdot)$ or
+  power losses in energy networks.
+* **Benders-like** decomposition where cuts approximate a difficult sub-problem
+  (e.g. chance-constraints, stochastic recourse).
+
+---
+
+Combined with the earlier tricks, epigraphs give **exact linear models** for
+many convex terms, while cutting planes let you tackle the truly nonlinear bits
+progressively, keeping the master problem linear and solver-friendly.
+"""
+
+# ╔═╡ ea3ea95a-58cb-4d0d-a167-aa68b8bc2645
+md"""
+**Example** -- Cutting-plane Exercise – Approximating a Circular Constraint with Linear Cuts
+
+A small drone must carry a **payload** of mass $m\,[\mathrm{kg}]$ and an
+**on-board battery** of capacity $c\,[\mathrm{Ah}]$.
+Because of fuselage geometry the two design variables must lie
+*inside* a circular envelope in the $(m,c)$-plane:
+
+```math
+m^{2} + c^{2} \; \le \; 100 .
+```
+
+The engineering goal is to minimise the total cost
+
+```math
+\min\;  200\,m +  80\,c ,
+```
+
+subject to the circle above and simple bounds
+
+```math
+0 \;\le\; m \;\le\; 12, \qquad
+0 \;\le\; c \;\le\; 12 .
+```
+
+Since the solver available to you handles only linear (M)ILPs, you will
+replace the quadratic constraint by a sequence of cutting planes
+(outer approximation).
+
+**Cutting-plane algorithm outline**
+
+1. **Master LP**  
+   * Start with the bounding box only.  
+   * Solve for a tentative point $(\bar m,\bar c)$.
+
+2. **Feasibility check**  
+   * If $\bar m^{2}+\bar c^{2} \le 100$ the point is feasible $\Rightarrow$ **done**.  
+   * Otherwise generate a *supporting hyperplane* for the circle at $(\bar m,\bar c)$:
+
+```math
+2\,\bar m\,(m - \bar m) \;+\; 2\,\bar c\,(c - \bar c) \;\le\; 100 \;-\; \bar m^{2} \;-\; \bar c^{2}.
+```
+
+(Derived from the gradient of $g(m,c)=m^{2}+c^{2}-100$.)
+
+3. **Add Cut**
+    * Add cut & repeat.
+
+2
+"""
+
 # ╔═╡ 808c505d-e10d-42e3-9fb1-9c6f384b2c3c
 md"""
 ---
@@ -236,6 +392,56 @@ begin
         keep_working()
     end
 end
+
+# ╔═╡ fa5785a1-7274-4524-9e54-895d46e83861
+md"""
+### 2.3 Other Modeling Tricks
+
+Below are some classic “tricks of the trade’’ for turning non-linear or logical
+requirements into **mixed-integer linear programming (MILP)** form.  
+Throughout, $x\in\mathbb R^n$ are continuous decision variables and
+$z\in\{0,1\}$ are binary (0–1) variables.
+
+---
+
+#### Big-$M$ linearisation of conditional constraints  
+Suppose a constraint should apply **only if** a binary variable is 1:
+
+```math
+z = 1 \;\Longrightarrow\; a^\top x \le b.
+```
+
+Introduce a sufficiently large constant $M>0$ and write
+
+```math
+a^\top x \;\le\; b + M\,(1-z).
+```
+
+* If $z=1$ the right-hand side is $b$, so the original constraint is enforced.  
+* If $z=0$ the bound is relaxed by $M$ and becomes non-binding.
+
+> **Caveat:** pick $M$ as tight as possible. Over-large $M$ values hurt the LP
+> relaxation and may cause numerical instability.
+
+---
+
+#### Indicator constraints (a safer alternative)  
+Modern solvers allow *indicator* constraints that internally handle the
+implication without an explicit $M$:
+
+```math
+z = 1 \;\Longrightarrow\; a^\top x \le b.
+```
+
+In JuMP:
+
+```julia
+@constraint(model, z --> a' * x <= b)
+```
+
+---
+
+"""
 
 # ╔═╡ 5e3444d0-8333-4f51-9146-d3d9625fe2e9
 md"""
@@ -422,6 +628,26 @@ begin
     end
 end
 
+# ╔═╡ 20aef3e9-47b5-4f60-9726-7db77f7c3e47
+begin
+    # student answer
+ 	ansd = missing
+    try
+        ansd = safeval(model_lp2, :x_d)
+    catch           # objective_value will throw if model_lp not ready
+        ansd = missing
+    end
+
+    # Decide which badge to show
+    if ismissing(ansd)               # nothing yet
+        still_missing()
+    elseif x == 25.0
+        correct()
+    else
+        keep_working()
+    end
+end
+
 # ╔═╡ 254b9a87-17f9-4fea-8b28-0e3873b58fe2
 begin
     ground_truth_3 = (x = -7.946795, y = 60.00, obj = -78554.7682)
@@ -490,6 +716,12 @@ end
 # ╟─1d3edbdd-7747-4651-b650-c6b9bf87b460
 # ╟─6fb672d0-5a18-4ccc-b7b3-184839c2401b
 # ╟─248b398a-0cf5-4c2b-8752-7b9cc4e765d6
+# ╟─245eb671-84e1-447b-8045-e9eb04966d80
+# ╟─6a823649-04fa-4322-a028-2fb29dffb08b
+# ╠═c369ab46-b416-4c12-83fe-65040a0c47c8
+# ╟─20aef3e9-47b5-4f60-9726-7db77f7c3e47
+# ╟─b13f9775-68c2-4646-9b67-c69ee23a4ea0
+# ╠═ea3ea95a-58cb-4d0d-a167-aa68b8bc2645
 # ╟─808c505d-e10d-42e3-9fb1-9c6f384b2c3c
 # ╠═39617561-bbbf-4ef6-91e2-358dfe76581c
 # ╟─01367096-3971-4e79-ace2-83600672fbde
@@ -498,6 +730,7 @@ end
 # ╟─3997d993-0a31-435e-86cd-50242746c305
 # ╠═3f56ec63-1fa6-403c-8d2a-1990382b97ae
 # ╟─0e8ed625-df85-4bd2-8b16-b475a72df566
+# ╟─fa5785a1-7274-4524-9e54-895d46e83861
 # ╟─5e3444d0-8333-4f51-9146-d3d9625fe2e9
 # ╠═0e190de3-da60-41e9-9da5-5a0c7fefd1d7
 # ╟─cac18d70-b354-48c7-9f37-31ee0c585675
