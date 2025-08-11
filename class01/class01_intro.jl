@@ -585,7 +585,7 @@ x \in S^{1} \times \mathbb{R} & \text{Cylinder}
 """)
 
 # ╔═╡ 4d598933-05a9-44fa-b5a7-f7e1c7afb094
-md"## Control--Afine Systems
+md"## Control--Affine Systems
 
 Non--linear Systems of the form:
 ```math
@@ -594,7 +594,7 @@ Non--linear Systems of the form:
 
  $\implies$ Non--linear in the state but affine in the input/control.
 
-Control--Afine Systems are common in many mechanical systems.
+Control--Affine Systems are common in many mechanical systems.
 
 "
 
