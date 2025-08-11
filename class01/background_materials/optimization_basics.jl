@@ -30,14 +30,29 @@ begin
     using Ipopt        # Solver for NLPs
 end
 
-# ╔═╡ 0df8b65a-0527-4545-bf11-00e9912bced0
+# ╔═╡ b879c4bf-8292-45a0-87d0-b1f0fa456585
 md"""
-
 | | | |
 |-----------:|:--|:------------------|
 |  Lecturer   | : | Rosemberg, Andrew |
 |  Date   | : | 28 of July, 2025 |
 
+"""
+
+# ╔═╡ eeceb82e-abfb-4502-bcfb-6c9f76a0879d
+md"""
+## Prelude
+
+Research and make sure you understand the following concepts/questions:
+ - What is a convex maximization optimziation problem? and a minimization one? Why are convex problems desirable (compared to non-convex ones)?
+ - What is a linear program?
+ - What are Lagrangian multipliers?
+ - What are Integer problems? and Mixed-Integer problems?
+ - What is duality? Can you construct the dual of at least a linear program?
+"""
+
+# ╔═╡ 0df8b65a-0527-4545-bf11-00e9912bced0
+md"""
 # Background – Modeling Optimization Problems in JuMP 🏗️
 
 This short Pluto notebook walks you through three small optimisation models of increasing
@@ -253,8 +268,59 @@ replace the quadratic constraint by a sequence of cutting planes
 3. **Add Cut**
     * Add cut & repeat.
 
-2
+At any point in the solution process, the current LP solution looks like (for a given set of cuts indexed by $j$):
+```math
+\begin{aligned}
+\min_{m,c} \quad & 200\,m + 80\,c \\
+\text{s.t.}\quad & 0 \le m \le 12, \\
+                  & 0 \le c \le 12, \\
+                  & 2\,\bar m_j\,(m - \bar m_j) + 2\,\bar c_j\,(c - \bar c_j) \le 100 - \bar m_j^{2} - \bar c_j^{2}, \quad j=1,\dots,J.
+\end{aligned}
+```
+
+Your tasks
+
+1. **Implement** the iterative procedure in JuMP + HiGHS:  
+   - master model with variables `m`, `c`;  
+   - a loop that solves, checks feasibility, and adds cuts when needed.  
+
+2. **Record** and (optionally) plot the objective value after each iteration.  
+
 """
+
+# ╔═╡ 7d855c60-41dd-40af-b00a-60b3e779ad13
+question_box(md"How can you check your answer?")
+
+# ╔═╡ ae263aac-1668-4f18-8104-ac25953a4503
+question_box(md"""
+### How do you solve two-stage problems?		 
+
+How can you use cutting planes to solve a linear Two--Stage problem
+
+```math
+\begin{aligned}
+\min_{x}\; & c^{\top}x 
+            \;+\;
+            \mathbb{E}_{\xi}\!\Bigl[
+              \min_{y(\xi)} \; q^{\top}y(\xi)
+            \Bigr] \\[6pt]
+\text{s.t.}\; & A\,x = b, \quad x \ge 0
+               \qquad\qquad\text{(first-stage decisions)}
+\end{aligned}
+```
+			 
+For each realisation $\xi = \bigl(h(\xi),\,T(\xi)\bigr)$ of the uncertain data,
+the **second-stage (recourse) problem** is
+			 
+```math
+\begin{aligned}
+\min_{y(\xi)}\; & q^{\top}y(\xi) \\[4pt]
+\text{s.t.}\; & T(\xi)\,y(\xi) = h(\xi) - W\,x, \\
+              & y(\xi) \ge 0
+              \qquad\qquad\text{(second-stage decisions)}
+\end{aligned}
+```
+""")
 
 # ╔═╡ 808c505d-e10d-42e3-9fb1-9c6f384b2c3c
 md"""
@@ -709,6 +775,8 @@ end
 # ╔═╡ Cell order:
 # ╟─881eed45-e7f0-4785-bde8-530e378d7050
 # ╟─9f5675a3-07df-4fb1-b683-4c5fd2a85002
+# ╟─b879c4bf-8292-45a0-87d0-b1f0fa456585
+# ╟─eeceb82e-abfb-4502-bcfb-6c9f76a0879d
 # ╟─0df8b65a-0527-4545-bf11-00e9912bced0
 # ╠═9ce52307-bc22-4f66-a4af-a4e4ac382212
 # ╟─6f67ca7c-1391-4cb9-b692-cd818e037587
@@ -721,7 +789,9 @@ end
 # ╠═c369ab46-b416-4c12-83fe-65040a0c47c8
 # ╟─20aef3e9-47b5-4f60-9726-7db77f7c3e47
 # ╟─b13f9775-68c2-4646-9b67-c69ee23a4ea0
-# ╠═ea3ea95a-58cb-4d0d-a167-aa68b8bc2645
+# ╟─ea3ea95a-58cb-4d0d-a167-aa68b8bc2645
+# ╟─7d855c60-41dd-40af-b00a-60b3e779ad13
+# ╟─ae263aac-1668-4f18-8104-ac25953a4503
 # ╟─808c505d-e10d-42e3-9fb1-9c6f384b2c3c
 # ╠═39617561-bbbf-4ef6-91e2-358dfe76581c
 # ╟─01367096-3971-4e79-ace2-83600672fbde
