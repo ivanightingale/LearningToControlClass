@@ -49,6 +49,26 @@ md"
 |  Date   | : | 28 of July, 2025 |
 "
 
+# ╔═╡ ced1b968-3ba6-4e58-9bcd-bbc6bee2b93c
+md"#### Reference Material"
+
+# ╔═╡ 97994ed8-5606-46ef-bd30-c5343c1d99cf
+begin
+	MarkdownLiteral.@markdown(
+"""
+
+[^cmu]: Zachary Manchester et al. Optimal Control and Reinforcement Learning at Carnegie Mellon University - [CMU 16-745]("https://optimalcontrol.ri.cmu.edu/")
+
+[^OptProx]: Van Hentenryck, P., 2024. Fusing Artificial Intelligence and Optimization with Trustworthy Optimization Proxies. Collections, 57(02).
+		
+[^ArmManip]: Guechi, E.H., Bouzoualegh, S., Zennir, Y. and Blažič, S., 2018. MPC control and LQ optimal control of a two-link robot arm: A comparative study. Machines, 6(3), p.37.
+
+[^ZachMIT]: Zachary Manchester talk at MIT - [MIT Robotics - Zac Manchester - Composable Optimization for Robotic Motion Planning and Control]("https://www.youtube.com/watch?v=eSleutHuc0w&ab_channel=MITRobotics").
+		
+"""
+)
+end
+
 # ╔═╡ 1f774f46-d57d-4668-8204-dc83d50d8c94
 md"# Intro - Optimal Control and Learning
 
@@ -146,14 +166,200 @@ in stochastic programming.
 # ╔═╡ 5d7a4408-21ff-41ec-b004-4b0a9f04bb4f
 question_box(md"Can you name a few ways to try and/or solve this problem?")
 
+# ╔═╡ 7e487ebc-8327-4f3e-a8ca-1e07fb39991a
+md"""
+### Solution Methods
+
+There are a few ways to solve these problems:
+
+```math
+(\mathbf{x}_{t-1}, w_t)\xrightarrow[\pi_t^{*}(\mathbf{x}_{t-1}, w_t)]{
+\begin{align}
+    &\min_{\mathbf{x}_t, \mathbf{u}_t} \quad  \! \! c(\mathbf{x}_t, \mathbf{u}_t) + \mathbf{E}_{t+1}[V_{t+1}(\mathbf{x}_t, w_{t+1})]    \\
+    &   \text{ s.t. } \quad\mathbf{x}_t  = f(\mathbf{x}_{t-1}, w_t, \mathbf{u}_t) \nonumber         \\
+    &  \quad \quad \quad \! \! h(\mathbf{x}_t, \mathbf{u}_t)  \geq 0. \nonumber             
+\end{align}
+} (\mathbf{x}_t^{*}, \mathbf{u}_t^{*}) 
+```
+
+**Exact Methods:**
+ - Deterministic Equivalent: Explicitly model all decisions of all possible scenarios. (Good Luck!)
+ - Stochastic Dual Dynamic Programming, Progressive Hedging, ... (Hard but doable for some class of problems.)
+
+**Approximate Methods**: 
+ - Approximate Dynamic Programming, (model-free and model-based)Reinforcement Learning, Two-Stage Decision Rules, ...
+ - **Optimization Proxies**:
+
+```math
+\theta^{\star}
+\;=\;
+\operatorname*{arg\,min}_{\theta \in \Theta}
+\;
+\mathbb{E}\Bigl[\bigl\|\,\pi_t^{\ast}-\pi_t(\,\cdot\,;\theta)\bigr\|_{\mathcal F}\Bigr],
+```
+
+"""
+
+# ╔═╡ bd623016-24ce-4c10-acb3-b2b80d4facc8
+md"[^OptProx]"
+
+# ╔═╡ 2d211386-675a-4223-b4ca-124edd375958
+@htl """
+
+<img src="https://www.siam.org/media/k2hls5wb/figure1.jpg">
+
+"""
+
+# ╔═╡ 45275d44-e268-43cb-8156-feecd916a6da
+@htl """
+<div style="
+  border:1px solid #ccc;
+  border-radius:6px;
+  padding:1rem;
+  font-size:0.9rem;
+  max-width:760px;
+  line-height:1.45;
+">
+
+  <!-- ─────────────────────── header ─────────────────────── -->
+  <h2 style="margin-top:0">LearningToOptimize&nbsp;Organization</h2>
+
+  <p>
+    <strong>LearningToOptimize&nbsp;(L2O)</strong> is a collection of open-source tools
+    focused on the emerging paradigm of <em>amortized optimization</em>—using machine-learning
+    methods to accelerate traditional constrained-optimization solvers.
+    <em>L2O is a work-in-progress; existing functionality is considered experimental and may
+    change.</em>
+  </p>
+
+  <!-- ─────────────────── repositories table ──────────────── -->
+  <h3>Open-Source&nbsp;Repositories</h3>
+
+  <table style="border-collapse:collapse;width:100%">
+    <tbody>
+      <tr>
+        <td style="padding:4px 6px;vertical-align:top;">
+          <a href="https://github.com/LearningToOptimize/LearningToOptimize.jl"
+             target="_blank">LearningToOptimize.jl</a>
+        </td>
+        <td style="padding:4px 6px;">
+          Flagship Julia package that wraps data generation, training loops and evaluation
+          utilities for fitting surrogate models to parametric optimization problems.
+        </td>
+      </tr>
+
+      <tr>
+        <td style="padding:4px 6px;vertical-align:top;">
+          <a href="https://github.com/andrewrosemberg/DecisionRules.jl"
+             target="_blank">DecisionRules.jl</a>
+        </td>
+        <td style="padding:4px 6px;">
+          Build decision rules for multistage stochastic programs, as proposed in
+          <a href="https://arxiv.org/pdf/2405.14973" target="_blank"><em>Efficiently
+          Training Deep-Learning Parametric Policies using Lagrangian Duality</em></a>.
+        </td>
+      </tr>
+
+      <tr>
+        <td style="padding:4px 6px;vertical-align:top;">
+          <a href="https://github.com/LearningToOptimize/L2OALM.jl"
+             target="_blank">L2OALM.jl</a>
+        </td>
+        <td style="padding:4px 6px;">
+          Implementation of the primal-dual learning method <strong>ALM</strong>,
+          introduced in
+          <a href="https://ojs.aaai.org/index.php/AAAI/article/view/25520" target="_blank">
+          <em>Self-Supervised Primal-Dual Learning for Constrained Optimization</em></a>.
+        </td>
+      </tr>
+
+      <tr>
+        <td style="padding:4px 6px;vertical-align:top;">
+          <a href="https://github.com/LearningToOptimize/L2ODLL.jl"
+             target="_blank">L2ODLL.jl</a>
+        </td>
+        <td style="padding:4px 6px;">
+          Implementation of the dual learning method <strong>DLL</strong>,
+          proposed in
+          <a href="https://neurips.cc/virtual/2024/poster/94146" target="_blank">
+          <em>Dual Lagrangian Learning for Conic Optimization</em></a>.
+        </td>
+      </tr>
+
+      <tr>
+        <td style="padding:4px 6px;vertical-align:top;">
+          <a href="https://github.com/LearningToOptimize/L2ODC3.jl"
+             target="_blank">L2ODC3.jl</a>
+        </td>
+        <td style="padding:4px 6px;">
+          Implementation of the primal learning method <strong>DC3</strong>, as described in
+          <a href="https://openreview.net/forum?id=V1ZHVxJ6dSS" target="_blank">
+          <em>DC3: A Learning Method for Optimization with Hard Constraints</em></a>.
+        </td>
+      </tr>
+
+      <tr>
+        <td style="padding:4px 6px;vertical-align:top;">
+          <a href="https://github.com/LearningToOptimize/BatchNLPKernels.jl"
+             target="_blank">BatchNLPKernels.jl</a>
+        </td>
+        <td style="padding:4px 6px;">
+          GPU kernels that evaluate objectives, Jacobians and Hessians for
+          <strong>batches</strong> of
+          <a href="https://github.com/exanauts/ExaModels.jl" target="_blank">ExaModels</a>,
+          useful when defining loss functions for large-batch ML predictions.
+        </td>
+      </tr>
+
+      <tr>
+        <td style="padding:4px 6px;vertical-align:top;">
+          <a href="https://github.com/LearningToOptimize/BatchConeKernels.jl"
+             target="_blank">BatchConeKernels.jl</a>
+        </td>
+        <td style="padding:4px 6px;">
+          GPU kernels for batched cone operations (projections, distances, etc.),
+          enabling advanced architectures such as repair layers.
+        </td>
+      </tr>
+
+      <tr>
+        <td style="padding:4px 6px;vertical-align:top;">
+          <a href="https://github.com/LearningToOptimize/LearningToControlClass"
+             target="_blank">LearningToControlClass</a>
+        </td>
+        <td style="padding:4px 6px;">
+          Course repository for <em>Special Topics on Optimal Control &amp; Learning</em>
+          (Fall 2025, Georgia Tech).
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ─────────────── datasets and weights ──────────────── -->
+  <h3 style="margin-top:1.25rem;">Open Datasets and Weights</h3>
+
+  <p>
+    The
+    <a href="https://huggingface.co/LearningToOptimize" target="_blank">
+    LearningToOptimize&nbsp;🤗 Hugging Face organization</a>
+    hosts datasets and pre-trained weights that can be used with L2O packages.
+  </p>
+
+</div>
+"""
+
 # ╔═╡ c08f511e-b91d-4d17-a286-96469c31568a
 md"## Example: Robotic Arm Manipulation"
 
 # ╔═╡ b3129bcb-c24a-4faa-a5cf-f69ce518ea87
-load(joinpath(class_dir, "nlp_robot_arm.png"))
+begin
+	load(joinpath(class_dir, "nlp_robot_arm.png"))
+end
 
 # ╔═╡ c1f43c8d-0616-4572-bb48-dbb71e40adda
 md"""
+[^ArmManip]
+
 The tip of the second link is computed using the direct geometric model:
 
 ```math
@@ -169,6 +375,7 @@ y = L_{1}\,\cos\theta_{1} \;+\; L_{2}\,\cos\!\bigl(\theta_{1}+\theta_{2}\bigr).
 # ╔═╡ 57d896ca-221a-4cfc-b37a-be9898fac923
 begin
 md"""
+
 **State**  
 ```math
   \mathbf{x}_t=\begin{bmatrix}\theta_{1,t}&\theta_{2,t}&\dot\theta_{1,t}&\dot\theta_{2,t}\end{bmatrix}^{\!\top}
@@ -214,9 +421,6 @@ h(\mathbf{x}_t,\mathbf{u}_t)\ge 0\;:\;
 
 """
 end
-
-# ╔═╡ e2d3d160-d3b6-41f2-a8bc-2878ba71e78c
-
 
 # ╔═╡ 52005382-177b-4a11-a914-49a5ffc412a3
 section_outline(md"A Crash Course:",md" (Continuous-Time) Dynamics
@@ -463,11 +667,22 @@ Foldable(md"All mechanical systems can be written this way. Why?", md"""
 
 Manipulator Dynamics Equations are a way of rewriting the Euler--Lagrange equations.
 
-#### 🚀 Detour: The Principle of Least Action 🚀
-
-In the calculus of variations and classical mechanics, the Euler–Lagrange equations are a system of second-order ordinary differential equations whose solutions are stationary points of the given action functional. 
 
 > The equations were discovered in the 1750s by Swiss mathematician Leonhard Euler and Italian mathematician Joseph-Louis Lagrange.
+
+""")
+
+# ╔═╡ 5a691d10-44f7-4d44-a2c9-a7d4d720b7cc
+begin
+md"""
+#### 🚀 Detour: The Principle of Least Action 🚀
+
+In the calculus of variations and classical mechanics, the Euler–Lagrange equations are a system of second-order ordinary differential equations whose solutions are stationary points of the given action functional: 
+
+```math
+\mathcal{S}[q(\cdot)] \;=\;
+\int_{t_0}^{t_f} L\!\bigl(q(t),\; \dot q(t)\bigr)\,dt,
+```
 
 In classical mechanics:
 		 
@@ -475,6 +690,14 @@ In classical mechanics:
 L = \underbrace{\frac{1}{2} v^{\top}M(q)v}_{\text{Kinematic Energy}} - \underbrace{U(q)}_{\text{Potential Energy}}
 ```
 
+"""
+end
+
+# ╔═╡ f3d155c6-5384-481a-8373-582e753ea8d6
+question_box(md"What can you say about $M(q)$? When do we have a problem inverting it?")
+
+# ╔═╡ ee5c5e2e-e9f1-4f94-95c9-21d506281ae1
+md"""
 A curve ($q^\star(t)$) is physically realised iff it is a stationary
 point of ($\mathcal{S}$) :
 
@@ -487,16 +710,92 @@ point of ($\mathcal{S}$) :
 M(q)\,\ddot q + C(q,\dot q)\,\dot q + \nabla U(q)=0 .
 ```
 
-""")
-
-# ╔═╡ f3d155c6-5384-481a-8373-582e753ea8d6
-question_box(md"What can you say about $M(q)$? When do we have a problem inverting it?")
+"""
 
 # ╔═╡ b9aeab8a-f8ea-4310-8568-5d6bda0bb4d3
 question_box(md"Can you derive the stationary condition?")
 
-# ╔═╡ e1dc6ecf-4e62-415a-a620-0731953c5ab4
+# ╔═╡ 30a013a8-c02e-4816-af0d-9280473c916b
+md"""
+In most cases:
+```math
+q^{*} \in \arg \min_{q}
+\int_{t_0}^{t_f} L\!\bigl(q(t),\; \dot q(t)\bigr)\,dt,
+```
 
+Now, suppose the configuration must satisfy a *gap function*  
+$\phi(q)\ge 0$ (e.g. **contact with the ground**, obstacle avoidance, joint
+limits).  
+The variational problem becomes
+
+```math
+q^{*} \;\in\;
+\arg\!\min_{q(\cdot)}
+\int_{t_0}^{t_f} L\!\bigl(q(t),\dot q(t)\bigr)\,dt
+\quad\text{s.t.}\quad
+\phi\!\bigl(q(t)\bigr)\;\ge 0 \;\;\;\forall\,t.
+```
+
+Let $(t_k = t_0 + k,\Delta t)$ with $(k=0,\dots,N)$ and
+$(q_k \approx q(t_k))$.
+Using the midpoint rule we approximate the action by
+
+```math
+S_N(q_{0:N})
+\;=\;
+\sum_{k=0}^{N-1}
+L\!\Bigl(
+      \tfrac12\bigl(q_k+q_{k+1}\bigr),\;
+      \tfrac{q_{k+1}-q_k}{\Delta t}
+\Bigr)\,\Delta t,
+```
+
+and obtain the finite‐dimensional problem
+
+```math
+\begin{aligned}
+\min_{q_1,\dots,q_{N}}
+& \; S_N(q_{0:N}) \\[4pt]
+\text{s.t.}\;&\;
+   \phi(q_{k+1}) \;\ge 0,
+   \qquad k = 0,\dots,N-1.
+\end{aligned}
+```
+
+"""
+
+# ╔═╡ 2cc57795-717a-46f0-9bb5-67b601a766de
+begin
+	gif_url   = "https://raw.githubusercontent.com/dojo-sim/Dojo.jl/main/docs/src/assets/animations/atlas_drop.gif"
+	still_url = "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQkrtL7TCGzNxFlXIqYHW_cFP9pfLscwd7vLSH09nfRFEQCqX_J"
+	md""
+end
+
+# ╔═╡ 59f6167d-796c-4844-89c0-c796fb59aa2e
+Columns(md"[^ZachMIT]", md"▶/⏸$(@bind playing CheckBox(default=false))")
+
+# ╔═╡ 58c2e1f2-819d-40fc-8e92-03a1a3019a3d
+Columns(md"""
+$(load(joinpath(class_dir, "rocket_physics.png")))
+
+#### Dojo.jl
+		
+A differentiable physics engine for robotics that simulates systems using optimization.
+
+- [ArXiv preprint](https://arxiv.org/abs/2203.00806)
+- [GitHub](https://github.com/dojo-sim/Dojo.jl)
+		
+"""
+, 
+@htl """
+<img src="$(playing ? gif_url : still_url)"
+	 width="800" height="600"
+	 style="object-fit:contain;" />
+"""		
+)
+
+# ╔═╡ 70690e72-c31e-4c91-b211-35c74d1d9973
+warning_box(md"But in general we need a *ReFeynman* of the these equations!")
 
 # ╔═╡ 5f35a169-887f-477f-b010-167627f7ce4c
 md"## Linear Systems
@@ -1142,32 +1441,26 @@ end
 # ╔═╡ de4807ca-4e17-4020-9810-5f7c0fcae9a3
 question_box(md"### Why most simulators use Backward--Euler?")
 
-# ╔═╡ 97994ed8-5606-46ef-bd30-c5343c1d99cf
-begin
-	MarkdownLiteral.@markdown(
-"""
-
-[^cmu]: [CMU Course on Optimal Control]("https://optimalcontrol.ri.cmu.edu/")
-
-"""
-)
-end
-
 # ╔═╡ Cell order:
 # ╟─13b12c00-6d6e-11f0-3780-a16e73360478
 # ╟─ec473e69-d5ec-4d6a-b868-b89dadb85705
 # ╟─8d7a34ef-5a2d-41a8-ac55-39ab00d7e432
+# ╟─ced1b968-3ba6-4e58-9bcd-bbc6bee2b93c
+# ╟─97994ed8-5606-46ef-bd30-c5343c1d99cf
 # ╟─1f774f46-d57d-4668-8204-dc83d50d8c94
 # ╟─a0f71960-c97c-40d1-8f78-4b1860d2e0a2
 # ╟─1d7092cd-0044-4d38-962a-ce3214c48c24
 # ╟─60ba261a-f2eb-4b45-ad6d-b6042926ccab
 # ╟─15709f7b-943e-4190-8f40-0cfdb8772183
 # ╟─5d7a4408-21ff-41ec-b004-4b0a9f04bb4f
+# ╟─7e487ebc-8327-4f3e-a8ca-1e07fb39991a
+# ╟─bd623016-24ce-4c10-acb3-b2b80d4facc8
+# ╟─2d211386-675a-4223-b4ca-124edd375958
+# ╟─45275d44-e268-43cb-8156-feecd916a6da
 # ╟─c08f511e-b91d-4d17-a286-96469c31568a
 # ╟─b3129bcb-c24a-4faa-a5cf-f69ce518ea87
 # ╟─c1f43c8d-0616-4572-bb48-dbb71e40adda
 # ╟─57d896ca-221a-4cfc-b37a-be9898fac923
-# ╠═e2d3d160-d3b6-41f2-a8bc-2878ba71e78c
 # ╟─52005382-177b-4a11-a914-49a5ffc412a3
 # ╟─8ea866a6-de0f-4812-8f59-2aebec709243
 # ╟─2be161cd-2d4c-4778-adca-d45f8ab05f98
@@ -1185,9 +1478,15 @@ end
 # ╟─f10927fe-d392-4374-bad1-ab5ac85b8116
 # ╟─b8b206ef-cdc5-4cc9-9b55-70d711ba2a9e
 # ╟─a09de9e4-7ecc-4d23-9135-384077f0c03f
+# ╟─5a691d10-44f7-4d44-a2c9-a7d4d720b7cc
 # ╟─f3d155c6-5384-481a-8373-582e753ea8d6
+# ╟─ee5c5e2e-e9f1-4f94-95c9-21d506281ae1
 # ╟─b9aeab8a-f8ea-4310-8568-5d6bda0bb4d3
-# ╠═e1dc6ecf-4e62-415a-a620-0731953c5ab4
+# ╟─30a013a8-c02e-4816-af0d-9280473c916b
+# ╟─2cc57795-717a-46f0-9bb5-67b601a766de
+# ╟─59f6167d-796c-4844-89c0-c796fb59aa2e
+# ╟─58c2e1f2-819d-40fc-8e92-03a1a3019a3d
+# ╟─70690e72-c31e-4c91-b211-35c74d1d9973
 # ╟─5f35a169-887f-477f-b010-167627f7ce4c
 # ╟─e860d92b-cc8f-479b-a0fc-e5f7a11ae1fd
 # ╟─bb4bfa72-bf69-41f5-b017-7cbf31653bae
@@ -1239,4 +1538,3 @@ end
 # ╟─86ce1303-e77c-4b93-a2ed-dc0c54a1f191
 # ╠═b857efd5-dba1-4872-b133-59e80d7cd489
 # ╟─de4807ca-4e17-4020-9810-5f7c0fcae9a3
-# ╟─97994ed8-5606-46ef-bd30-c5343c1d99cf
