@@ -210,143 +210,143 @@ md"[^OptProx]"
 
 """
 
-# ╔═╡ 45275d44-e268-43cb-8156-feecd916a6da
-@htl """
-<div style="
-  border:1px solid #ccc;
-  border-radius:6px;
-  padding:1rem;
-  font-size:0.9rem;
-  max-width:760px;
-  line-height:1.45;
-">
+# # ╔═╡ 45275d44-e268-43cb-8156-feecd916a6da
+# @htl """
+# <div style="
+#   border:1px solid #ccc;
+#   border-radius:6px;
+#   padding:1rem;
+#   font-size:0.9rem;
+#   max-width:760px;
+#   line-height:1.45;
+# ">
 
-  <!-- ─────────────────────── header ─────────────────────── -->
-  <h2 style="margin-top:0">LearningToOptimize&nbsp;Organization</h2>
+#   <!-- ─────────────────────── header ─────────────────────── -->
+#   <h2 style="margin-top:0">LearningToOptimize&nbsp;Organization</h2>
 
-  <p>
-    <strong>LearningToOptimize&nbsp;(L2O)</strong> is a collection of open-source tools
-    focused on the emerging paradigm of <em>amortized optimization</em>—using machine-learning
-    methods to accelerate traditional constrained-optimization solvers.
-    <em>L2O is a work-in-progress; existing functionality is considered experimental and may
-    change.</em>
-  </p>
+#   <p>
+#     <strong>LearningToOptimize&nbsp;(L2O)</strong> is a collection of open-source tools
+#     focused on the emerging paradigm of <em>amortized optimization</em>—using machine-learning
+#     methods to accelerate traditional constrained-optimization solvers.
+#     <em>L2O is a work-in-progress; existing functionality is considered experimental and may
+#     change.</em>
+#   </p>
 
-  <!-- ─────────────────── repositories table ──────────────── -->
-  <h3>Open-Source&nbsp;Repositories</h3>
+#   <!-- ─────────────────── repositories table ──────────────── -->
+#   <h3>Open-Source&nbsp;Repositories</h3>
 
-  <table style="border-collapse:collapse;width:100%">
-    <tbody>
-      <tr>
-        <td style="padding:4px 6px;vertical-align:top;">
-          <a href="https://github.com/LearningToOptimize/LearningToOptimize.jl"
-             target="_blank">LearningToOptimize.jl</a>
-        </td>
-        <td style="padding:4px 6px;">
-          Flagship Julia package that wraps data generation, training loops and evaluation
-          utilities for fitting surrogate models to parametric optimization problems.
-        </td>
-      </tr>
+#   <table style="border-collapse:collapse;width:100%">
+#     <tbody>
+#       <tr>
+#         <td style="padding:4px 6px;vertical-align:top;">
+#           <a href="https://github.com/LearningToOptimize/LearningToOptimize.jl"
+#              target="_blank">LearningToOptimize.jl</a>
+#         </td>
+#         <td style="padding:4px 6px;">
+#           Flagship Julia package that wraps data generation, training loops and evaluation
+#           utilities for fitting surrogate models to parametric optimization problems.
+#         </td>
+#       </tr>
 
-      <tr>
-        <td style="padding:4px 6px;vertical-align:top;">
-          <a href="https://github.com/andrewrosemberg/DecisionRules.jl"
-             target="_blank">DecisionRules.jl</a>
-        </td>
-        <td style="padding:4px 6px;">
-          Build decision rules for multistage stochastic programs, as proposed in
-          <a href="https://arxiv.org/pdf/2405.14973" target="_blank"><em>Efficiently
-          Training Deep-Learning Parametric Policies using Lagrangian Duality</em></a>.
-        </td>
-      </tr>
+#       <tr>
+#         <td style="padding:4px 6px;vertical-align:top;">
+#           <a href="https://github.com/andrewrosemberg/DecisionRules.jl"
+#              target="_blank">DecisionRules.jl</a>
+#         </td>
+#         <td style="padding:4px 6px;">
+#           Build decision rules for multistage stochastic programs, as proposed in
+#           <a href="https://arxiv.org/pdf/2405.14973" target="_blank"><em>Efficiently
+#           Training Deep-Learning Parametric Policies using Lagrangian Duality</em></a>.
+#         </td>
+#       </tr>
 
-      <tr>
-        <td style="padding:4px 6px;vertical-align:top;">
-          <a href="https://github.com/LearningToOptimize/L2OALM.jl"
-             target="_blank">L2OALM.jl</a>
-        </td>
-        <td style="padding:4px 6px;">
-          Implementation of the primal-dual learning method <strong>ALM</strong>,
-          introduced in
-          <a href="https://ojs.aaai.org/index.php/AAAI/article/view/25520" target="_blank">
-          <em>Self-Supervised Primal-Dual Learning for Constrained Optimization</em></a>.
-        </td>
-      </tr>
+#       <tr>
+#         <td style="padding:4px 6px;vertical-align:top;">
+#           <a href="https://github.com/LearningToOptimize/L2OALM.jl"
+#              target="_blank">L2OALM.jl</a>
+#         </td>
+#         <td style="padding:4px 6px;">
+#           Implementation of the primal-dual learning method <strong>ALM</strong>,
+#           introduced in
+#           <a href="https://ojs.aaai.org/index.php/AAAI/article/view/25520" target="_blank">
+#           <em>Self-Supervised Primal-Dual Learning for Constrained Optimization</em></a>.
+#         </td>
+#       </tr>
 
-      <tr>
-        <td style="padding:4px 6px;vertical-align:top;">
-          <a href="https://github.com/LearningToOptimize/L2ODLL.jl"
-             target="_blank">L2ODLL.jl</a>
-        </td>
-        <td style="padding:4px 6px;">
-          Implementation of the dual learning method <strong>DLL</strong>,
-          proposed in
-          <a href="https://neurips.cc/virtual/2024/poster/94146" target="_blank">
-          <em>Dual Lagrangian Learning for Conic Optimization</em></a>.
-        </td>
-      </tr>
+#       <tr>
+#         <td style="padding:4px 6px;vertical-align:top;">
+#           <a href="https://github.com/LearningToOptimize/L2ODLL.jl"
+#              target="_blank">L2ODLL.jl</a>
+#         </td>
+#         <td style="padding:4px 6px;">
+#           Implementation of the dual learning method <strong>DLL</strong>,
+#           proposed in
+#           <a href="https://neurips.cc/virtual/2024/poster/94146" target="_blank">
+#           <em>Dual Lagrangian Learning for Conic Optimization</em></a>.
+#         </td>
+#       </tr>
 
-      <tr>
-        <td style="padding:4px 6px;vertical-align:top;">
-          <a href="https://github.com/LearningToOptimize/L2ODC3.jl"
-             target="_blank">L2ODC3.jl</a>
-        </td>
-        <td style="padding:4px 6px;">
-          Implementation of the primal learning method <strong>DC3</strong>, as described in
-          <a href="https://openreview.net/forum?id=V1ZHVxJ6dSS" target="_blank">
-          <em>DC3: A Learning Method for Optimization with Hard Constraints</em></a>.
-        </td>
-      </tr>
+#       <tr>
+#         <td style="padding:4px 6px;vertical-align:top;">
+#           <a href="https://github.com/LearningToOptimize/L2ODC3.jl"
+#              target="_blank">L2ODC3.jl</a>
+#         </td>
+#         <td style="padding:4px 6px;">
+#           Implementation of the primal learning method <strong>DC3</strong>, as described in
+#           <a href="https://openreview.net/forum?id=V1ZHVxJ6dSS" target="_blank">
+#           <em>DC3: A Learning Method for Optimization with Hard Constraints</em></a>.
+#         </td>
+#       </tr>
 
-      <tr>
-        <td style="padding:4px 6px;vertical-align:top;">
-          <a href="https://github.com/LearningToOptimize/BatchNLPKernels.jl"
-             target="_blank">BatchNLPKernels.jl</a>
-        </td>
-        <td style="padding:4px 6px;">
-          GPU kernels that evaluate objectives, Jacobians and Hessians for
-          <strong>batches</strong> of
-          <a href="https://github.com/exanauts/ExaModels.jl" target="_blank">ExaModels</a>,
-          useful when defining loss functions for large-batch ML predictions.
-        </td>
-      </tr>
+#       <tr>
+#         <td style="padding:4px 6px;vertical-align:top;">
+#           <a href="https://github.com/LearningToOptimize/BatchNLPKernels.jl"
+#              target="_blank">BatchNLPKernels.jl</a>
+#         </td>
+#         <td style="padding:4px 6px;">
+#           GPU kernels that evaluate objectives, Jacobians and Hessians for
+#           <strong>batches</strong> of
+#           <a href="https://github.com/exanauts/ExaModels.jl" target="_blank">ExaModels</a>,
+#           useful when defining loss functions for large-batch ML predictions.
+#         </td>
+#       </tr>
 
-      <tr>
-        <td style="padding:4px 6px;vertical-align:top;">
-          <a href="https://github.com/LearningToOptimize/BatchConeKernels.jl"
-             target="_blank">BatchConeKernels.jl</a>
-        </td>
-        <td style="padding:4px 6px;">
-          GPU kernels for batched cone operations (projections, distances, etc.),
-          enabling advanced architectures such as repair layers.
-        </td>
-      </tr>
+#       <tr>
+#         <td style="padding:4px 6px;vertical-align:top;">
+#           <a href="https://github.com/LearningToOptimize/BatchConeKernels.jl"
+#              target="_blank">BatchConeKernels.jl</a>
+#         </td>
+#         <td style="padding:4px 6px;">
+#           GPU kernels for batched cone operations (projections, distances, etc.),
+#           enabling advanced architectures such as repair layers.
+#         </td>
+#       </tr>
 
-      <tr>
-        <td style="padding:4px 6px;vertical-align:top;">
-          <a href="https://github.com/LearningToOptimize/LearningToControlClass"
-             target="_blank">LearningToControlClass</a>
-        </td>
-        <td style="padding:4px 6px;">
-          Course repository for <em>Special Topics on Optimal Control &amp; Learning</em>
-          (Fall 2025, Georgia Tech).
-        </td>
-      </tr>
-    </tbody>
-  </table>
+#       <tr>
+#         <td style="padding:4px 6px;vertical-align:top;">
+#           <a href="https://github.com/LearningToOptimize/LearningToControlClass"
+#              target="_blank">LearningToControlClass</a>
+#         </td>
+#         <td style="padding:4px 6px;">
+#           Course repository for <em>Special Topics on Optimal Control &amp; Learning</em>
+#           (Fall 2025, Georgia Tech).
+#         </td>
+#       </tr>
+#     </tbody>
+#   </table>
 
-  <!-- ─────────────── datasets and weights ──────────────── -->
-  <h3 style="margin-top:1.25rem;">Open Datasets and Weights</h3>
+#   <!-- ─────────────── datasets and weights ──────────────── -->
+#   <h3 style="margin-top:1.25rem;">Open Datasets and Weights</h3>
 
-  <p>
-    The
-    <a href="https://huggingface.co/LearningToOptimize" target="_blank">
-    LearningToOptimize&nbsp;🤗 Hugging Face organization</a>
-    hosts datasets and pre-trained weights that can be used with L2O packages.
-  </p>
+#   <p>
+#     The
+#     <a href="https://huggingface.co/LearningToOptimize" target="_blank">
+#     LearningToOptimize&nbsp;🤗 Hugging Face organization</a>
+#     hosts datasets and pre-trained weights that can be used with L2O packages.
+#   </p>
 
-</div>
-"""
+# </div>
+# """
 
 # ╔═╡ c08f511e-b91d-4d17-a286-96469c31568a
 md"## Example: Robotic Arm Manipulation"
