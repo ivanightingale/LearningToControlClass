@@ -762,12 +762,37 @@ and obtain the finite‐dimensional problem
 \end{aligned}
 ```
 
-[^ZachMIT]
-
 """
 
+# ╔═╡ 2cc57795-717a-46f0-9bb5-67b601a766de
+begin
+	gif_url   = "https://raw.githubusercontent.com/dojo-sim/Dojo.jl/main/docs/src/assets/animations/atlas_drop.gif"
+	still_url = "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQkrtL7TCGzNxFlXIqYHW_cFP9pfLscwd7vLSH09nfRFEQCqX_J"
+	md""
+end
+
+# ╔═╡ 59f6167d-796c-4844-89c0-c796fb59aa2e
+Columns(md"[^ZachMIT]", md"▶/⏸$(@bind playing CheckBox(default=false))")
+
 # ╔═╡ 58c2e1f2-819d-40fc-8e92-03a1a3019a3d
-load(joinpath(class_dir, "rocket_physics.png"))
+Columns(md"""
+$(load(joinpath(class_dir, "rocket_physics.png")))
+
+#### Dojo.jl
+		
+A differentiable physics engine for robotics that simulates systems using optimization.
+
+- [ArXiv preprint](https://arxiv.org/abs/2203.00806)
+- [GitHub](https://github.com/dojo-sim/Dojo.jl)
+		
+"""
+, 
+@htl """
+<img src="$(playing ? gif_url : still_url)"
+	 width="800" height="600"
+	 style="object-fit:contain;" />
+"""		
+)
 
 # ╔═╡ 70690e72-c31e-4c91-b211-35c74d1d9973
 warning_box(md"But in general we need a *ReFeynman* of the these equations!")
@@ -1458,6 +1483,8 @@ question_box(md"### Why most simulators use Backward--Euler?")
 # ╟─ee5c5e2e-e9f1-4f94-95c9-21d506281ae1
 # ╟─b9aeab8a-f8ea-4310-8568-5d6bda0bb4d3
 # ╟─30a013a8-c02e-4816-af0d-9280473c916b
+# ╟─2cc57795-717a-46f0-9bb5-67b601a766de
+# ╟─59f6167d-796c-4844-89c0-c796fb59aa2e
 # ╟─58c2e1f2-819d-40fc-8e92-03a1a3019a3d
 # ╟─70690e72-c31e-4c91-b211-35c74d1d9973
 # ╟─5f35a169-887f-477f-b010-167627f7ce4c
