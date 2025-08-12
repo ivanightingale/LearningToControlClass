@@ -481,7 +481,7 @@ md"State $x$ is everything you need to define to determine the how your system w
 md"### Example: Pendulum"
 
 # ╔═╡ baa3993c-96b0-474e-b5b4-f9eaea642a49
-function pendulum(θ_deg = 60; L = 4, fsize = (520, 450), _xlims=nothing)
+function pendulum(θ_deg = 60; L = 4, fsize = (520, 450), _xlims=nothing, _ylims=(-5, 5))
     θ       = deg2rad(θ_deg)
     pivot   = Point2f(0, 0)
     mass    = Point2f(-L*sin(θ), -L*cos(θ))        # rod tip
@@ -495,11 +495,9 @@ function pendulum(θ_deg = 60; L = 4, fsize = (520, 450), _xlims=nothing)
                xgridvisible   = false,
                ygridvisible   = false)
     hidespines!(ax)
-
-	_y = -L*cos(θ)
-	if _y > 0 
-		ylims!(ax, (-1, _y + 1))
-	end
+    if !isnothing(_ylims)
+	    ylims!(ax, _ylims)
+    end
 
 	if !isnothing(_xlims)
 		xlims!(ax, _xlims)
