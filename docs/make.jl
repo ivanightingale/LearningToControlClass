@@ -1,5 +1,5 @@
 using Documenter
-using Pluto
+# using Pluto
 
 include("definitions.jl")
 
@@ -7,10 +7,10 @@ repo_dir = dirname(@__DIR__)
 build_dir = joinpath(repo_dir, "docs", "build")
 
 plutos = [
-    joinpath(repo_dir, "class01", "background_materials", "math_basics.jl"),
-    joinpath(repo_dir, "class01", "background_materials", "optimization_basics.jl"),
-    joinpath(repo_dir, "class01", "background_materials", "optimization_motivation.jl"),
-    joinpath(repo_dir, "class01", "class01_intro.jl"),
+    joinpath(repo_dir, "class01", "background_materials", "math_basics.html"),
+    joinpath(repo_dir, "class01", "background_materials", "optimization_basics.html"),
+    joinpath(repo_dir, "class01", "background_materials", "optimization_motivation.html"),
+    joinpath(repo_dir, "class01", "class01_intro.html"),
 ]
 
 if !isdir(build_dir)
@@ -39,19 +39,32 @@ makedocs(
     ],
 )
 
+for pluto in plutos
+    filename = replace(pluto, repo_dir => build_dir)
+    mkpath(dirname(filename))
+    cp(pluto, filename, force=true)
+end
+
 rm(joinpath(repo_dir, "docs", "src", "class01"), force=true)
 
-s = Pluto.ServerSession();
-for pluto in plutos
-    nb = Pluto.SessionActions.open(s, pluto; run_async=false)
-    html_contents = Pluto.generate_html(nb; binder_url_js="undefined")
-    filename = replace(pluto, repo_dir => build_dir)
-    html_path = replace(filename, r"\.jl$" => ".html")
-    mkpath(dirname(html_path))
-    open(html_path, "w") do f
-        write(f, html_contents)
-    end
-end
+# In case we want to generate HTML from Pluto notebooks in CI
+# plutos = [
+#     joinpath(repo_dir, "class01", "background_materials", "math_basics.jl"),
+#     joinpath(repo_dir, "class01", "background_materials", "optimization_basics.jl"),
+#     joinpath(repo_dir, "class01", "background_materials", "optimization_motivation.jl"),
+#     joinpath(repo_dir, "class01", "class01_intro.jl"),
+# ]
+# s = Pluto.ServerSession();
+# for pluto in plutos
+#     nb = Pluto.SessionActions.open(s, pluto; run_async=false)
+#     html_contents = Pluto.generate_html(nb; binder_url_js="undefined")
+#     filename = replace(pluto, repo_dir => build_dir)
+#     html_path = replace(filename, r"\.jl$" => ".html")
+#     mkpath(dirname(html_path))
+#     open(html_path, "w") do f
+#         write(f, html_contents)
+#     end
+# end
 
 # Documenter can also automatically deploy documentation to gh-pages.
 # See "Hosting Documentation" and deploydocs() in the Documenter manual
