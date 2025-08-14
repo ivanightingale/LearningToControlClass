@@ -35,7 +35,7 @@ This student-led course explores modern techniques for controlling — and learn
 | 4  | 09/12/2025   | **External seminar 1** - Joaquim Dias Garcia| Dynamic Programming & Model-Predictive Control | |
 | 5  | 09/19/2025   | Lecture - Guancheng "Ivan" Qiu | **Nonlinear** trajectory **optimization**; collocation; implicit integration | |
 | 6  | 09/26/2025   | **External seminar 2** - Henrique Ferrolho | Trajectory **optimization** on robots in Julia Robotics | |
-| 7  | 10/03/2025   | Lecture - TBD | Essentials of PDEs for control engineers; weak forms; FEM/FDM review | |
+| 7  | 10/03/2025   | Lecture - TBD | Essentials of PDEs for control engineers; weak forms; FEM/FDM review; Hybrid control with classical PDE solvers | |
 | 8  | 10/10/2025   | **External seminar 3** TBD (speaker to be confirmed) | Topology **optimization** | |
 | 9  | 10/17/2025   | **External seminar 4** — François Pacaud | GPU-accelerated optimal control | |
 |10  | 10/24/2025   | Lecture - Michael Klamkin | Physics-Informed Neural Networks (PINNs): formulation & pitfalls | |
@@ -46,15 +46,18 @@ This student-led course explores modern techniques for controlling — and learn
 
 #### Pool of additional topics
 
-If there are more students than slots, we will select from the following topics for recorded-lectures. 
-Students must provide materials equivalent to an in-person session. 
+If there are more students than slots, we will select from the following topics for recorded lectures. 
+Students must provide materials equivalent to those used in an in-person session. 
 
 | # | Format / Presenter | Topic & Learning Goals | Prep / Key Resources |
 |---|--------------------|------------------------|----------------------|
-| 15 | Lecture - TBD | Quaternions, Lie groups, and Lie algebras; attitude control; LQR with Attitude, Quadrotors | |
-| 16 | Lecture - TBD | Contact Explict and Contact Implicit; Trajectory Optimization for Hybrid and Composed Systems;  | |
-| 16 | Lecture - TBD | Trajectory Optimization with Obstacles; Convexification of Non-Convex Constraints; | |
-| 17 | Lecture - TBD | Robust control & min-max DDP (incl. PDE cases); chance constraints; Data-driven control & Model-Based RL-in-the-loop | |
+| 15 | Lecture - TBD | Quaternions, Lie groups, and Lie algebras; attitude control; LQR with Attitude, Quadrotors; | |
+| 16 | Lecture - TBD | Stochastic optimal control, Linear Quadratic Gaussian (LQG), Kalman filtering, robust control under uncertainty, unscented optimal control; | |
+| 17 | Lecture - TBD | Trajectory Optimization with Obstacles; Convexification of Non-Convex Constraints; | |
+| 18 | Lecture - TBD | Robust control & min-max DDP (incl. PDE cases); chance constraints; Data-driven control & Model-Based RL-in-the-loop | |
+| 19 | Lecture - TBD | Contact Explict and Contact Implicit; Trajectory Optimization for Hybrid and Composed Systems;  | |
+| 20 | Lecture - TBD | Probabilistic Programming; Bayesian numerical methods; Variational Inference; probabilistic solvers for ODEs/PDEs; Bayesian optimization in control;  | |
+| 21 | Lecture - TBD | Distributed optimal control & multi-agent coordination; Consensus, distributed MPC, and optimization over graphs (ADMM). | |
 
 ## Reference Material
 
