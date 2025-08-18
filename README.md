@@ -47,7 +47,7 @@ This student-led course explores modern techniques for controlling — and learn
 #### Pool of additional topics
 
 If there are more students than slots, we will select from the following topics for recorded lectures. 
-Students must provide materials equivalent to those used in an in-person session. 
+Students must provide materials equivalent to those used in an in-person session by `10/03/2025`.
 
 | # | Format / Presenter | Topic & Learning Goals | Prep / Key Resources |
 |---|--------------------|------------------------|----------------------|
