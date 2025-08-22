@@ -54,7 +54,7 @@ Students must provide materials equivalent to those used in an in-person session
 | 15 | Lecture - TBD | Quaternions, Lie groups, and Lie algebras; attitude control; LQR with Attitude, Quadrotors; | |
 | 16 | Lecture - TBD | Stochastic optimal control, Linear Quadratic Gaussian (LQG), Kalman filtering, robust control under uncertainty, unscented optimal control; | |
 | 17 | Lecture - TBD | Trajectory Optimization with Obstacles; Convexification of Non-Convex Constraints; | |
-| 18 | Lecture - TBD | Robust control & min-max DDP (incl. PDE cases); chance constraints; Data-driven control & Model-Based RL-in-the-loop | |
+| 18 | Lecture - Joe Ye | Robust control & min-max DDP (incl. PDE cases); chance constraints; Data-driven control & Model-Based RL-in-the-loop | |
 | 19 | Lecture - TBD | Contact Explict and Contact Implicit; Trajectory Optimization for Hybrid and Composed Systems;  | |
 | 20 | Lecture - TBD | Probabilistic Programming; Bayesian numerical methods; Variational Inference; probabilistic solvers for ODEs/PDEs; Bayesian optimization in control;  | |
 | 21 | Lecture - TBD | Distributed optimal control & multi-agent coordination; Consensus, distributed MPC, and optimization over graphs (ADMM). | |
