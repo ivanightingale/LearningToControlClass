@@ -74,18 +74,18 @@ question_box(md"What is the partial derivative of $f$ with respect to $w_n$? Wha
 # ╔═╡ 23ff3286-be75-42b8-8327-46ebb7d8b538
 md"Write you answer bellow in place of `missing`"
 
-# ╔═╡ a33c9e20-0139-4e72-a6a1-d7e9641195cb
-begin
-	∂f╱∂ωₙ = missing # should be a function of w, a, n
-	∇f = missing # should be a function of w, a
-end
-
 # ╔═╡ c9afb329-2aa8-48e2-8238-8f6f3977b988
 begin
 N = 10
 n = 5
 a = rand(N)
 println("a=", a)
+end
+
+# ╔═╡ a33c9e20-0139-4e72-a6a1-d7e9641195cb
+begin
+	∂f╱∂ωₙ = a[n] # should be a function of w, a, n
+	∇f = a # should be a function of w, a
 end
 
 # ╔═╡ 529c2464-4611-405b-8ff7-b9de8158aa2d
@@ -130,7 +130,7 @@ f_2(w_1, w_2, w_3) = w_1 w_2 + w_2 w_3 + w_3 w_1
 # ╔═╡ 611c28fa-9542-11ea-1751-fbdedcfb7690
 begin
 	f2(w) = w[1] * w[2] + w[2] * w[3] + w[3] * w[1]
-	∇f2 = (w) -> missing # replace missing with the function that computes the gradient of `f2`
+	∇f2 = (w) -> [w[2] + w[3], w[1] + w[3], w[1] + w[2]] # replace missing with the function that computes the gradient of `f2`
 end
 
 # ╔═╡ da942073-32d5-4de5-82c0-271a0cb0e903
@@ -172,11 +172,30 @@ y = A v
 # ╔═╡ 397ffb27-b0c4-408a-8c89-b022e6924ee0
 question_box(md"Argue that $y$ can be written as a linear combination of the columns of $A$.")
 
+# ╔═╡ 6f6ca783-6e07-42f0-bbcc-6e7802677bbd
+md"
+Answer:
+```math
+\begin{align}
+y &= Av \\
+&= \sum_{i=1}^{m} (A_{[i, :]} v) e_{i} \\
+&= \sum_{j=1}^{n} v_{j} A_{[:, j]}
+\end{align}
+```
+"
+
 # ╔═╡ f1346c3e-727a-488d-bfc8-54ffacd26987
 md"### d) Vector Squared"
 
 # ╔═╡ e0642f42-9545-11ea-14ee-fde52cb54ccc
 question_box(md" Given any vector $v \in R^N$ with real entries, show that $v^T v = 0 \iff v = 0$")
+
+# ╔═╡ 48f52430-13f3-4c68-af68-1ae1e7ba7748
+md"
+Answer:
+
+ $v^{\top}v = 0$ is equivalent to $\sum_{i=1}^{n} v_{i}^{2} = 0$ which is equivalent to $v_{i} = 0$.
+"
 
 # ╔═╡ 19ff8d36-9547-11ea-0e08-e5cdd8338673
 md"
@@ -187,6 +206,13 @@ Suppose a matrix $A = B^T B$ where matrix $B_{m,n}$ is not necessarily square ($
 
 # ╔═╡ ee268cb3-c7b4-4696-a8d2-54efe9ab56a7
 question_box(md"Is that $A$ is square, symmetric, and PSD? Argue")
+
+# ╔═╡ afbf731f-0a2a-499a-a361-e3b983a7e780
+md"
+Answer:
+
+ $A^{\top} = (B^{\top}B)^{\top} = B^{\top} B$, so $A$ is symmetric and square. We also have $v^{\top}Av = v^{\top} B^{\top} B v = ||Bv||_{2}^{2} \geq 0$ so $A$ is PSD.
+"
 
 # ╔═╡ 9967004a-cd54-4b57-a813-c70634dece88
 md" **Check your counter example:**
@@ -232,11 +258,11 @@ md" **Lets check our answer:**"
 begin
 
 # Our Eigenvalues 
-😀 = missing
+😀 = [2, 4]
 
 # Our Eigenvectors
 
-🥤= missing
+🥤= [-1/sqrt(2) 1/sqrt(2); 1/sqrt(2) 1/sqrt(2)]
 
 end
 
@@ -279,8 +305,8 @@ end
 # ╔═╡ 17a2fa3a-4dfc-45df-955a-068bbd1c225c
 begin
 	# Add your answer here
-	V₋₁ = missing
-	Λ₋₁ = missing
+	V₋₁ = eigen(A).vectors
+	Λ₋₁ = inv.(eigen(A).values)
 end
 
 # ╔═╡ 1fec2e0a-c108-43a1-a4f3-557af9e215ab
@@ -317,6 +343,15 @@ How many solutions when $rank(A)<N$? What can you say about Null$(A)$?
 How many solutions when $rank(A)=M$? What is the objective value?
 ")
 
+# ╔═╡ 48452f3d-ecef-453a-9489-ea33306805b2
+md"
+Answer:
+
+- 1 solution.$(A^{\top}A)^{-1} A^{\top} y$
+- Infinitely many. Dimension of $dim(Null(A)) = N - rank(A)$.
+- In this case the problem is under-determined. The linear system has solutions and the objective is therefore 0.
+"
+
 # ╔═╡ 53b889b3-edf4-4eb2-ac4f-478b51117bf5
 md"""
 #### i) Regularized Least--Squares
@@ -331,8 +366,24 @@ The regularized least-squares problem is
 # ╔═╡ 92eda57b-a791-4507-bd30-5e81dcdf8946
 question_box(md"For which $Rank(A)$ this is useful?")
 
+# ╔═╡ ce5d3afc-1db2-46df-998c-729cb9564df3
+md"
+Answer:
+
+When $Rank(A) < N$. Adding the regularization makes the linear system obtained from setting the gradient to 0 to have a unique solution.
+"
+
 # ╔═╡ 890ac713-4636-4ee3-9d3f-fb661f944576
 question_box(md"Closed form solution?")
+
+# ╔═╡ dc4eb291-7d90-4242-8cf2-29bf009a9e78
+md"
+Answer:
+
+We need $A^{\top}A x - A^{\top} y + \delta x = 0$.
+
+So the solution is $(A^{\top} A + \delta I)^{-1} A^{\top} y$.
+"
 
 # ╔═╡ 0e3331b5-f7fc-4666-a617-d1b5f99aa162
 question_box(md"""
@@ -344,6 +395,13 @@ Show that, as δ → 0, the regularized solution converges to the minimum--norm 
 \end{aligned}
 ```
 """)
+
+# ╔═╡ c0594da7-ba4d-4d6a-8b26-648fc2acbb68
+md"
+Answer:
+
+
+"
 
 # ╔═╡ 7a0dc457-c4b4-4893-a36f-366cac98c349
 begin
@@ -397,8 +455,19 @@ end
 Function to fit a polynomial of order `M` to sample points `(t,y)` using least-squares.
 """
 function polynomial_fit(tm::Vector{T}, ym::Vector{T}, M::Int)::Function where {T<:Real}
-	# Write your answer here in place if missing
-	return (t) -> missing
+	function f(t::T)
+        s = zero(T)
+        for j in 1:M
+            L_j = one(T)
+            for k in 1:M
+				k != j && (L_j *= (t - tm[k]) / (tm[j] - tm[k]))
+            end
+            s += ym[j] * L_j
+        end
+        return s
+    end
+    
+    return f
 end
 
 # ╔═╡ 5db09226-55de-4fe6-b630-0d9748500579
@@ -411,9 +480,9 @@ begin
 	end
 end
 
-# ╔═╡ 1a27508f-fd91-4a40-82d0-74753d3d1acd
+# ╔═╡ 4f0a5f84-f080-4a7a-853f-0cd47112e601
 begin
-	# Plot here
+	plt_a = plot(ts, vcat(polinomials, [f_q1]), xlabel="t", label=vcat(string.(range_M), "f") |> permutedims)
 end
 
 # ╔═╡ f8ca0eaa-6fc4-40eb-9723-f8445cd145dd
@@ -458,12 +527,43 @@ Plot the resulting cubic spline with $f(t)$ overlaid.
 end
 
 # ╔═╡ 3b4e9c20-44fd-4bcc-ab61-231cab22f6ff
-# Implement and replace here 
-cobic_spline = (t) -> missing
+begin
+	n_cs = 8
+	x = range(-1, 1, length=n_cs + 1) |> collect
+	y = f_q1.(x)
+	grad_start = 0.0
+	grad_end = 0.0
+	h = diff(x)
+
+	mu = vcat([h[i] / (h[i] + h[i + 1]) for i in 1:n_cs - 1], [0])  # mu_n = 0
+	lam = vcat([0], 1 .- mu[1:end - 1])  # lam_0 = 0
+	A_cs = Tridiagonal(mu, 2 * ones(n_cs + 1), lam)
+	
+	b_cs = zeros(n_cs + 1)
+	b_cs[1] = 6 * ( (y[2] - y[1]) / h[1] - grad_start ) / h[1]  # d_0
+	b_cs[end] = 6 * ( grad_end - (y[end] - y[end - 1]) / h[end] ) / h[end]  # d_n
+	for i in 2:n
+		b_cs[i] = 6 * ( (y[i + 1] - y[i]) / h[i] - (y[i] - y[i - 1]) / h[i - 1] ) / (h[i] + h[i-1])
+	end
+
+	M_cs = A_cs \ b_cs
+
+	function cobic_spline(t)
+		i = clamp(searchsortedlast(x, t), 2, n_cs+1)
+        hi = h[i-1]
+        xi0, xi = x[i-1], x[i]
+        Mi0, Mi = M_cs[i-1], M_cs[i]
+        yi0, yi = y[i-1], y[i]
+		return Mi0 * (xi - t)^3 / (6 * hi) +
+               Mi * (t - xi0)^3 / (6 * hi) +
+               (yi0 - Mi0 * hi^2 / 6) * (xi - t) / hi +
+               (yi - Mi * hi^2 / 6) * (t - xi0) / hi
+	end
+end
 
 # ╔═╡ 8155e2d3-5a82-42d4-8450-297f88da190a
 begin
-	# Plot here
+	plt_b = plot(x, cobic_spline, xlabel="t")
 end
 
 # ╔═╡ 002cc5c1-094e-4133-9108-451ff74e8f2f
@@ -517,8 +617,16 @@ end
 
 # ╔═╡ 6b006a1e-e53c-490e-ab61-772a168f0064
 begin
-	# Write your answer here
-	alpha = missing # This should a vector of floats
+	A_qbs = [
+		3//4 1//8 0 0 0;
+    	1//8 3//4 1//8 0 0;
+	 	0 1//8 3//4 1//8 0;
+		0 0 1//8 3//4 1//8;
+		0 0 0 1//8 3//4
+	]
+
+	b_qbs = [-1, -1, 2, 5, 1]
+	alpha = A_qbs \ b_qbs
 end
 
 # ╔═╡ 4ffc2c46-7c78-4afa-9ea3-888b1790b291
@@ -626,10 +734,13 @@ And others that are useful for Machine Learning:
 # ╟─e6948424-ce04-4bed-b9d1-ab6c5a513ffa
 # ╟─6f7eecec-9543-11ea-1284-dd52fce3ecca
 # ╟─397ffb27-b0c4-408a-8c89-b022e6924ee0
+# ╟─6f6ca783-6e07-42f0-bbcc-6e7802677bbd
 # ╟─f1346c3e-727a-488d-bfc8-54ffacd26987
 # ╟─e0642f42-9545-11ea-14ee-fde52cb54ccc
+# ╟─48f52430-13f3-4c68-af68-1ae1e7ba7748
 # ╟─19ff8d36-9547-11ea-0e08-e5cdd8338673
 # ╟─ee268cb3-c7b4-4696-a8d2-54efe9ab56a7
+# ╟─afbf731f-0a2a-499a-a361-e3b983a7e780
 # ╟─9967004a-cd54-4b57-a813-c70634dece88
 # ╠═b8700fc7-3e81-44ac-abf2-d62bf96dcece
 # ╟─644e3970-4b24-4392-822b-0d11e5cbeb89
@@ -643,17 +754,21 @@ And others that are useful for Machine Learning:
 # ╟─1fec2e0a-c108-43a1-a4f3-557af9e215ab
 # ╟─a6fbd265-f78a-4914-b9ec-f0596db10a4f
 # ╟─ef54ff3d-f713-46c3-a758-b36166f9e898
+# ╟─48452f3d-ecef-453a-9489-ea33306805b2
 # ╟─53b889b3-edf4-4eb2-ac4f-478b51117bf5
 # ╟─92eda57b-a791-4507-bd30-5e81dcdf8946
+# ╟─ce5d3afc-1db2-46df-998c-729cb9564df3
 # ╟─890ac713-4636-4ee3-9d3f-fb661f944576
+# ╟─dc4eb291-7d90-4242-8cf2-29bf009a9e78
 # ╟─0e3331b5-f7fc-4666-a617-d1b5f99aa162
+# ╟─c0594da7-ba4d-4d6a-8b26-648fc2acbb68
 # ╟─7a0dc457-c4b4-4893-a36f-366cac98c349
 # ╠═9afd68f1-0205-40cd-bf33-20fba8069055
 # ╟─7a49dd41-dca3-4a88-84c5-0bb00016bb8e
 # ╟─f7e30484-c36c-4624-a38e-1ca0338dc735
 # ╠═78558f34-fd3a-4a72-ae30-6966d13a8990
 # ╠═5db09226-55de-4fe6-b630-0d9748500579
-# ╠═1a27508f-fd91-4a40-82d0-74753d3d1acd
+# ╠═4f0a5f84-f080-4a7a-853f-0cd47112e601
 # ╟─f8ca0eaa-6fc4-40eb-9723-f8445cd145dd
 # ╟─42210cd5-73bb-4d38-ac37-1896ed61327d
 # ╟─8253c6cb-ec11-473c-a24f-5be4d645b0cd
