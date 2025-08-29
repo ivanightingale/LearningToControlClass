@@ -5,7 +5,7 @@
 % ==== Equality constraints: KKT, Newton vs. Gauss–Newton ====
 
 \begin{frame}{Equality-constrained minimization: geometry and conditions}
-\textbf{Problem.}; $\min_{x\in\mathbb{R}^n} f(x)\quad \text{s.t.}\quad C(x)=0, C:\mathbb{R}^n\to\mathbb{R}^m$.
+\textbf{Problem}; $\min_{x\in\mathbb{R}^n} f(x)\quad \text{s.t.}\quad C(x)=0, C:\mathbb{R}^n\to\mathbb{R}^m$.
 
 \medskip
 \textbf{Geometric picture.} At an optimum on the manifold $C(x)=0$, the negative gradient must lie in the tangent space:
@@ -33,6 +33,38 @@ $$
 
 
 
+\section{Constrained Optimization}
+
+% ==== Slide 1: Picture-first intuition ====
+\begin{frame}[t]{Equality constraints: picture first}
+\setbeamercovered{invisible}
+
+\textbf{Goal.} Minimize $f(x)$ while staying on the surface $C(x)=0$.
+
+\uncover<2->{\textbf{Feasible set as a surface.} Think of $C(x)=0$ as a smooth surface embedded in $\mathbb{R}^n$ (a manifold).}
+ 
+\uncover<3->{\textbf{Move without breaking the constraint.} Tangent directions are the “along-the-surface” moves that keep $C(x)$ unchanged to first order. Intuitively: tiny steps that slide on the surface.}
+ 
+\uncover<4->{\textbf{What must be true at the best point.} At $x^\star$, there is no downhill direction that stays on the surface. Equivalently, the usual gradient of $f$ has \emph{no component along the surface}.}
+ 
+\uncover<5->{\textbf{Normals enter the story.} If the gradient can’t point along the surface, it must point \emph{through} it—i.e., it aligns with a combination of the surface’s normal directions (one normal per constraint).}
+\end{frame}
+
+% ==== Slide 2: From picture to KKT ====
+\begin{frame}[t]{From the picture to KKT (equality case)}
+\setbeamercovered{invisible}
+
+\textbf{KKT conditions at a regular local minimum (equality only):}
+ 
+\uncover<1->{\textbf{1) Feasibility:} $C(x^\star)=0$. \emph{(We’re on the surface.)}}
+ 
+\uncover<2->{\textbf{2) Stationarity:} $\nabla f(x^\star) + J_C(x^\star)^{\!T}\lambda^\star = 0$. \emph{(The gradient is a linear combination of the constraint normals.)}}
+ 
+\uncover<3->{\textbf{Lagrangian viewpoint.} Define $L(x,\lambda)=f(x)+\lambda^{\!T}C(x)$. At a solution, $x^\star$ is a stationary point of $L$ w.r.t.\ $x$ (that’s the stationarity equation), while $C(x^\star)=0$ enforces feasibility.}
+ 
+\uncover<4->{\textbf{What the multipliers mean.} The vector $\lambda^\star$ tells how strongly each constraint “pushes back” at the optimum; it also measures sensitivity of the optimal value to small changes in the constraints.}
+ 
+\end{frame}
 
 
 \begin{frame}{KKT system for equalities (first-order necessary conditions)}
@@ -57,9 +89,12 @@ J_C(x) & 0
 $$
 
 \textit{Notes.} This is a symmetric \emph{saddle-point} system; typical solves use block elimination (Schur complement) or sparse factorizations.
-
-
 \end{frame}
+
+
+
+
+
 
 \begin{frame}{Move to Julia Code}
 \begin{center}
@@ -68,41 +103,54 @@ $$
 \end{frame}
 
 \begin{frame}{Numerical practice: Newton on KKT}
-\textbf{When it works best.}
-\begin{itemize}
-\item Near a regular solution with $J_{C}(x^\star)$ full row rank  and positive-definite reduced Hessian.
-\item With a globalization (line search on a merit function) and mild regularization for robustness.
-\end{itemize}
+  \setbeamercovered{invisible}
 
-\textbf{Common safeguards.}
-\begin{itemize}
-\item \emph{Regularize} the $(1,1)$ block to ensure a good search direction (e.g., add $\beta I$).
-\item \emph{Merit/penalty} line search to balance feasibility vs.\ optimality during updates.
-\item \emph{Scaling} constraints to improve conditioning of the KKT system.
-\end{itemize}
+  
+    \textbf{When it works best.}
+    \begin{itemize}
+      \item Near a regular solution with $J_{C}(x^\star)$ full row rank and positive-definite reduced Hessian.
+      \item With a globalization (line search on a merit function) and mild regularization for robustness.
+    \end{itemize}
 
-
+    % --- Part 2: appears on the 2nd click only --- 
+    \uncover<2->{%
+      \textbf{Common safeguards.}
+      \begin{itemize}
+        \item \emph{Regularize} the $(1,1)$ block to ensure a good search direction (e.g., add $\beta I$).
+        \item \emph{Merit/penalty} line search to balance feasibility vs.\ optimality during updates.
+        \item \emph{Scaling} constraints to improve conditioning of the KKT system.
+      \end{itemize}
+    } 
 \end{frame}
 
-\begin{frame}{Gauss--Newton vs.\ full Newton on KKT}
-\textbf{Full Newton Hessian of the Lagrangian:} $\nabla_{xx}^2 L(x,\lambda) &= \hess f(x)+\sum_{i=1}^m \lambda_i\,\hess C_i(x)$
 
-\textbf{Gauss--Newton approximation:} drop the \emph{constraint-curvature} term $\sum_i \lambda_i,\hess C_i(x)$:
+\begin{frame}{Gauss--Newton vs. full Newton on KKT}
 
-\begin{align*} 
-H_{\text{GN}}(x) &\approx \hess f(x).
+\uncover<1->{
+\textbf{Full Newton Hessian of the Lagrangian:}\quad
+$\nabla_{xx}^2 L(x,\lambda) = \nabla^2 f(x) + \sum_{i=1}^m \lambda_i\, \nabla^2 C_i(x)$
+}
+
+\vspace{0.6em}
+
+\uncover<2->{
+\textbf{Gauss--Newton approximation:} drop the \emph{constraint-curvature} term
+$\sum_{i=1}^m \lambda_i\, \nabla^2 C_i(x)$:
+\begin{align*}
+H_{\text{GN}}(x) &\approx \nabla^2 f(x).
 \end{align*}
+}
 
+\uncover<3->{
 \textbf{Trade-offs (high level).}
 \begin{itemize}
-\item \emph{Full Newton:} fewer iterations near the solution, but each step is costlier and can be less robust far from it.
-\item \emph{Gauss--Newton:} cheaper per step and often more stable; may need more iterations but wins in wall-clock on many problems.
+  \item \emph{Full Newton:} fewer iterations near the solution, but each step is costlier and can be less robust far from it.
+  \item \emph{Gauss--Newton:} cheaper per step and often more stable; may need more iterations but wins in wall-clock on many problems.
 \end{itemize}
-
-\textbf{Practice tip.} Start with GN (with line search); switch to full Newton (or add low-rank updates) as feasibility improves.
-
+}
 
 \end{frame}
+
 
 % ==== Inequalities & KKT: complementarity ====
 

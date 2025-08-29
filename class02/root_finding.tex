@@ -1,44 +1,102 @@
 
 \section{Root-Finding}
+ 
 
-\begin{frame}{Root Finding}
-Given $f(x)$, find $x^*$ such that $f(x^*) = 0$ (example: finding equilibrium of a continuous-time dynamics).
-
-Closely related: fixed point \quad \quad \quad $f(x^*) = x^* \quad (\text{equilibrium of discrete-time dynamics})$
-
-\textbf{Fixed-Point Iteration}
-\begin{itemize}
-    \item Simplest solution method
-    \item If fixed point is stable, just “iterate the dynamics” until it converges
-    \item Only works if $x^*$ is a stable equilibrium point and if initial guess is in the basin of attraction
-    \item can converge slowly (depends on $f$ i.e depending on eigenvalues)
+% Slide 1 — Big picture
+\begin{frame}{Root-Finding and Fixed Points (Big Picture)}
+\begin{itemize}\setlength\itemsep{0.6em}
+  \item \textbf{Root-finding:} given $f:\mathbb{R}^n\!\to\!\mathbb{R}^n$, find $x^\star$ with $f(x^\star)=0$ (e.g., steady states, nonlinear equations).
+  \item \textbf{Fixed point:} $x^\star$ is a fixed point of $g$ if $g(x^\star)=x^\star$ (discrete-time equilibrium).
+  \item \textbf{Bridge:} pick $g(x)=x-\alpha f(x)$ ($\alpha>0$) so that
+  \[
+  f(x^\star)=0 \iff g(x^\star)=x^\star.
+  \]
+  \item \textbf{Mindset:} start $x_0$ and iterate $x_{k+1}=g(x_k)$ until nothing changes.
 \end{itemize}
-Gradient Descent in Fixed Point Iteration applied to gradient of function $f$.
+\end{frame}
+
+% Slide 2 — Convergence intuition
+\begin{frame}{When Does Fixed-Point Iteration Converge?}
+\begin{itemize}\setlength\itemsep{0.6em}
+  \item Near $x^\star$, $g$ behaves like its Jacobian $J_g(x^\star)$ (linearization).
+  \item \textbf{Contraction test:} scalar: $|g'(x^\star)|<1$; vector: spectral radius $\rho(J_g(x^\star))<1$.
+  \item Smaller contraction $\Rightarrow$ faster (linear) convergence; $\ge 1 \Rightarrow$ divergence/oscillations.
+  \item Converges only from within the \emph{basin of attraction} (good initial guess matters).
+\end{itemize}
+\end{frame}
+
+% Slide 3 — Minimal recipe & stopping
+\begin{frame}{Fixed-Point Iteration: Minimal Recipe}
+\begin{itemize}\setlength\itemsep{0.6em}
+  \item Choose $g$ (often $g(x)=x-\alpha f(x)$) and an initial guess $x_0$.
+  \item Loop: \quad $x_{k+1}\leftarrow g(x_k)$.
+  \item Stop when residual $\|f(x_{k+1})\|$ is small, or step $\|x_{k+1}-x_k\|$ is small, or max iterations reached.
+  \item Report both: residual and step size (helps diagnose false convergence).
+\end{itemize}
+\end{frame}
+
+% Slide 4 — Tuning & practical tips
+\begin{frame}{Tuning and Practical Tips}
+\begin{itemize}\setlength\itemsep{0.6em}
+  \item \textbf{Step size $\alpha$:} too small $\Rightarrow$ slow; too large $\Rightarrow$ divergence/oscillation. Start modest; adjust cautiously.
+  \item \textbf{Damping:} $x_{k+1}\!\leftarrow\! (1-\beta)x_k+\beta g(x_k)$ with $0<\beta\le 1$ to stabilize.
+  \item \textbf{If stalled:} try a better $g$ (rescale/precondition $f$) or a better initial guess.
+  \item \textbf{Optimization link:} gradient descent is FPI on $\nabla F$: $g(x)=x-\eta\nabla F(x)$ solves $\nabla F(x^\star)=0$.
+  \item \textbf{When too slow:} use (quasi-)Newton methods for faster local convergence (needs derivatives/linear solves).
+\end{itemize}
 \end{frame}
 
 
 
+
+
+
+
+% ---- Newton's Method (animated in 4 parts) ----
 \begin{frame}{Newton's Method}
-TLDR: Instead os solving for $f(x) =0$, solve a linear for a linear approximation of $f(x)$.\\
-Fit a linear approximation to $f(x)$:\quad $f(x+\Delta x) \approx f(x) + \frac{\partial f}{\partial x}\Delta x$
 
-Set approximation to zero and solve for $\Delta x$:
+\uncover<1->{
+\underline{\textbf{TLDR}}: Instead of solving for $f(x)=0$, solve a linear system from a linear approximation of $f(x)$.
+}
 
-$$
-f(x) + \frac{\partial f}{\partial x}\Delta x = 0 \quad \Rightarrow \quad \Delta x = -\left(\frac{\partial f}{\partial x}\right)^{-1} f(x)
-$$
+\vspace{0.6em}
 
-Apply correction: $x \leftarrow x + \Delta x$
-Do this in a loop and repeat until convergence.
+\uncover<2->{
+Fit a linear approximation to $f(x)$:\quad
+$f(x+\Delta x) \approx f(x) + \frac{\partial f}{\partial x}\,\Delta x$
+}
+
+\vspace{0.6em}
+
+\uncover<3->{
+Set the approximation to zero and solve for $\Delta x$:
+\[
+f(x) + \frac{\partial f}{\partial x}\,\Delta x = 0
+\quad \Rightarrow \quad
+\Delta x = -\left(\frac{\partial f}{\partial x}\right)^{-1} f(x)
+\]
+}
+
+\vspace{0.6em}
+
+\uncover<4->{
+Apply the correction and iterate:
+\[
+x \leftarrow x + \Delta x
+\]
+\smallskip
+Repeat until convergence.
+}
 
 \end{frame}
+
 
 \begin{frame}{Example: Backward Euler}
 Last time: Implicit dynamics model (nonlinear function of current state and future state)
 $$
 f(x_{n+1}, x_n, u_n) = 0
 $$
-Implicit Euler: this time we have $x_{n+1}$ on the right; i.e evaluate f at future time.
+Implicit Euler: this time we have $x_{n+1}$ on the right; i.e evaluate $f$ at future time.
 $$
 x_{n+1} = x_n + h f(x_{n+1})
 $$
@@ -64,29 +122,33 @@ Solve root finding problem for $x_{n+1}$
 \end{frame}
 
 
-\begin{frame}{Minimization}
-$$
-\min_x f(x), \quad f(x): \mathbb{R}^n \to \mathbb{R}
-$$
-If $f$ is smooth, $\frac{\partial f}{\partial x}(x^*) = 0$ at a local minimum. 
-
+\begin{frame}[t]{Minimization}
+\[
+\min_x f(x), \quad f:\mathbb{R}^n \to \mathbb{R}
+\]
+If $f$ is smooth, $\frac{\partial f}{\partial x}(x^*) = 0$ at a local minimum.\\
 Hence, now we have a root-finding problem $\nabla f(x) = 0$ $\Rightarrow$ Apply Newton!
 
-$$
-\nabla f(x+\Delta x) \approx \nabla f(x) + \frac{\partial}{\partial x}(\nabla f(x))\Delta x = 0
-\quad \quad \quad \quad 
-\Rightarrow \Delta x = -(\nabla^2 f(x))^{-1}\nabla f(x)
-$$
+\medskip
 
-$$
+% --- second part appears on next advance, first part stays visible ---
+\only<2->{
+
+\[
+\nabla f(x+\Delta x) \approx \nabla f(x) + \frac{\partial}{\partial x}(\nabla f(x))\Delta x = 0
+\quad\Rightarrow\quad
+\Delta x = -(\nabla^2 f(x))^{-1}\nabla f(x)
+\]
+
+\[
 x \leftarrow x + \Delta x
-$$
+\]
 
 Repeat this step until convergence; Intuition to have about Newton:
 \begin{itemize}
     \item Fitting a quadratic approximation to $f(x)$; Exactly minimize approximation
-\end{itemize} 
-    
+\end{itemize}
+}
 \end{frame}
 
 
@@ -99,58 +161,91 @@ Repeat this step until convergence; Intuition to have about Newton:
 
 
 \begin{frame}{Take-away Messages on Newton}
-Newton is a local root-finding method. Will converge to the closest fixed point to the initial guess (min, max, saddle). 
+Newton is a local root-finding method. Will converge to the closest fixed point 
+to the initial guess (min, max, saddle). 
 
+\bigskip
 \textbf{Sufficient Conditions}
 \begin{itemize}
-    \item $\nabla f = 0$: “first-order necessary condition” for a minimum. Not a sufficient condition.
-    \item  Let’s look at scalar case: $\Delta x = -\frac{1}{\nabla^2 f}\nabla f$
-\end{itemize} 
-where: negative corresponds to “descent”, $\nabla f$ corresponds to the gradient and $\nabla^2 f$ acts as the “leading rate” / “step size”.
+    \item $\nabla f = 0$: “first-order necessary condition” for a minimum. 
+    Not a sufficient condition.
+    \item Let’s look at scalar case: $\Delta x = -\frac{1}{\nabla^2 f}\nabla f$
+\end{itemize}
 
-$\nabla^2 f > 0 \quad \Rightarrow \quad \text{descent (minimization)} \quad \quad \quad \nabla^2 f < 0 \quad \Rightarrow \quad \text{ascent (maximization)}$
+\medskip
+where: negative corresponds to “descent”, $\nabla f$ corresponds to the gradient 
+and $\nabla^2 f$ acts as the “leading rate” / “step size”.
+\end{frame}
+
+
+\begin{frame}{Take-away Messages on Newton (cont’d)}
+\[
+\nabla^2 f > 0 \quad \Rightarrow \quad \text{descent (minimization)} 
+\qquad 
+\nabla^2 f < 0 \quad \Rightarrow \quad \text{ascent (maximization)}
+\]
+
 \begin{itemize}
     \item In $\mathbb{R}^n$, if $\nabla^2 f \succeq 0$ (positive definite) $\Rightarrow$ descent
     \item If $\nabla^2 f > 0$ everywhere $\Rightarrow f(x)$ is strongly convex → Can always solve with Newton
     \item Usually not the case for hard/nonlinear problems
 \end{itemize}
- \end{frame}
+\end{frame}
 
 \begin{frame}{Regularization: Ensuring Local Minimization}
-Practical solution to make sure we always minimize:
- 
+
+\uncover<1->{\textbf{Practical solution to make sure we always minimize:}}
+
+\vspace{0.6em}
+
+\uncover<2->{
 If $H$ ($H \leftarrow \nabla^2 f$) not positive definite, we just make it so with regularization.
 
+\medskip
 
 While $H \not\succeq 0$:
-$$H \leftarrow H + \beta I \quad (\beta > 0 \ \text{scalar hyperparameter})$$
- 
-Then do newton step as usual. I.e:
+\[
+H \leftarrow H + \beta I \quad (\beta > 0 \ \text{scalar hyperparameter})
+\]
+}
 
-$$
-x \quad \leftarrow \quad  x + \Delta x \quad  = \quad x  -H^{-1}\nabla f
-$$
+\uncover<3->{
+Then do newton step as usual. I.e:
+\[
+x \leftarrow x + \Delta x = x - H^{-1}\nabla f
+\]
 
 \begin{itemize}
     \item also called “damped Newton” (shrinks steps)
     \item Guarantees descent
     \item Regularization makes sure we minimize, but what about over-shooting?
-\end{itemize} 
+\end{itemize}
+}
+
 \end{frame}
+
 
 \begin{frame}{Line Search: Mitigating overshooting in Newton}
 \begin{itemize}
-    \item Often $\Delta x$ step from Newton overshoots the minimum.
-    \item To fix this, check $f(x + \alpha \Delta x)$ and “back track” until we get a “good” reduction.
-    \item Many strategies: all differ in definition of good. 
-    \item A simple + effective one is \textbf{Armijo Rule}:
-\end{itemize} 
+    \item<1-> Often $\Delta x$ step from Newton overshoots the minimum.
+    \item<1-> To fix this, check $f(x + \alpha \Delta x)$ and “back track” until we get a “good” reduction.
+    \item<1-> Many strategies: all differ in definition of good. 
+    \item<2-> A simple + effective one is \textbf{Armijo Rule}:
+\end{itemize}
 
+\uncover<2->{
 Start with $\alpha=1$ as our step length and have tolerance $b$ as a hyper-parameter.
- $$
-\text{while } f(x + \alpha \Delta x) > f(x) + b \alpha \nabla f(x)^T \Delta x: \quad \quad  \alpha \leftarrow c \alpha \quad (\text{scalar } < 1 \text{ i.e } c =\frac{1}{2}) 
-$$ 
-\footnotesize
-The intuition behind this is that $\alpha \nabla f(x)^T \Delta x$ corresponds to the expected change in $f$ based on a 1st order taylor series expansion. I.e we are checking the actual decrease in $f$ agrees with a $1st$ order taylor approximation within a tolerance $b$.
-    
+\[
+\text{while } f(x + \alpha \Delta x) > f(x) + b\,\alpha\, \nabla f(x)^{\!T} \Delta x
+\quad\Longrightarrow\quad
+\alpha \leftarrow c\,\alpha
+\quad (\text{scalar } 0<c<1,\ \text{e.g. } c=\tfrac{1}{2})
+\]
+}
+
+\uncover<3->{
+{\footnotesize
+The intuition: $\alpha\, \nabla f(x)^{\!T} \Delta x$ is the predicted change in $f$ from a first-order Taylor expansion. Armijo checks that the \emph{actual} decrease in $f$ matches this first-order prediction within tolerance $b$.
+}
+}
 \end{frame}
