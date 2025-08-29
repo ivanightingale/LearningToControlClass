@@ -1,0 +1,156 @@
+
+\section{Root-Finding}
+
+\begin{frame}{Root Finding}
+Given $f(x)$, find $x^*$ such that $f(x^*) = 0$ (example: finding equilibrium of a continuous-time dynamics).
+
+Closely related: fixed point \quad \quad \quad $f(x^*) = x^* \quad (\text{equilibrium of discrete-time dynamics})$
+
+\textbf{Fixed-Point Iteration}
+\begin{itemize}
+    \item Simplest solution method
+    \item If fixed point is stable, just “iterate the dynamics” until it converges
+    \item Only works if $x^*$ is a stable equilibrium point and if initial guess is in the basin of attraction
+    \item can converge slowly (depends on $f$ i.e depending on eigenvalues)
+\end{itemize}
+Gradient Descent in Fixed Point Iteration applied to gradient of function $f$.
+\end{frame}
+
+
+
+\begin{frame}{Newton's Method}
+TLDR: Instead os solving for $f(x) =0$, solve a linear for a linear approximation of $f(x)$.\\
+Fit a linear approximation to $f(x)$:\quad $f(x+\Delta x) \approx f(x) + \frac{\partial f}{\partial x}\Delta x$
+
+Set approximation to zero and solve for $\Delta x$:
+
+$$
+f(x) + \frac{\partial f}{\partial x}\Delta x = 0 \quad \Rightarrow \quad \Delta x = -\left(\frac{\partial f}{\partial x}\right)^{-1} f(x)
+$$
+
+Apply correction: $x \leftarrow x + \Delta x$
+Do this in a loop and repeat until convergence.
+
+\end{frame}
+
+\begin{frame}{Example: Backward Euler}
+Last time: Implicit dynamics model (nonlinear function of current state and future state)
+$$
+f(x_{n+1}, x_n, u_n) = 0
+$$
+Implicit Euler: this time we have $x_{n+1}$ on the right; i.e evaluate f at future time.
+$$
+x_{n+1} = x_n + h f(x_{n+1})
+$$
+
+(Evaluate $f$ at future time)
+
+$$
+\Rightarrow f(x_{n+1}, x_n, u_n) = x_{n+1} - x_n - h f(x_{n+1}) = 0
+$$
+Solve root finding problem for $x_{n+1}$
+\begin{itemize}
+    \item Very fast convergence with Newton (quadratic) and can get machine precision.
+    \item Most expensive part is solving a linear system $O(n^3)$
+    \item Can improve complexity by taking advantage of problem structure/sparsity.
+\end{itemize} 
+\end{frame}
+
+
+\begin{frame}{Move to Julia Code}
+\begin{center}
+    \textbf{Quick Demo of Julia Notebook: part1\_root\_finding.ipynb}
+\end{center}
+\end{frame}
+
+
+\begin{frame}{Minimization}
+$$
+\min_x f(x), \quad f(x): \mathbb{R}^n \to \mathbb{R}
+$$
+If $f$ is smooth, $\frac{\partial f}{\partial x}(x^*) = 0$ at a local minimum. 
+
+Hence, now we have a root-finding problem $\nabla f(x) = 0$ $\Rightarrow$ Apply Newton!
+
+$$
+\nabla f(x+\Delta x) \approx \nabla f(x) + \frac{\partial}{\partial x}(\nabla f(x))\Delta x = 0
+\quad \quad \quad \quad 
+\Rightarrow \Delta x = -(\nabla^2 f(x))^{-1}\nabla f(x)
+$$
+
+$$
+x \leftarrow x + \Delta x
+$$
+
+Repeat this step until convergence; Intuition to have about Newton:
+\begin{itemize}
+    \item Fitting a quadratic approximation to $f(x)$; Exactly minimize approximation
+\end{itemize} 
+    
+\end{frame}
+
+
+\begin{frame}{Move to Julia Code}
+\begin{center}
+    \textbf{Quick Demo of Julia Notebook: part1\_minimization.ipynb}
+\end{center}
+\end{frame}
+
+
+
+\begin{frame}{Take-away Messages on Newton}
+Newton is a local root-finding method. Will converge to the closest fixed point to the initial guess (min, max, saddle). 
+
+\textbf{Sufficient Conditions}
+\begin{itemize}
+    \item $\nabla f = 0$: “first-order necessary condition” for a minimum. Not a sufficient condition.
+    \item  Let’s look at scalar case: $\Delta x = -\frac{1}{\nabla^2 f}\nabla f$
+\end{itemize} 
+where: negative corresponds to “descent”, $\nabla f$ corresponds to the gradient and $\nabla^2 f$ acts as the “leading rate” / “step size”.
+
+$\nabla^2 f > 0 \quad \Rightarrow \quad \text{descent (minimization)} \quad \quad \quad \nabla^2 f < 0 \quad \Rightarrow \quad \text{ascent (maximization)}$
+\begin{itemize}
+    \item In $\mathbb{R}^n$, if $\nabla^2 f \succeq 0$ (positive definite) $\Rightarrow$ descent
+    \item If $\nabla^2 f > 0$ everywhere $\Rightarrow f(x)$ is strongly convex → Can always solve with Newton
+    \item Usually not the case for hard/nonlinear problems
+\end{itemize}
+ \end{frame}
+
+\begin{frame}{Regularization: Ensuring Local Minimization}
+Practical solution to make sure we always minimize:
+ 
+If $H$ ($H \leftarrow \nabla^2 f$) not positive definite, we just make it so with regularization.
+
+
+While $H \not\succeq 0$:
+$$H \leftarrow H + \beta I \quad (\beta > 0 \ \text{scalar hyperparameter})$$
+ 
+Then do newton step as usual. I.e:
+
+$$
+x \quad \leftarrow \quad  x + \Delta x \quad  = \quad x  -H^{-1}\nabla f
+$$
+
+\begin{itemize}
+    \item also called “damped Newton” (shrinks steps)
+    \item Guarantees descent
+    \item Regularization makes sure we minimize, but what about over-shooting?
+\end{itemize} 
+\end{frame}
+
+\begin{frame}{Line Search: Mitigating overshooting in Newton}
+\begin{itemize}
+    \item Often $\Delta x$ step from Newton overshoots the minimum.
+    \item To fix this, check $f(x + \alpha \Delta x)$ and “back track” until we get a “good” reduction.
+    \item Many strategies: all differ in definition of good. 
+    \item A simple + effective one is \textbf{Armijo Rule}:
+\end{itemize} 
+
+Start with $\alpha=1$ as our step length and have tolerance $b$ as a hyper-parameter.
+ $$
+\text{while } f(x + \alpha \Delta x) > f(x) + b \alpha \nabla f(x)^T \Delta x: \quad \quad  \alpha \leftarrow c \alpha \quad (\text{scalar } < 1 \text{ i.e } c =\frac{1}{2}) 
+$$ 
+\footnotesize
+The intuition behind this is that $\alpha \nabla f(x)^T \Delta x$ corresponds to the expected change in $f$ based on a 1st order taylor series expansion. I.e we are checking the actual decrease in $f$ agrees with a $1st$ order taylor approximation within a tolerance $b$.
+    
+\end{frame}

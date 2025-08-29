@@ -1,0 +1,33 @@
+\begin{frame}{Some Notation:}
+Given $f(x): \mathbb{R}^n \to \mathbb{R}$ \quad \quad \quad \quad \quad \quad \quad \quad $\frac{\partial f}{\partial x} \in \mathbb{R}^{1 \times n} \quad \text{is a row vector}$
+
+This is because $\frac{\partial f}{\partial x}$ is the linear operator mapping $\Delta x$ into $\Delta f$:
+
+$$
+f(x + \Delta x) \approx f(x) + \frac{\partial f}{\partial x}\Delta x
+$$
+
+Similarly $g(y): \mathbb{R}^m \to \mathbb{R}^n$ \quad \quad \quad \quad \quad $\frac{\partial g}{\partial y} \in \mathbb{R}^{n \times m} \quad \text{because}$
+
+$$
+g(y+\Delta y) \approx g(y) + \frac{\partial g}{\partial y}\Delta y
+$$
+\end{frame}
+
+\begin{frame}{Some notation:}
+For convenience, we will define:
+
+$$
+\nabla f(x) = \left(\frac{\partial f}{\partial x}\right)^T \in \mathbb{R}^n \quad \text{(column vector)}
+$$
+
+$$
+\nabla^2 f(x) = \frac{\partial}{\partial x}\left(\frac{\partial f}{\partial x}\right) = \frac{\partial^2 f}{\partial x^2} \in \mathbb{R}^{n \times n}
+$$
+
+$$
+f(x+\Delta x) \approx f(x) + \frac{\partial f}{\partial x}\Delta x + \tfrac{1}{2}\Delta x^T \nabla^2 f(x)\Delta x
+$$
+    
+\end{frame}
+
