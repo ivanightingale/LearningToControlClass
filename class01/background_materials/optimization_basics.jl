@@ -723,7 +723,7 @@ begin
     # Decide which badge to show
     if ismissing(ansd)               # nothing yet
         still_missing()
-    elseif x == 25.0
+    elseif ansd == 25.0
         correct()
     else
         keep_working()
