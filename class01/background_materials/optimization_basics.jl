@@ -438,14 +438,9 @@ begin
  [2  8  7  4  1  9  6  3  5];
  [3  4  5  2  8  6  1  7  9]],)
 
-	anss = missing
-    try
-        anss = (
-            x_ss   = haskey(sudoku, :x_s) ? JuMP.value.(sudoku[:x_s]) : missing,
-        )
-    catch
-        anss = missing
-    end
+    anss = (;
+        x_ss = haskey(sudoku, :x_s) && JuMP.is_solved_and_feasible(sudoku) ? JuMP.value.(sudoku[:x_s]) : missing
+    )
 
     # Convert 3D binary matrix to 2D solution matrix
     function convert_3d_to_solution(x_3d)
@@ -594,8 +589,8 @@ begin
 model_nlp = Model(Ipopt.Optimizer)
 
 # Required named variables
-@variable(model_nlp, x)
-@variable(model_nlp, y)
+@variable(model_nlp, x_nlp)
+@variable(model_nlp, y_nlp)
 
 # --- YOUR CODE HERE ---
 
@@ -737,8 +732,8 @@ begin
 	ans3=missing
     try
         ans3 = (
-            x   = safeval(model_nlp, :x),
-            y   = safeval(model_nlp, :y),
+            x   = safeval(model_nlp, :x_nlp),
+            y   = safeval(model_nlp, :y_nlp),
             obj = objective_value(model_nlp),
         )
     catch
