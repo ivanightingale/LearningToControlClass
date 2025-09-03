@@ -100,10 +100,17 @@ model_lp = Model(HiGHS.Optimizer)
 # Required variable names (used for testing)
 @variable(model_lp, w >= 0) # number of Widgets
 @variable(model_lp, g >= 0) # number of Gadgets
+@variable(model_lp, 0 <= m_hr <= 100)
+@variable(model_lp, 0 <= l_hr <= 90)
 
 # --- YOUR CODE HERE ---
 
-# optimize!(model_lp) # uncomment to optimize
+@constraint(model_lp, 2 * w + 4 * g <= m_hr)
+@constraint(model_lp, 3 * w + 2 * g <= l_hr)
+
+@objective(model_lp, Max, 3 * w + 5 * g)
+
+optimize!(model_lp) # uncomment to optimize
 
 # Let's look at our model
 println(model_lp)
@@ -114,6 +121,15 @@ md"Tests will automatically fetch the optimal values from your solved model."
 
 # ╔═╡ 248b398a-0cf5-4c2b-8752-7b9cc4e765d6
 question_box(md"Did we get partial products?")
+
+# ╔═╡ 12349b7d-44c9-4f8c-bf4a-d8faaeecce36
+begin
+	println(value.(model_lp[:w]))
+	println(value.(model_lp[:g]))
+	md"
+	Answer: No.
+	"
+end
 
 # ╔═╡ 245eb671-84e1-447b-8045-e9eb04966d80
 md"""
@@ -171,8 +187,15 @@ model_lp2 = Model(HiGHS.Optimizer)
 @variable(model_lp2, x_d)
 
 # --- YOUR CODE HERE ---
-
-# optimize!(model_lp2) # uncomment to optimize
+d_super = [3, 8, 15, 20, 25, 29, 35, 40]
+w_super = [2, 1, 3, 4, 2, 3, 5, 1]
+@variable(model_lp2, dist_super[eachindex(d_super)])
+@constraint(model_lp2, 0 <= x_d <= 50)
+@constraint(model_lp2, dist_super .>= x_d .- d_super)
+@constraint(model_lp2, dist_super .>= d_super .- x_d)
+@objective(model_lp2, Min, sum(w_super .* dist_super))
+	
+optimize!(model_lp2) # uncomment to optimize
 
 # Let's look at our model
 println(model_lp2)
@@ -322,6 +345,20 @@ the **second-stage (recourse) problem** is
 ```
 """)
 
+# ╔═╡ cb0486b3-3375-4846-960b-e94e83ca0501
+md"
+Answer:
+
+Formulate a relaxation of the first-stage problem, with its initial form being the parts of the first-stage problem with the second-stage term completely removed.
+
+Solve the first-stage relaxation, and solve the second-stage problem with the obtained $x^{*}$ for each scenario. Get the optimal dual solution $\lambda^{*}(\xi)$ if optimal; get a dual extreme ray $r(\xi)$ if infeasible; or conclude that the original problem is unbounded if unbounded.
+
+Add $\mathbb{E}_{\xi}[\pi(\xi)]$ to the objective. Add the following cuts:
+$\pi(\xi) \geq \lambda(\xi)^{*^{\top}} (h(\xi) - Wx)$, $r(\xi)^{\top} (h(\xi) - Wx) \leq 0$.
+
+Solve the new relaxation and add more cuts, until there are no infeasible second-stage scenarios and improvement in optimal value is within a certain threshold.
+"
+
 # ╔═╡ 808c505d-e10d-42e3-9fb1-9c6f384b2c3c
 md"""
 ---
@@ -350,11 +387,13 @@ begin
 model_milp = Model(HiGHS.Optimizer)
 
 # Variables should be a vector named x (used for testing)
-# @variable(model_milp, x[1:3] ...
+@variable(model_milp, x[1:3], Bin)
 
 # --- YOUR CODE HERE ---
+@constraint(model_milp, sum([4, 3, 2] .* x) <= 10)
+@objective(model_milp, Max, sum([10, 7, 5] .* x))
 
-# optimize!(model_milp)
+optimize!(model_milp)
 
 # Let's look at our model
 println(model_milp)
@@ -390,6 +429,17 @@ end
 # ╔═╡ 38b3a8f3-35ae-46da-91ce-0e4ba27ae098
 question_box(md"Is the answer the same if we allow partial products?")
 
+# ╔═╡ c958252d-172e-49ec-8a71-d814138fa59f
+begin
+sum([4, 3, 2] .* value.(model_milp[:x]))
+
+md"
+Answer:
+
+No, the total weight of the optimal solution is 9kg which is less than 10kg.
+"
+end
+
 # ╔═╡ bca712e4-3f1c-467e-9209-e535aed5ab0a
 md"""
 ### 2.2  Sudoku
@@ -419,8 +469,50 @@ sudoku = Model(HiGHS.Optimizer)
 @variable(sudoku, x_s[i = 1:9, j = 1:9, k = 1:9], Bin);
 
 # --- YOUR CODE HERE ---
+for i in 1:9
+    for j in 1:9
+        @constraint(sudoku, sum(x_s[i, j, k] for k in 1:9) == 1)
+    end
+end
 
-# optimize!(sudoku)
+for ind in 1:9
+    for k in 1:9
+        @constraint(sudoku, sum(x_s[ind, j, k] for j in 1:9) == 1)
+        @constraint(sudoku, sum(x_s[i, ind, k] for i in 1:9) == 1)
+    end
+end
+
+for i in 1:3:7
+    for j in 1:3:7
+        for k in 1:9
+            @constraint(
+                sudoku,
+                sum(x_s[r, c, k] for r in i:(i+2), c in j:(j+2)) == 1
+            )
+        end
+    end
+end
+
+init_sol = [
+    5 3 0 0 7 0 0 0 0
+    6 0 0 1 9 5 0 0 0
+    0 9 8 0 0 0 0 6 0
+    8 0 0 0 6 0 0 0 3
+    4 0 0 8 0 3 0 0 1
+    7 0 0 0 2 0 0 0 6
+    0 6 0 0 0 0 2 8 0
+    0 0 0 4 1 9 0 0 5
+    0 0 0 0 8 0 0 7 9
+]
+for i in 1:9
+    for j in 1:9
+        if init_sol[i, j] != 0
+            fix(x_s[i, j, init_sol[i, j]], 1)
+        end
+    end
+end
+
+optimize!(sudoku)
 
 # Let's look at the stats of our model
 sudoku
@@ -436,7 +528,7 @@ begin
  [7  1  3  9  2  4  8  5  6];
  [9  6  1  5  3  7  2  8  4];
  [2  8  7  4  1  9  6  3  5];
- [3  4  5  2  8  6  1  7  9]])
+ [3  4  5  2  8  6  1  7  9]],)
 
 	anss = missing
     try
@@ -578,8 +670,8 @@ begin
 model_nlp = Model(Ipopt.Optimizer)
 
 # Required named variables
-@variable(model_nlp, x)
-@variable(model_nlp, y)
+# @variable(model_nlp, x)
+# @variable(model_nlp, y)
 
 # --- YOUR CODE HERE ---
 
@@ -694,6 +786,9 @@ begin
     end
 end
 
+# ╔═╡ e5034670-11c9-4f37-9025-9d86ca812b48
+safeval(model_lp2, :x_d)
+
 # ╔═╡ 20aef3e9-47b5-4f60-9726-7db77f7c3e47
 begin
     # student answer
@@ -784,18 +879,22 @@ end
 # ╟─1d3edbdd-7747-4651-b650-c6b9bf87b460
 # ╟─6fb672d0-5a18-4ccc-b7b3-184839c2401b
 # ╟─248b398a-0cf5-4c2b-8752-7b9cc4e765d6
+# ╟─12349b7d-44c9-4f8c-bf4a-d8faaeecce36
 # ╟─245eb671-84e1-447b-8045-e9eb04966d80
 # ╟─6a823649-04fa-4322-a028-2fb29dffb08b
 # ╠═c369ab46-b416-4c12-83fe-65040a0c47c8
+# ╠═e5034670-11c9-4f37-9025-9d86ca812b48
 # ╟─20aef3e9-47b5-4f60-9726-7db77f7c3e47
 # ╟─b13f9775-68c2-4646-9b67-c69ee23a4ea0
 # ╟─ea3ea95a-58cb-4d0d-a167-aa68b8bc2645
 # ╟─7d855c60-41dd-40af-b00a-60b3e779ad13
 # ╟─ae263aac-1668-4f18-8104-ac25953a4503
+# ╟─cb0486b3-3375-4846-960b-e94e83ca0501
 # ╟─808c505d-e10d-42e3-9fb1-9c6f384b2c3c
 # ╠═39617561-bbbf-4ef6-91e2-358dfe76581c
 # ╟─01367096-3971-4e79-ace2-83600672fbde
 # ╟─38b3a8f3-35ae-46da-91ce-0e4ba27ae098
+# ╠═c958252d-172e-49ec-8a71-d814138fa59f
 # ╟─bca712e4-3f1c-467e-9209-e535aed5ab0a
 # ╟─3997d993-0a31-435e-86cd-50242746c305
 # ╠═3f56ec63-1fa6-403c-8d2a-1990382b97ae
