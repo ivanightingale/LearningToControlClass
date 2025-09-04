@@ -12,17 +12,18 @@ This class covers the fundamental numerical optimization techniques essential fo
 
 ## Interactive Materials
 
-The class is structured around four interactive Jupyter notebooks:
+The class is structured around 1 slide deck and four interactive Jupyter notebooks:
 
-1. **[Part 1: Minimization via Newton's Method](part1_minimization.html)**
-   - Unconstrained optimization fundamentals
-   - Newton's method implementation
-   - Hessian matrix and regularization
-
-2. **[Part 1: Root Finding & Backward Euler](part1_root_finding.html)**
+1. **[Part 1a: Root Finding & Backward Euler](part1_root_finding.html)**
    - Root-finding algorithms for implicit integration
    - Fixed-point iteration vs. Newton's method
    - Application to pendulum dynamics
+
+
+2. **[Part 1b: Minimization via Newton's Method](part1_minimization.html)**
+   - Unconstrained optimization fundamentals
+   - Newton's method implementation
+   - Globalization strategies: Hessian matrix and regularization
 
 3. **[Part 2: Equality Constraints](part2_eq_constraints.html)**
    - Lagrange multiplier theory
@@ -37,7 +38,6 @@ The class is structured around four interactive Jupyter notebooks:
 ## Additional Resources
 
 - **[Lecture Slides (PDF)](ISYE_8803___Lecture_2___Slides.pdf)** - Complete slide deck
-- **[Demo Script](penalty_barrier_demo.py)** - Python demonstration of penalty vs. barrier methods
 - **[LaTeX Source](main.tex)** - Source code for lecture slides
 
 ## Key Learning Outcomes
@@ -48,13 +48,6 @@ The class is structured around four interactive Jupyter notebooks:
 - Solve equality-constrained optimization problems
 - Compare different constraint handling methods
 - Implement Sequential Quadratic Programming (SQP)
-
-## Prerequisites
-
-- Solid understanding of linear algebra and calculus
-- Familiarity with Julia programming
-- Basic knowledge of differential equations
-- Understanding of optimization concepts from Class 1
 
 ## Next Steps
 

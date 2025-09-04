@@ -34,19 +34,20 @@ By the end of this class, students will be able to:
 
 The class is structured around four interactive Jupyter notebooks that build upon each other:
 
-1. **[Part 1: Minimization via Newton's Method](part1_minimization.html)**
-   - Unconstrained optimization fundamentals
-   - Newton's method for minimization
-   - Hessian matrix and positive definiteness
-   - Regularization and line search techniques
-   - Practical implementation with Julia
 
-2. **[Part 1: Root Finding & Backward Euler](part1_root_finding.html)**
+1. **[Part 1a: Root Finding & Backward Euler](part1_root_finding.html)**
    - Root-finding algorithms for implicit integration
    - Fixed-point iteration vs. Newton's method
    - Backward Euler implementation for ODEs
    - Convergence analysis and comparison
    - Application to pendulum dynamics
+
+2. **[Part 1b: Minimization via Newton's Method](part1_minimization.html)**
+   - Unconstrained optimization fundamentals
+   - Newton's method for minimization
+   - Hessian matrix and positive definiteness
+   - Regularization and line search techniques
+   - Practical implementation with Julia
 
 3. **[Part 2: Equality Constraints](part2_eq_constraints.html)**
    - Lagrange multiplier theory
@@ -98,10 +99,6 @@ The methods covered in this class are fundamental to:
 
 ## Further Reading
 
-- Nocedal, J., & Wright, S. J. (2006). *Numerical Optimization*
-- Boyd, S., & Vandenberghe, L. (2004). *Convex Optimization*
-- Betts, J. T. (2010). *Practical Methods for Optimal Control and Estimation Using Nonlinear Programming*
-
 ## Next Steps
 
 This class provides the foundation for the advanced topics covered in subsequent classes, including:
@@ -112,4 +109,4 @@ This class provides the foundation for the advanced topics covered in subsequent
 
 ---
 
-*For questions or clarifications, please refer to the interactive notebooks or contact the instructor.*
+*For questions or clarifications, please reach out to Arnaud Deza at adeza3@gatech.edu*
