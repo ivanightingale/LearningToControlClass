@@ -17,15 +17,14 @@ plutos = [
     joinpath(repo_dir, "class02", "part3_ipm.html"),
 ]
 
-# Create symlinks to class directories
-rm(joinpath(repo_dir, "docs", "src", "class01"), force=true)
-rm(joinpath(repo_dir, "docs", "src", "class02"), force=true)
-symlink(joinpath(repo_dir, "class01"),
-    joinpath(repo_dir, "docs", "src", "class01")
-)
-symlink(joinpath(repo_dir, "class02"),
-    joinpath(repo_dir, "docs", "src", "class02")
-)
+if !isdir(build_dir)
+    symlink(joinpath(repo_dir, "class01"),
+        joinpath(repo_dir, "docs", "src", "class01")
+    )
+    symlink(joinpath(repo_dir, "class02"),
+        joinpath(repo_dir, "docs", "src", "class02")
+    )
+end
 
 makedocs(
     sitename = "LearningToControlClass",
@@ -33,7 +32,7 @@ makedocs(
         assets = ["assets/wider.css", "assets/redlinks.css"],
         mathengine = Documenter.MathJax3(Dict(
             :tex => Dict(
-                "macros" => make_macros_dict("src/assets/definitions.tex"),
+                "macros" => make_macros_dict("docs/src/assets/definitions.tex"),
                 "inlineMath" => [["\$","\$"], ["\\(","\\)"]],
                 "tags" => "ams",
             ),
