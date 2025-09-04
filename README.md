@@ -30,12 +30,12 @@ This student-led course explores modern techniques for controlling — and learn
 | #  | Date (MM/DD) | Format / Presenter | Topic & Learning Goals | Prep / Key Resources |
 |----|--------------|--------------------|------------------------|----------------------|
 | 1  | 08/22/2025   | Lecture — Andrew Rosemberg | Course map; why PDE-constrained **optimization**; tooling overview; stability & state-space dynamics; Lyapunov; discretization issues | [📚](https://learningtooptimize.github.io/LearningToControlClass/dev/class01/class01/) |
-| 2  | 08/29/2025   | Lecture - Arnaud Deza | Numerical **optimization** for control (grad/SQP/QP); ALM vs. interior-point vs. penalty methods | |
+| 2  | 08/29/2025   | Lecture - Arnaud Deza | Numerical **optimization** for control (grad/SQP/QP); ALM vs. interior-point vs. penalty methods | [📚](https://learningtooptimize.github.io/LearningToControlClass/dev/class02/overview/) |
 | 3  | 09/05/2025   | Lecture - Zaowei Dai | Pontryagin’s Maximum Principle; shooting & multiple shooting; LQR, Riccati, QP viewpoint (finite / infinite horizon) | |
 | 4  | 09/12/2025   | **External seminar 1** - Joaquim Dias Garcia| Dynamic Programming & Model-Predictive Control | |
 | 5  | 09/19/2025   | Lecture - Guancheng "Ivan" Qiu | **Nonlinear** trajectory **optimization**; collocation; implicit integration | |
 | 6  | 09/26/2025   | **External seminar 2** - Henrique Ferrolho | Trajectory **optimization** on robots in Julia Robotics | |
-| 7  | 10/03/2025   | Lecture - Jouke van Westrenen | Stochastic optimal control, Linear Quadratic Gaussian (LQG), Kalman filtering, robust control under uncertainty, unscented optimal control; | [📚](https://learningtooptimize.github.io/LearningToControlClass/dev/class02/overview/) |
+| 7  | 10/03/2025   | Lecture - Jouke van Westrenen | Stochastic optimal control, Linear Quadratic Gaussian (LQG), Kalman filtering, robust control under uncertainty, unscented optimal control; | |
 | 8  | 10/10/2025   | **External seminar 3** TBD (speaker to be confirmed) | Topology **optimization** | |
 | 9  | 10/17/2025   | **External seminar 4** — François Pacaud | GPU-accelerated optimal control | |
 |10  | 10/24/2025   | Lecture - Michael Klamkin | Physics-Informed Neural Networks (PINNs): formulation & pitfalls | |
