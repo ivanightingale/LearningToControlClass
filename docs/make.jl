@@ -17,14 +17,15 @@ plutos = [
     joinpath(repo_dir, "class02", "part3_ipm.html"),
 ]
 
-if !isdir(build_dir)
-    symlink(joinpath(repo_dir, "class01"),
-        joinpath(repo_dir, "docs", "src", "class01")
-    )
-    symlink(joinpath(repo_dir, "class02"),
-        joinpath(repo_dir, "docs", "src", "class02")
-    )
-end
+# Create symlinks to class directories
+rm(joinpath(repo_dir, "docs", "src", "class01"), force=true)
+rm(joinpath(repo_dir, "docs", "src", "class02"), force=true)
+symlink(joinpath(repo_dir, "class01"),
+    joinpath(repo_dir, "docs", "src", "class01")
+)
+symlink(joinpath(repo_dir, "class02"),
+    joinpath(repo_dir, "docs", "src", "class02")
+)
 
 makedocs(
     sitename = "LearningToControlClass",
