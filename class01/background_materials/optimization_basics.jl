@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.20.4
+# v0.20.15
 
 using Markdown
 using InteractiveUtils
@@ -670,12 +670,13 @@ begin
 model_nlp = Model(Ipopt.Optimizer)
 
 # Required named variables
-# @variable(model_nlp, x)
-# @variable(model_nlp, y)
+@variable(model_nlp, -10 <= x_nlp <= 10)
+@variable(model_nlp, -60 <= y_nlp <= 60)
 
 # --- YOUR CODE HERE ---
+@objective(model_nlp, Min, f(x_nlp, y_nlp))
 
-# optimize!(model_nlp)
+optimize!(model_nlp)
 
 println(model_nlp)
 end
@@ -713,9 +714,11 @@ begin
     @variable(model_nlp2, y2)
 
 	# --- YOUR CODE HERE ---
+	@constraint(model_nlp2, sqrt.((x2 .- [-4, 0, -3]) .^ 2 .+ (y2 .- [0, -5, -3]) .^ 2) + sqrt.((x2 .- [4, 0, 3]) .^ 2 .+ (y2 .- [0, 5, 3]) .^ 2) .<= [12, 14, 12])
+	@objective(model_nlp2, Min, f(x2, y2))
 	
     # Solve
-    # optimize!(model_nlp2)
+    optimize!(model_nlp2)
 
     # Quick report
     println(model_nlp2)
