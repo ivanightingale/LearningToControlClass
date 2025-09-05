@@ -23,6 +23,11 @@ This student-led course explores modern techniques for controlling — and learn
 | In-class presentations | **50 %** |
 | Projects | **25 %** |
 
+**Class material is due one week before the lecture!** No exceptions apart from the first 2 lectures.
+
+**Issues outlining references that will be used for lecture preparation are due at the end of the 3rd week (10/05/2025)!** 
+20 minutes of research should give you an initial idea of what you need to read.
+
 ## Weekly Schedule (Fall 2025 – Fridays 2 p.m. ET)
 
 #### In-person:
