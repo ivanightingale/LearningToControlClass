@@ -11,6 +11,9 @@
 ## Overview
 This student-led course explores modern techniques for controlling — and learning to control — dynamical systems. Topics range from classical optimal control and numerical optimization to reinforcement learning, PDE-constrained optimization (finite-element methods, Neural DiffEq, PINNs, neural operators), and GPU-accelerated workflows.
 
+## Objective
+Create an online book at the end using the materials from all lectures.
+
 ## Prerequisites
 * Solid linear-algebra background  
 * Programming experience in Julia, Python, *or* MATLAB  
@@ -19,14 +22,22 @@ This student-led course explores modern techniques for controlling — and learn
 ## Grading
 | Component | Weight |
 |-----------|--------|
-| Participation & paper critiques | **25 %** |
-| In-class presentations | **50 %** |
-| Projects | **25 %** |
+| Participation | **25 %** |
+| In-class Presentations and Chapter | **50 %** |
+| Projects (Liaison work & Scribe & Admin & ...) | **25 %** |
 
 **Class material is due one week before the lecture!** No exceptions apart from the first 2 lectures.
 
 **Issues outlining references that will be used for lecture preparation are due at the end of the 3rd week (10/05/2025)!** 
 20 minutes of research should give you an initial idea of what you need to read.
+
+🎯🚲 **Guessing Game**
+
+Here’s how the presentation grading works: we already know the lecture content we expect from you. Any deviations will be penalized **exponentially**. Your mission is twofold:  
+1. **Check your understanding** — use [discussions](https://github.com/LearningToOptimize/LearningToControlClass/discussions) from previous lectures to ensure you’ve mastered earlier topics. We expect lectures to be extremely linked to each other.
+2. **Test your hypotheses** — validate your lecture content by raising and resolving issues, focusing primarily on your *main task issue* (see this example from [class 03](https://github.com/LearningToOptimize/LearningToControlClass/issues/18)).  
+
+All interactions will happen **only through GitHub** — no in-person hints will be given. 
 
 ## Weekly Schedule (Fall 2025 – Fridays 2 p.m. ET)
 
