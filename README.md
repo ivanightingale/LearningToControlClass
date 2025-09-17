@@ -52,7 +52,7 @@ All interactions will happen **only through GitHub** — no in-person hints will
 | 5  | 09/19/2025   | Lecture - Guancheng "Ivan" Qiu | **Nonlinear** trajectory **optimization**; collocation; implicit integration | |
 | 6  | 09/26/2025   | **External seminar 2** - Henrique Ferrolho | Trajectory **optimization** on robots in Julia Robotics | |
 | 7  | 10/03/2025   | Lecture - Jouke van Westrenen | Stochastic optimal control, Linear Quadratic Gaussian (LQG), Kalman filtering, robust control under uncertainty, unscented optimal control; | |
-| 8  | 10/10/2025   | **External seminar 3** TBD (speaker to be confirmed) | Topology **optimization** | |
+| 8  | 10/10/2025   | Lecture - Kevin Wu | Distributed optimal control & multi-agent coordination; Consensus, distributed MPC, and optimization over graphs (ADMM) ||
 | 9  | 10/17/2025   | **External seminar 4** — François Pacaud | GPU-accelerated optimal control | |
 |10  | 10/24/2025   | Lecture - Michael Klamkin | Physics-Informed Neural Networks (PINNs): formulation & pitfalls | |
 |11  | 10/31/2025   | **External seminar 5** - Chris Rackauckas | Neural Differential Equations: PINNs + classical solvers | |
@@ -73,7 +73,7 @@ Students must provide materials equivalent to those used in an in-person session
 | 18 | Lecture - Joe Ye | Robust control & min-max DDP (incl. PDE cases); chance constraints; Data-driven control & Model-Based RL-in-the-loop | |
 | 19 | Lecture - TBD | Contact Explict and Contact Implicit; Trajectory Optimization for Hybrid and Composed Systems;  | |
 | 20 | Lecture - TBD | Probabilistic Programming; Bayesian numerical methods; Variational Inference; probabilistic solvers for ODEs/PDEs; Bayesian optimization in control;  | |
-| 21 | Lecture - TBD | Distributed optimal control & multi-agent coordination; Consensus, distributed MPC, and optimization over graphs (ADMM). | |
+| 21 | Lecture - Kevin Wu | Distributed optimal control & multi-agent coordination; Consensus, distributed MPC, and optimization over graphs (ADMM). | |
 | 22 | Lecture - TBD | Dynamic Optimal Control of Power Systems; Generators swing equations, Transmission lines electromagnetic transients, dynamic load models, and inverters. | |
 
 ## Reference Material
