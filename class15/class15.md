@@ -1,4 +1,4 @@
-# Class 15 — 11/21/2025
+# Class 15 — 10/03/2025
 
 **Presenter:** Shuaicheng (Allen) Tong
 
