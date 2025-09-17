@@ -11,6 +11,9 @@
 ## Overview
 This student-led course explores modern techniques for controlling — and learning to control — dynamical systems. Topics range from classical optimal control and numerical optimization to reinforcement learning, PDE-constrained optimization (finite-element methods, Neural DiffEq, PINNs, neural operators), and GPU-accelerated workflows.
 
+## Objective
+Create an online book at the end using the materials from all lectures.
+
 ## Prerequisites
 * Solid linear-algebra background  
 * Programming experience in Julia, Python, *or* MATLAB  
@@ -19,9 +22,22 @@ This student-led course explores modern techniques for controlling — and learn
 ## Grading
 | Component | Weight |
 |-----------|--------|
-| Participation & paper critiques | **25 %** |
-| In-class presentations | **50 %** |
-| Projects | **25 %** |
+| Participation | **25 %** |
+| In-class Presentations and Chapter | **50 %** |
+| Projects (Liaison work & Scribe & Admin & ...) | **25 %** |
+
+**Class material is due one week before the lecture!** No exceptions apart from the first 2 lectures.
+
+**Issues outlining references that will be used for lecture preparation are due at the end of the 3rd week (10/05/2025)!** 
+20 minutes of research should give you an initial idea of what you need to read.
+
+🎯🚲 **Guessing Game**
+
+Here’s how the presentation grading works: we already know the lecture content we expect from you. Any deviations will be penalized **exponentially**. Your mission is twofold:  
+1. **Check your understanding** — use [discussions](https://github.com/LearningToOptimize/LearningToControlClass/discussions) from previous lectures to ensure you’ve mastered earlier topics. We expect lectures to be extremely linked to each other.
+2. **Test your hypotheses** — validate your lecture content by raising and resolving issues, focusing primarily on your *main task issue* (see this example from [class 03](https://github.com/LearningToOptimize/LearningToControlClass/issues/18)).  
+
+All interactions will happen **only through GitHub** — no in-person hints will be given. 
 
 ## Weekly Schedule (Fall 2025 – Fridays 2 p.m. ET)
 
@@ -30,13 +46,13 @@ This student-led course explores modern techniques for controlling — and learn
 | #  | Date (MM/DD) | Format / Presenter | Topic & Learning Goals | Prep / Key Resources |
 |----|--------------|--------------------|------------------------|----------------------|
 | 1  | 08/22/2025   | Lecture — Andrew Rosemberg | Course map; why PDE-constrained **optimization**; tooling overview; stability & state-space dynamics; Lyapunov; discretization issues | [📚](https://learningtooptimize.github.io/LearningToControlClass/dev/class01/class01/) |
-| 2  | 08/29/2025   | Lecture - Arnaud Deza | Numerical **optimization** for control (grad/SQP/QP); ALM vs. interior-point vs. penalty methods | |
+| 2  | 08/29/2025   | Lecture - Arnaud Deza | Numerical **optimization** for control (grad/SQP/QP); ALM vs. interior-point vs. penalty methods | [📚](https://learningtooptimize.github.io/LearningToControlClass/dev/class02/overview/) |
 | 3  | 09/05/2025   | Lecture - Zaowei Dai | Pontryagin’s Maximum Principle; shooting & multiple shooting; LQR, Riccati, QP viewpoint (finite / infinite horizon) | |
 | 4  | 09/12/2025   | **External seminar 1** - Joaquim Dias Garcia| Dynamic Programming & Model-Predictive Control | |
 | 5  | 09/19/2025   | Lecture - Guancheng "Ivan" Qiu | **Nonlinear** trajectory **optimization**; collocation; implicit integration | |
 | 6  | 09/26/2025   | **External seminar 2** - Henrique Ferrolho | Trajectory **optimization** on robots in Julia Robotics | |
 | 7  | 10/03/2025   | Lecture - Jouke van Westrenen | Stochastic optimal control, Linear Quadratic Gaussian (LQG), Kalman filtering, robust control under uncertainty, unscented optimal control; | |
-| 8  | 10/10/2025   | **External seminar 3** TBD (speaker to be confirmed) | Topology **optimization** | |
+| 8  | 10/10/2025   | Lecture - Kevin Wu | Distributed optimal control & multi-agent coordination; Consensus, distributed MPC, and optimization over graphs (ADMM) ||
 | 9  | 10/17/2025   | **External seminar 4** — François Pacaud | GPU-accelerated optimal control | |
 |10  | 10/24/2025   | Lecture - Michael Klamkin | Physics-Informed Neural Networks (PINNs): formulation & pitfalls | |
 |11  | 10/31/2025   | **External seminar 5** - Chris Rackauckas | Neural Differential Equations: PINNs + classical solvers | |
@@ -57,7 +73,7 @@ Students must provide materials equivalent to those used in an in-person session
 | 18 | Lecture - Joe Ye | Robust control & min-max DDP (incl. PDE cases); chance constraints; Data-driven control & Model-Based RL-in-the-loop | |
 | 19 | Lecture - TBD | Contact Explict and Contact Implicit; Trajectory Optimization for Hybrid and Composed Systems;  | |
 | 20 | Lecture - TBD | Probabilistic Programming; Bayesian numerical methods; Variational Inference; probabilistic solvers for ODEs/PDEs; Bayesian optimization in control;  | |
-| 21 | Lecture - TBD | Distributed optimal control & multi-agent coordination; Consensus, distributed MPC, and optimization over graphs (ADMM). | |
+| 21 | Lecture - Kevin Wu | Distributed optimal control & multi-agent coordination; Consensus, distributed MPC, and optimization over graphs (ADMM). | |
 | 22 | Lecture - Shuaicheng (Allen) Tong | Dynamic Optimal Control of Power Systems; Generators swing equations, Transmission lines electromagnetic transients, dynamic load models, and inverters. | |
 
 ## Reference Material
