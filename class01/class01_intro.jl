@@ -840,10 +840,10 @@ Foldable(md" $\dot{x} = f(x,u) \; \implies \; A=? \; B=?$", md"""
 Suppose now that we apply our dynamics equation to an input:
 
 ```math
-u(t) = u_{eq} + \delta u(t), \quad t \ge 0
+u(t) = u_e + \delta u(t), \quad t \ge 0
 ```
-where $u_{eq}$ is an fixed input and $\delta u(t)$ is a perturbation function such that the input is close 
-but not equal to $u_{eq}$ and similarly we perturb the initial condition:
+where $u_e$ is an fixed input and $\delta u(t)$ is a perturbation function such that the input is close 
+but not equal to $u_e$ and similarly we perturb the initial condition:
 
 ```math
 x(0) = x_e + \delta x(0)
@@ -857,10 +857,10 @@ We will define the deviation from the reference state as:
 To determine the evolution of $\delta x(t)$, we can expand the dynamics around the reference point using a Taylor expansion:
 
 ```math
-\dot{\delta x}(t) = f(x_e + \delta x(t), u_{eq} + \delta u(t))
+\dot{\delta x}(t) = f(x_e + \delta x(t), u_e + \delta u(t))
 ```
 ```math
-=\frac{\partial f}{\partial x}\bigg|_{(x_e, u_{eq})} \delta x(t) + \frac{\partial f}{\partial u}\bigg|_{(x_e, u_{eq})} \delta u(t) + \mathcal{O}(\|\delta x\|^2) + \mathcal{O}(\|\delta u\|^2)
+=\frac{\partial f}{\partial x}\bigg|_{(x_e, u_e)} \delta x(t) + \frac{\partial f}{\partial u}\bigg|_{(x_e, u_e)} \delta u(t) + \mathcal{O}(\|\delta x\|^2) + \mathcal{O}(\|\delta u\|^2)
 ```
 
 Considering just the first-order terms we obtain:
