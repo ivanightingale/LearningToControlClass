@@ -139,7 +139,7 @@ Underactuated robotics is a promising growing field [^mit1], with progress displ
 # ╔═╡ 9876a377-0da0-44a6-8922-378639724199
 md"""
 ##### Unicycle robot
-![unicycle](https://media.licdn.com/dms/image/v2/D4E22AQHjrdv5VJpqYw/feedshare-shrink_1280/B4EZbV9cOjGkAo-/0/1747346378871?e=1758758400&v=beta&t=i1gPZeObZyh-tJurAUPvYcpW-El8fx8oIMoG51G9oxw)
+![unicycle](https://raw.githubusercontent.com/wheelbot/Mini-Wheelbot/refs/heads/main/imgs/circle.gif)
 
 Recall the system dynamics
 
