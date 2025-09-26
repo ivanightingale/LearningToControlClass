@@ -291,8 +291,6 @@ The optimization problem is
 	& ...
 \end{align*}
 ```
-
-Do we need to include $\dot{x}(t_{k + \frac{1}{2}})$, $x(t_{k + \frac{1}{2}})$, and $u(t_{k + \frac{1}{2}})$ all as decision variables? Let's find out.
 "
 
 # ╔═╡ 165297a6-854f-475c-a16a-637de6dc9b69
@@ -565,7 +563,7 @@ begin
 end
 
 # ╔═╡ c27dfea7-2fc6-46a7-894b-6596e5f65d5a
-question_box(md"Note that we set an initial guess for the state and control varialbes (using the `start` keyword when defining the variables). Even though this initial guess of the trajectories is clearly nonsense, it does help with convergence. Try removing the initial guess. Do you observe any change in the number of iterations for the solver to converge?")
+question_box(md"Note that we set an initial guess for the state and control varialbes (using the `start` keyword when defining the variables). Even though this initial guess of the trajectories is physically impossible, it does help with convergence. Try removing the initial guess. Do you observe any change in the number of iterations for the solver to converge?")
 
 # ╔═╡ 3c0a82ca-0b49-43c6-af74-c95dcb98e160
 question_box(md"What do you think are the pros and cons of direct collocation?")
@@ -648,9 +646,8 @@ Instead of computing the value function at each time step exactly in its entiret
 4. Repeat until convergence criteria are met.
 ---
 
-When exact dynamics is used to simulate the trajectories, approximate DP is anytime: the algorithm can be stopped at any number of iterations, and the latest solution would be feasible.
-
-Collocation, on the other hand, may not be able to provide a feasible solution over the entire time horizon until the solver is close to achieving convergence.
+When exact dynamics is used to simulate the trajectories, approximate DP can be stopped at any iteration, and the current solution would satisfy the dynamics.
+Collocation, on the other hand, may not be able to provide a solution that satisfies the dynamics over the entire time horizon until the solver is close to achieving convergence.
 "
 
 # ╔═╡ 65269bed-858b-4aa6-b8fc-c631a5b5b429
@@ -720,6 +717,9 @@ Overall, the algorithm can be summarized as:
 4. Repeat backward pass & forward pass until convergence criteria are met.
 "
 
+# ╔═╡ 71322a24-2eb6-48ef-b652-bd7105ccdea8
+question_box(md"Can you think of one advantage collocation has over the vanilla differential DP? (Hint: think about what is easy to be added to an optimization problem but not to the backward pass of differential DP)")
+
 # ╔═╡ Cell order:
 # ╟─2fe513ba-9310-11f0-2266-9730fc13e5da
 # ╟─e6aa5227-91bd-4cec-9448-24384708a305
@@ -766,3 +766,4 @@ Overall, the algorithm can be summarized as:
 # ╠═92e51bd2-630b-4882-a2d7-8d49121afc21
 # ╟─9932b4dc-4b6e-4a81-8f14-dc71c4c597fc
 # ╟─65269bed-858b-4aa6-b8fc-c631a5b5b429
+# ╟─71322a24-2eb6-48ef-b652-bd7105ccdea8
