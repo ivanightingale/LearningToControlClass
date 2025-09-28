@@ -218,7 +218,7 @@ For legged robots, a constraint of the form
 ```math
 ||f||_{2} \leq \mu f_{N}
 ```
-may be enforced to prevent slipping, where $f$ is the frictional force, $\mu$ is the coefficient of statis friction and $f_{N}$ is the normal force.
+may be enforced to prevent slipping, where $f$ is the applied force, $\mu$ is the coefficient of statis friction and $f_{N}$ is the normal force.
 "
 
 # ╔═╡ 055ac28a-2fbd-4777-b683-688ae6b10a89
