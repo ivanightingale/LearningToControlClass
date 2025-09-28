@@ -49,7 +49,7 @@ All interactions will happen **only through GitHub** — no in-person hints will
 | 2  | 08/29/2025   | Lecture - Arnaud Deza | Numerical **optimization** for control (grad/SQP/QP); ALM vs. interior-point vs. penalty methods | [📚](https://learningtooptimize.github.io/LearningToControlClass/dev/class02/overview/) |
 | 3  | 09/05/2025   | Lecture - Zaowei Dai | Pontryagin’s Maximum Principle; shooting & multiple shooting; LQR, Riccati, QP viewpoint (finite / infinite horizon) | |
 | 4  | 09/12/2025   | **External seminar 1** - Joaquim Dias Garcia| Dynamic Programming & Model-Predictive Control | |
-| 5  | 09/19/2025   | Lecture - Guancheng "Ivan" Qiu | **Nonlinear** trajectory **optimization**; collocation; implicit integration | |
+| 5  | 09/19/2025   | Lecture - Guancheng "Ivan" Qiu | **Nonlinear** trajectory **optimization**; collocation; implicit integration | [📚](https://learningtooptimize.github.io/LearningToControlClass/dev/class05/class05/) |
 | 6  | 09/26/2025   | **External seminar 2** - Henrique Ferrolho | Trajectory **optimization** on robots in Julia Robotics | |
 | 7  | 10/03/2025   | Lecture - Jouke van Westrenen | Stochastic optimal control, Linear Quadratic Gaussian (LQG), Kalman filtering, robust control under uncertainty, unscented optimal control; | |
 | 8  | 10/10/2025   | Lecture - Kevin Wu | Distributed optimal control & multi-agent coordination; Consensus, distributed MPC, and optimization over graphs (ADMM) ||
@@ -67,14 +67,12 @@ Students must provide materials equivalent to those used in an in-person session
 
 | # | Format / Presenter | Topic & Learning Goals | Prep / Key Resources |
 |---|--------------------|------------------------|----------------------|
-| 15 | Lecture - TBD | Quaternions, Lie groups, and Lie algebras; attitude control; LQR with Attitude, Quadrotors; | |
-| 16 | Lecture - TBD | Stochastic optimal control, Linear Quadratic Gaussian (LQG), Kalman filtering, robust control under uncertainty, unscented optimal control; | |
-| 17 | Lecture - TBD | Trajectory Optimization with Obstacles; Convexification of Non-Convex Constraints; | |
-| 18 | Lecture - Joe Ye | Robust control & min-max DDP (incl. PDE cases); chance constraints; Data-driven control & Model-Based RL-in-the-loop | |
+| 15 | Lecture - Shuaicheng (Allen) Tong | Dynamic Optimal Control of Power Systems; Generators swing equations, Transmission lines electromagnetic transients, dynamic load models, and inverters. | |
+| 16 | Lecture - Joe Ye | Robust control & min-max DDP (incl. PDE cases); chance constraints; Data-driven control & Model-Based RL-in-the-loop | |
+| 17 | Lecture - TBD | Quaternions, Lie groups, and Lie algebras; attitude control; LQR with Attitude, Quadrotors; | |
+| 18 | Lecture - TBD | Trajectory Optimization with Obstacles; Convexification of Non-Convex Constraints; | |
 | 19 | Lecture - TBD | Contact Explict and Contact Implicit; Trajectory Optimization for Hybrid and Composed Systems;  | |
 | 20 | Lecture - TBD | Probabilistic Programming; Bayesian numerical methods; Variational Inference; probabilistic solvers for ODEs/PDEs; Bayesian optimization in control;  | |
-| 21 | Lecture - Kevin Wu | Distributed optimal control & multi-agent coordination; Consensus, distributed MPC, and optimization over graphs (ADMM). | |
-| 22 | Lecture - Shuaicheng (Allen) Tong | Dynamic Optimal Control of Power Systems; Generators swing equations, Transmission lines electromagnetic transients, dynamic load models, and inverters. | |
 
 ## Reference Material
 
