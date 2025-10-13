@@ -54,8 +54,8 @@ All interactions will happen **only through GitHub** — no in-person hints will
 | 7  | 10/03/2025   | Lecture - Jouke van Westrenen | Stochastic optimal control, Linear Quadratic Gaussian (LQG), Kalman filtering, robust control under uncertainty, unscented optimal control; | |
 | 8  | 10/10/2025   | Lecture - Kevin Wu | Distributed optimal control & multi-agent coordination; Consensus, distributed MPC, and optimization over graphs (ADMM) ||
 | 9  | 10/17/2025   | **External seminar 4** — François Pacaud | GPU-accelerated optimal control | |
-|10  | 10/24/2025   | Lecture - Michael Klamkin | Physics-Informed Neural Networks (PINNs): formulation & pitfalls | |
-|11  | 10/31/2025   | **External seminar 5** - Chris Rackauckas | Neural Differential Equations: PINNs + classical solvers | |
+|11  | 10/24/2025   | **External seminar 5** - Chris Rackauckas | Neural Differential Equations: classical solvers + adjoint methods | |
+|10  | 10/31/2025   | Lecture - Michael Klamkin | Physics-Informed Neural Networks (PINNs): formulation & pitfalls | |
 |12  | 11/07/2025   | Lecture - Pedro Paulo | Neural operators (FNO, Galerkin Transformer); large-scale surrogates | |
 |13  | 11/14/2025   | **External seminar 6** - Charlelie Laurent | Scalable PINNs / neural operators; CFD & weather applications | |
 |14  | 11/21/2025   | Lecture - TBD | TBD from the pool | |
