@@ -68,7 +68,7 @@ Students must provide materials equivalent to those used in an in-person session
 | # | Format / Presenter | Topic & Learning Goals | Prep / Key Resources |
 |---|--------------------|------------------------|----------------------|
 | 15 | Lecture - Shuaicheng (Allen) Tong | Dynamic Optimal Control of Power Systems; Generators swing equations, Transmission lines electromagnetic transients, dynamic load models, and inverters. | |
-| 16 | Lecture - Joe Ye | Robust control & min-max DDP (incl. PDE cases); chance constraints; Data-driven control & Model-Based RL-in-the-loop | |
+| 16 | Lecture - TBD | Robust control & min-max DDP (incl. PDE cases); chance constraints; Data-driven control & Model-Based RL-in-the-loop | |
 | 17 | Lecture - TBD | Quaternions, Lie groups, and Lie algebras; attitude control; LQR with Attitude, Quadrotors; | |
 | 18 | Lecture - TBD | Trajectory Optimization with Obstacles; Convexification of Non-Convex Constraints; | |
 | 19 | Lecture - TBD | Contact Explict and Contact Implicit; Trajectory Optimization for Hybrid and Composed Systems;  | |
